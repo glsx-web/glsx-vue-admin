@@ -1,0 +1,150 @@
+@import "variables.scss";
+
+.el-menu--vertical .el-menu--popup,
+.el-menu--vertical .el-menu--popup> a >li.el-menu-item {
+        background-color:  rgba(0,0,0,.9) !important;
+        color: #fff !important;
+        //mix-blend-mode: difference;
+}
+.el-menu--vertical .el-menu--popup> a >li.el-menu-item{
+    &:hover{
+        background-color:$--background-color--a1;
+    }
+}
+
+#app {
+    // 主体区域
+    .main-container {
+        min-height: 100%;
+        transition: margin-left $transitionTime;
+    }
+    .el-menu-item.is-active{
+        background-color:$--background-color--a1 ;
+        box-shadow: inset 0 0 1px rgba(255,255,255,.5);
+    }
+    .sidebar-container .menu-wrapper >a > li.el-menu-item,
+    .sidebar-container .menu-wrapper >li.el-submenu > div.el-submenu__title{
+        background-color:transparent !important;
+        // color: $fontColor !important;
+        box-sizing:border-box;
+        &:hover{
+            background-color:$--background-color--a1;
+            box-shadow: inset 0 0 1px rgba(255,255,255,.5);
+            transition: none;
+        };
+        i{
+            color: $fontColor !important;
+        }
+    }
+    
+    // 侧边栏
+    .sidebar-container {
+        transition: width $transitionTime;
+        position: absolute;
+        font-size: 0px;
+        z-index: 1001;
+        overflow: hidden;
+        width: 100%;
+        //reset element-ui css
+        .horizontal-collapse-transition {
+            transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+        }
+        .scrollbar-wrapper {
+            height: calc(100% + 15px);
+            .el-scrollbar__view {
+                height: 100%;
+            }
+        }
+        .is-horizontal {
+            display: none;
+        }
+        a {
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+        }
+        .svg-icon {
+            margin-right: 16px;
+        }
+        .el-menu {
+            border: none;
+            height: 100%;
+            width: 100% !important;
+            background-color: transparent !important;
+        }
+    }
+    .hideSidebar {
+        h1 {
+            width: 36px !important;
+        }
+        .sidebar-container {
+            width: 36px !important;
+        }
+        .main-container {
+            margin-left: 36px;
+        }
+        .submenu-title-noDropdown {
+            padding-left: 10px !important;
+            position: relative;
+            .el-tooltip {
+                padding: 0 10px !important;
+            }
+        }
+        .el-submenu {
+            overflow: hidden;
+            &>.el-submenu__title {
+                padding-left: 10px !important;
+                .el-submenu__icon-arrow {
+                    display: none;
+                }
+            }
+        }
+        .el-menu--collapse {
+            .el-submenu {
+                &>.el-submenu__title {
+                    &>span {
+                        height: 0;
+                        width: 0;
+                        overflow: hidden;
+                        visibility: hidden;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+    .sidebar-container .el-submenu .el-menu--inline{
+        border: 1px solid rgba(255,255,255,.3);
+        border-right: none;
+        border-left: none;
+        box-shadow: inset 0 0 1px #000;
+    }
+    .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
+    .sidebar-container .el-submenu .el-menu-item {
+        background-color:$--background-color--a1;
+        &:hover {
+            background-color:$--background-color--a2;
+        }
+    }
+    //适配移动端
+    .mobile {
+        .main-container {
+            margin-left: 0px;
+        }
+        .sidebar-container {
+            transition: transform $transitionTime;
+        }
+        &.hideSidebar {
+            .sidebar-container {
+                transition-duration: 0.3s;
+                transform: translate3d(-9900, 0, 0);
+            }
+        }
+    }
+    .withoutAnimation {
+        .main-container,
+        .sidebar-container {
+            transition: none;
+        }
+    }
+}
