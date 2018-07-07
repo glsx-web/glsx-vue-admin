@@ -2,14 +2,14 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 04:07:16
+ * @Last Modified time: 2018-07-08 01:58:45
  */
 import { recursionSet } from '@/utils'
 
 const aside = {
   state: {
     'visible': '',
-    'state': 1, // 状态   1:开启  2. 关闭
+    'state': '', // 状态   1:开启  2. 关闭
     'sidebar': {
       'visible': '',
       'maxWidth': 200,

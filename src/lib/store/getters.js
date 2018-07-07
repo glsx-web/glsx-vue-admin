@@ -3,7 +3,7 @@ import header from './modules/header';
  * @Author: limin
  * @Date: 2018-06-25 10:29:33
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-05 19:28:01
+ * @Last Modified time: 2018-07-08 00:40:41
  */
 const getters = {
   visitedViews: state => state.tagsView.visitedViews,
@@ -22,6 +22,7 @@ const getters = {
   addRouters: state => state.permission.addRouters,
   header: state => state.header,
   aside: state => state.aside,
-  footer: state => state.footer
+  footer: state => state.footer,
+  app: state => state.app
 }
 export default getters

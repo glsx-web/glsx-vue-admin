@@ -13,13 +13,13 @@ export default {
     ...mapGetters([
       'aside'
     ]),
-    asideVisivle() {
+    asideVisible() {
       return this.aside.visible || this.Get(AsideConst.Visible.Key)
     },
-    sidebarVisivle() {
+    sidebarVisible() {
       return this.aside.sidebar.visible || this.Get(AsideConst.Sidebar.Visible.Key)
     },
-    logoVisivle() {
+    logoVisible() {
       return this.aside.logo.visible || this.Get(AsideConst.Logo.User.Visible.Key)
     }
   }

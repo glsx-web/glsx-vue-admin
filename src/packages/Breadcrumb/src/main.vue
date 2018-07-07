@@ -34,7 +34,7 @@ export default {
   methods: {
     getBreadcrumb() {
       var matched = this.$route.matched.filter(item => item.name)
-      const first = this._.head(matched)
+      const first = matched[0]
       if (first && first.name.toLowerCase() !== DASHBOARD.name.toLowerCase()) {
         matched = [DASHBOARD].concat(matched)
       }

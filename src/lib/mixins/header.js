@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 03:52:15
+ * @Last Modified time: 2018-07-08 02:09:09
  */
 
 import { mapGetters, mapActions } from 'vuex'
@@ -13,38 +13,38 @@ export default {
     ...mapGetters([
       'header'
     ]),
-    headerVisivle() {
+    headerVisible() {
       return this.header.visible || this.Get(HeaderConst.Visible.Key)
     },
-    navbarVisivle() {
+    navbarVisible() {
       return this.header.navbar.visible || this.Get(HeaderConst.Navbar.Visible.Key)
     },
-    langVisivle() {
+    langVisible() {
       return this.header.navbar.language.visible || this.Get(HeaderConst.Navbar.Language.Visible.Key)
     },
-    screenfullVisivle() {
+    screenfullVisible() {
       return this.header.navbar.screenfull.visible || this.Get(HeaderConst.Navbar.Screenfull.Visible.Key)
     },
-    themeVisivle() {
+    themeVisible() {
       return this.header.navbar.theme.visible || this.Get(HeaderConst.Navbar.Theme.Visible.Key)
     },
-    logoutVisivle() {
+    logoutVisible() {
       return this.header.navbar.logout.visible || this.Get(HeaderConst.Navbar.Logout.Visible.Key)
     },
-    userVisivle() {
+    userVisible() {
       return this.header.navbar.user.visible || this.Get(HeaderConst.Navbar.User.Visible.Key)
     },
-    avatarVisivle() {
+    avatarVisible() {
       return this.header.navbar.user.avatar.visible || this.Get(HeaderConst.Navbar.User.Avatar.Visible.Key)
     },
-    nameVisivle() {
+    nameVisible() {
       return this.header.navbar.user.name.visible || this.Get(HeaderConst.Navbar.User.Name.Visible.Key)
     },
-    settingsVisivle() {
+    settingsVisible() {
       return this.header.navbar.settings.visible || this.Get(HeaderConst.Navbar.Settings.Visible.Key)
     },
-    tagsViewVisivle() {
-      return this.header.tagsView.visible || this.Get(HeaderConst.Tagsview.Visible)
+    tagsViewVisible() {
+      return this.header.tagsView.visible || this.Get(HeaderConst.TagsView.Visible.Key)
     }
   },
   methods: {

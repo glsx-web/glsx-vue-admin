@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 01:32:01
+ * @Last Modified time: 2018-07-08 02:02:07
  */
 import { recursionSet } from '@/utils'
 const header = {
@@ -53,7 +53,7 @@ const header = {
       }
     },
     'tagsView': {
-      'visible': true,
+      'visible': '',
       'activeColor': ''
     }
   },

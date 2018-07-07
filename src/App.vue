@@ -9,10 +9,8 @@
 </el-container>
 </template>
 <script>
-import { ResizeHandler } from '@/lib/mixins'
 export default {
   name: 'app',
-  mixins: [ResizeHandler],
   mounted() {
     console.log(111)
   }

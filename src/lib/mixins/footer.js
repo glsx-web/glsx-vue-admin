@@ -12,7 +12,7 @@ export default {
     ...mapGetters([
       'footer'
     ]),
-    footerVisivle() {
+    footerVisible() {
       return this.footer.visible || this.Get(FooterConst.Visible.Key)
     }
   }

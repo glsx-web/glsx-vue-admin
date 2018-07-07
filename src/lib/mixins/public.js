@@ -2,17 +2,17 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 04:12:03
+ * @Last Modified time: 2018-07-08 01:57:48
  */
 
 import { mapGetters, mapActions } from 'vuex'
-import { recursionGet, get, set } from '@/utils'
+import { recursionGet, get, set, firstUpperCase } from '@/utils'
 import { generateTitle } from '@/utils/i18n'
 import confMixin from '@/views/layout/config'
 import axios from 'axios'
-const Actions = { 'header': 'SetHeader', 'aside': 'SetAside', 'footer': 'SetFooter' }
+// const Actions = { 'header': 'SetHeader', 'aside': 'SetAside', 'footer': 'SetFooter', 'app': 'SetApp' }
 const ThemeColor = '#409EFF'
-import { HeaderConst, AsideConst, AppConst } from '@/lib/consts'
+import { AsideConst, AppConst } from '@/lib/consts'
 export default {
   mixins: [confMixin],
   name: 'PublicMixin',
@@ -23,10 +23,11 @@ export default {
       'visitedViews',
       'cachedViews',
       'header',
-      'aside'
+      'aside',
+      'app'
     ]),
     themeColor() {
-      return this.header.navbar.theme.value || this.Get(HeaderConst.Navbar.Theme.Key) || ThemeColor
+      return this.app.defaultColor || this.Get(AppConst.DefaultColor.Key) || ThemeColor
     },
     asideState() {
       return this.Get(AsideConst.State.Key)
@@ -39,7 +40,8 @@ export default {
     ...mapActions([
       'SetHeader',
       'SetAside',
-      'SetFooter'
+      'SetFooter',
+      'SetApp'
     ]),
     getConfig() {
       axios.get('src/views/layout/config.json').then((res) => {
@@ -51,8 +53,10 @@ export default {
       var aKeys = key.split('_')
       var module = aKeys.shift()
       const vxValue = recursionGet(this[module], aKeys)
+      console.log(vxValue)
       if (!vxValue) {
         var storeValue = get(key)
+        console.log(storeValue)
         if (!storeValue) {
           if (key.endsWith('_visible')) {
             return AppConst.Visibility.VISIBLE
@@ -68,7 +72,8 @@ export default {
     },
     Set(key, value) {
       var module = key.split('_').shift()
-      this[Actions[module]]({ key: key, value: value }).then(() => {
+      console.log(firstUpperCase(module))
+      this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
         console.log(key, value)
         set(key, value)
       })

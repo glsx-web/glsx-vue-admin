@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-23 11:57:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-05 17:11:44
+ * @Last Modified time: 2018-07-08 00:23:55
  */
 import { setSession, getSession, removeSession, get, set, remove } from './store'
 import * as Consts from './const'
@@ -28,6 +28,9 @@ const recursionGet = function(obj, arrKeys) {
     return obj[arrKeys[0]]
   }
 }
+const firstUpperCase = function(str) {
+  return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase())
+}
 export {
   setSession,
   getSession,
@@ -37,5 +40,6 @@ export {
   set,
   Consts,
   recursionGet,
-  recursionSet
+  recursionSet,
+  firstUpperCase
 }

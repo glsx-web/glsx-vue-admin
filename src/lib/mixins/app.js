@@ -1,125 +1,56 @@
 /*
  * @Author: limin
- * @Date: 2018-07-01 01:36:03
+ * @Date: 2018-06-25 10:30:32
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 01:55:46
+ * @Last Modified time: 2018-07-08 00:09:08
  */
-
 import { mapGetters, mapActions } from 'vuex'
-import { recursionGet, get, set } from '@/utils'
-import { generateTitle } from '@/utils/i18n'
-import confMixin from '@/views/layout/config'
-import axios from 'axios'
-const Actions = { 'header': 'SetHeader', 'aside': 'SetAside', 'footer': 'SetFooter' }
-const ThemeColor = '#409EFF'
-import { HeaderConst, AsideConst, AppConst, FooterConst } from '@/lib/consts'
+import { AppConst, AsideConst } from '@/lib/consts'
+const { body } = document
+const WIDTH = 1024
+const RATIO = 3
+
 export default {
-  mixins: [confMixin],
+  name: 'AppMixin',
   computed: {
     ...mapGetters([
-      'sidebar',
-      'device',
-      'permission_routers',
-      'clientHeight',
-      'header',
-      'aside',
-      'footer',
-      'visitedViews'
+      'app',
+      'aside'
     ]),
-    themeColor() {
-      return this.header.navbar.theme.value || this.Get(HeaderConst.Navbar.Theme.Key) || ThemeColor
-    },
-    asideState() {
-      return this.Get(AsideConst.State.Key)
-    },
-    headerVisivle() {
-      return this.header.visible || this.Get(HeaderConst.Visible)
-    },
-    navbarVisivle() {
-      return this.header.navbar.visible || this.Get(HeaderConst.Navbar.Visible)
-    },
-    langVisivle() {
-      return this.header.navbar.language.visible || this.Get(HeaderConst.Navbar.Language.Visible)
-    },
-    screenfullVisivle() {
-      return this.header.navbar.screenfull.visible || this.Get(HeaderConst.Navbar.Screenfull.Visible)
-    },
-    themeVisivle() {
-      return this.header.navbar.theme.visible || this.Get(HeaderConst.Navbar.Theme.Visible)
-    },
-    logoutVisivle() {
-      return this.header.navbar.logout.visible || this.Get(HeaderConst.Navbar.Logout.Visible)
-    },
-    usertVisivle() {
-      return this.header.navbar.user.visible || this.Get(HeaderConst.Navbar.User.Visible)
-    },
-    avatarVisivle() {
-      return this.header.navbar.user.avatar.visible || this.Get(HeaderConst.Navbar.User.Avatar.Visible)
-    },
-    nameVisivle() {
-      return this.header.navbar.user.name.visible || this.Get(HeaderConst.Navbar.User.Name.Visible)
-    },
-    asideVisivle() {
-      return this.aside.visible || this.Get(AsideConst.Visible)
-    },
-    tagsViewVisivle() {
-      return this.header.tagsView.visible || this.Get(HeaderConst.Tagsview.Visible)
-    },
-    logoVisivle() {
-      return this.aside.logo.visible || this.Get(AsideConst.Logo.User.Visible)
-    },
-    footerVisivle() {
-      return this.footer.visible || this.Get(FooterConst.Visible)
-    },
-    config() {
-      return this.getConfig()
-    }
-  },
-  methods: {
-    ...mapActions([
-      'SetHeader',
-      'SetAside',
-      'SetFooter',
-      'LogOut',
-      'addVisitedViews',
-      'delVisitedViews',
-      'delOthersViews',
-      'delAllViews'
-    ]),
-    getConfig() {
-      axios.get('src/views/layout/config.json').then((res) => {
-        console.log(res.data)
-      })
-    },
-    Get(key) {
-      var aKeys = key.split('_')
-      var module = aKeys.shift()
-      const vxValue = recursionGet(this[module], aKeys)
-      if (!vxValue) {
-        var storeValue = get(key)
-        if (!storeValue) {
-          if (key.endsWith('_visible')) {
-            return AppConst.Visibility.VISIBLE
-          } else {
-            return ''
-          }
-        } else {
-          return storeValue
-        }
-      } else {
-        return vxValue
+    watch: {
+      $route(route) {
+        this.app.device === AppConst.Device.Types.MINSIZE && this.aside.state === AppConst.States.OPEN && this.SetAside(AsideConst.State.Key, AppConst.States.CLOSE)
       }
     },
-    Set(key, value) {
-      var module = key.split('_').shift()
-      this[Actions[module]]({ key: key, value: value }).then(() => {
-        console.log(key, value)
-        set(key, value)
-      })
+    beforeMount() {
+      window.addEventListener('resize', setTimeout(() => { this.resizeHandler() }, 400))
     },
-    generateTitle
-  },
-  mounted() {
-    this.getConfig()
+    mounted() {
+      this.resize()
+    },
+    methods: {
+      ...mapActions([
+        'SetApp',
+        'SetAside'
+      ]),
+      isMiniSize() {
+        const rect = body.getBoundingClientRect()
+        return rect.width - RATIO < WIDTH
+      },
+      setClientHeight() {
+        this.SetApp(AppConst.ClientHeight.Key, body.clientHeight)
+      },
+      toggleDevice() {
+        const isMiniSize = this.isMiniSize()
+        this.SetApp(AppConst.Device.Key, isMiniSize ? AppConst.Device.Types.MINSIZE : AppConst.Device.Types.MINSIZE.DESKTOP)
+      },
+      resize() {
+        this.setClientHeight()
+        this.toggleDevice()
+      },
+      resizeHandler() {
+        !document.hidden && this.resize()
+      }
+    }
   }
 }

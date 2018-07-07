@@ -1,5 +1,5 @@
 <template>
-    <div :style="oStyle" v-if="headerVisivle"> 
+    <div :style="oStyle" v-if="headerVisible"> 
       <gl-app-navbar  v-if="oNavbar.visible"
         v-on:@themeHandler="handleTheme" 
         v-on:@logout="handleLogout"
@@ -29,7 +29,7 @@
 import { HeaderMixin, PublicMixin } from '@/lib/mixins'
 import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
-import { HeaderConst, AsideConst } from '@/lib/consts'
+import { HeaderConst, AsideConst, AppConst } from '@/lib/consts'
 export default {
   name: 'GlAppHeader',
   mixins: [HeaderMixin, PublicMixin],
@@ -51,38 +51,38 @@ export default {
     },
     oNavbar() {
       return {
-        visible: this.navbarVisivle,
+        visible: this.navbarVisible,
         user: {
-          visible: this.userVisivle,
+          visible: this.userVisible,
           avatar: {
-            visible: this.avatarVisivle,
+            visible: this.avatarVisible,
             value: this.Navbar.user.avatar.value
           },
           name: {
-            visible: this.nameVisivle,
+            visible: this.nameVisible,
             value: this.Navbar.user.name.value
           }
         },
         screenfull: {
-          visible: this.screenfullVisivle,
+          visible: this.screenfullVisible,
           content: this.$t(this.Navbar.screenfull.i18n)
         },
         logout: {
-          visible: this.logoutVisivle,
+          visible: this.logoutVisible,
           content: this.$t(this.Navbar.logout.i18n)
         },
         language: {
-          visible: this.langVisivle,
+          visible: this.langVisible,
           content: this.$t(this.Navbar.language.i18n),
           value: this.Navbar.language.value
         },
         settings: {
-          visible: this.settingsVisivle,
+          visible: this.settingsVisible,
           content: this.$t(this.Navbar.settings.i18n),
           value: this.Navbar.settings.value
         },
         theme: {
-          visible: this.themeVisivle,
+          visible: this.themeVisible,
           content: this.$t(this.Navbar.theme.i18n),
           preDefineColors: this.Navbar.theme.preDefineColors,
           value: this.themeColor
@@ -92,7 +92,7 @@ export default {
     },
     oTagsView() {
       return {
-        visible: this.tagsViewVisivle,
+        visible: this.tagsViewVisible,
         activeColor: this.TagsView.activeColor || this.themeColor,
         visitedViews: this.visitedViews,
         generate: this.generateTitle
@@ -104,7 +104,7 @@ export default {
       this.Set(AsideConst.State.Key, AsideConst.States.CLOSE)
     },
     handleTheme(theme) {
-      this.Set(HeaderConst.Navbar.Theme.Key, theme)
+      this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
       this.LogOut().then(() => {
@@ -112,9 +112,7 @@ export default {
       })
     },
     handleToggle() {
-      console.log(this.asideState, AsideConst.States.OPEN, this.asideState === AsideConst.States.OPEN)
-      const state = (this.asideState === AsideConst.States.OPEN) ? AsideConst.States.CLOSE : AsideConst.States.OPEN
-      console.log(AsideConst.State.Key, state)
+      const state = (this.asideState === AppConst.States.OPEN) ? AppConst.States.CLOSE : AppConst.States.OPEN
       this.Set(AsideConst.State.Key, state)
     },
     handleSetLanguage(lang) {

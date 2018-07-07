@@ -1,10 +1,10 @@
-import ResizeHandler from './ResizeHandler'
+import AppMixin from './app'
 import AsideMixin from './aside'
 import HeaderMixin from './header'
 import FooterMixin from './footer'
 import PublicMixin from './public'
 export {
-  ResizeHandler,
+  AppMixin,
   AsideMixin,
   HeaderMixin,
   FooterMixin,

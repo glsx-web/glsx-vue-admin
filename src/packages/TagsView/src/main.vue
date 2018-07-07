@@ -74,7 +74,7 @@ export default {
     moveToCurrentTag() {
       const tags = this.$refs.tag
       this.$nextTick(() => {
-        this._.forEach(tags, (tag) => {
+        tags.forEach((tag) => {
           if (tag.to === this.$route.fullPath) {
             this.$refs.scrollPane.moveToTarget(tag.$el)
             return false

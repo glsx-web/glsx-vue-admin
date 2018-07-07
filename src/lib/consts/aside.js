@@ -6,10 +6,6 @@ export default {
   State: {
     Key: 'aside_state'
   },
-  States: {
-    CLOSE: 0,
-    OPEN: 1
-  },
   Sidebar: {
     Key: 'aside_sidebar',
     Visible: {

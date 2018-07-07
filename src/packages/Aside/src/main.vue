@@ -2,16 +2,16 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 03:47:35
+ * @Last Modified time: 2018-07-08 01:22:28
  */
 <template>
-  <div  class="aside" :class="oClass" :style="oStyle" v-if="asideVisivle">
+  <div  class="aside" :class="oClass" :style="oStyle" v-if="asideVisible">
       <gl-app-logo v-if="oLogo.visible"
         :width="oLogo.width" 
         :height="oLogo.height" 
         :backgroundColor="oLogo.backgroundColor" 
         :backgroundImage="oLogo.backgroundImage" />
-        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="sidebarVisivle">
+        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="sidebarVisible">
           <gl-app-sidebar 
             :asideState="asideState" 
             :permission_routers="oSidebar.permission_routers" 
@@ -26,9 +26,10 @@ import { AsideMixin, PublicMixin } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
+import { AppConst } from '@/lib/consts'
 export default {
   name: 'GlAppAside',
-  mixins: [AsideMixin, PublicMixin],
+  mixins: [PublicMixin, AsideMixin],
   components: {
     GlAppSidebar,
     GlAppLogo,
@@ -53,19 +54,21 @@ export default {
         }
       }
     },
+    isMinSize() {
+      return this.app.device === AppConst.Device.Types.MINSIZE
+    },
     nHeight() {
-      return this.clientHeight - this.Logo.height
+      return this.app.clientHeight - this.Logo.height
     },
     oClass() {
       return {
         hideSidebar: !this.asideState,
-        withoutAnimation: false, // this.sidebar.withoutAnimation,
-        minsize: this.device === 'minsize'
+        minsize: this.isMinSize
       }
     },
     oStyle() {
       return {
-        width: ((!this.asideState && this.device === 'minsize') ? 0 : (this.asideState ? this.Sidebar.maxWidth : this.Sidebar.minWidth)) + 'px',
+        width: ((this.asideState === AppConst.States.CLOSE && this.isMinSize) ? 0 : (this.asideState === AppConst.States.OPEN ? this.Sidebar.maxWidth : this.Sidebar.minWidth)) + 'px',
         backgroundColor: this.themeColor,
         height: '100%'
       }
@@ -77,16 +80,6 @@ export default {
         backgroundColor: this.Logo.backgroundColor,
         backgroundImage: this.Logo.image
       }
-    }
-  },
-  methods: {
-    greet(obj) {
-      if (obj.left < 36) {
-        obj.left = 36
-        this.handleClickOutside()
-      }
-      obj.left = Math.min(obj.left, 300)
-      this.Sidebar.maxWidth = obj.left
     }
   }
 }

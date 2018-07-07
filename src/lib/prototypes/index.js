@@ -2,27 +2,24 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:09
  * @Last Modified by: limin
- * @Last Modified time: 2018-06-29 16:08:42
+ * @Last Modified time: 2018-07-07 23:08:39
  */
-import ___ from 'lodash'
 import { ResInSession } from '@/utils/cache'
 export default {
   install(Vue, options) {
-    Vue.prototype._ = ___
-
     Vue.prototype.$gl_has = (res) => {
       let aRes = []
       let has = true
       // 提取权限数组
       if (Array.isArray(res)) {
-        ___.forEach(res, (e) => {
-          aRes = ___.concat(aRes, e)
+        res.forEach((e) => {
+          aRes = aRes.concat(e)
         })
       } else {
-        aRes = ___.concat(aRes, res)
+        aRes = aRes.concat(res)
       }
       // 校验权限
-      ___.forEach(aRes, (p) => {
+      aRes.forEach((p) => {
         if (!ResInSession.has(p)) {
           has = false
           return false
