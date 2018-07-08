@@ -56,6 +56,9 @@ export default {
         Key: 'header_navbar_settings_visible'
       }
     },
+    ItemsArray: {
+      Key: 'header_navbar_itemsArray'
+    },
     Theme: {
       Key: 'header_navbar_theme_value',
       Visible: {

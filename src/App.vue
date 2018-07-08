@@ -9,7 +9,11 @@
 </el-container>
 </template>
 <script>
+import draggable from 'vuedraggable'
 export default {
+  components: {
+    draggable
+  },
   name: 'app',
   mounted() {
     console.log(111)

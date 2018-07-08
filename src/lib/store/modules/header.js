@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 02:02:07
+ * @Last Modified time: 2018-07-08 13:52:52
  */
 import { recursionSet } from '@/utils'
 const header = {
@@ -11,6 +11,7 @@ const header = {
     'height': 60,
     'navbar': {
       'visible': '',
+      'itemsArray': '',
       'user': {
         'visible': '',
         'avatar': {

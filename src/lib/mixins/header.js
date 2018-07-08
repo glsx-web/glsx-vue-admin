@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 02:09:09
+ * @Last Modified time: 2018-07-08 13:46:39
  */
 
 import { mapGetters, mapActions } from 'vuex'
@@ -42,6 +42,9 @@ export default {
     },
     settingsVisible() {
       return this.header.navbar.settings.visible || this.Get(HeaderConst.Navbar.Settings.Visible.Key)
+    },
+    itemsArray() {
+      return this.header.navbar.itemsArray || this.Get(HeaderConst.Navbar.ItemsArray.Key)
     },
     tagsViewVisible() {
       return this.header.tagsView.visible || this.Get(HeaderConst.TagsView.Visible.Key)

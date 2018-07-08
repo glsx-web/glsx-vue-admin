@@ -48,7 +48,6 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
   Vue.use(protos)
   Vue.prototype.$store = store
   components.map(component => {
-    console.log(component)
     Vue.component(component.name, component)
   })
 }

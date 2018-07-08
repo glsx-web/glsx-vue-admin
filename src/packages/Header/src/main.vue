@@ -1,10 +1,12 @@
 <template>
     <div :style="oStyle" v-if="headerVisible"> 
+      <draggable>
       <gl-app-navbar  v-if="oNavbar.visible"
         v-on:@themeHandler="handleTheme" 
         v-on:@logout="handleLogout"
         v-on:@toggleSideBar="handleToggle"
         v-on:@setLanguage="handleSetLanguage"
+        v-on:@itemChanged="handleItemChanged"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
         :name="oNavbar.user.name"
@@ -13,7 +15,8 @@
         :logout="oNavbar.logout"
         :settings="oNavbar.settings"
         :generate="oNavbar.generate"
-        :isActive="!!asideState"/>
+        :itemsArray="oNavbar.itemsArray"
+        :isActive="isActive"/>
       <gl-app-tags-view  v-if="oTagsView.visible"
         v-on:@addViewTag="handleAddViewTag"
         v-on:@closeSeletedTag="handleCloseTag"
@@ -22,10 +25,12 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
+        </draggable>
     </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import { HeaderMixin, PublicMixin } from '@/lib/mixins'
 import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
@@ -35,7 +40,8 @@ export default {
   mixins: [HeaderMixin, PublicMixin],
   components: {
     GlAppNavbar,
-    GlAppTagsView
+    GlAppTagsView,
+    draggable
   },
   computed: {
     oStyle() {
@@ -48,6 +54,9 @@ export default {
     },
     TagsView() {
       return this.header.tagsView
+    },
+    isActive() {
+      return this.asideState === AppConst.States.OPEN
     },
     oNavbar() {
       return {
@@ -81,6 +90,7 @@ export default {
           content: this.$t(this.Navbar.settings.i18n),
           value: this.Navbar.settings.value
         },
+        itemsArray: this.itemsArray,
         theme: {
           visible: this.themeVisible,
           content: this.$t(this.Navbar.theme.i18n),
@@ -140,6 +150,9 @@ export default {
       this.delAllViews().then(() => {
         this.$router.push('/')
       })
+    },
+    handleItemChanged(value) {
+      this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
     }
   }
 }

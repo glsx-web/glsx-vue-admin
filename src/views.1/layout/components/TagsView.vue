@@ -1,14 +1,12 @@
 <template>
   <div class="tags-view-container">
-    <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
-      <draggable v-model="visitedViews" >
-        <router-link ref='tag' class="tags-view-item" :class="isActive(tag)?'active':''" :style="isActive(tag)?objStyle:''" v-for="tag in Array.from(visitedViews)"
-          :to="tag.fullPath" :key="tag.fullPath" @contextmenu.prevent.native="openMenu(tag,$event)">
-          {{generate(tag.title)}}
-          <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
-        </router-link>
-      </draggable>
-    </gl-app-scroll-pane>
+    <scroll-pane class='tags-view-wrapper' ref='scrollPane'>
+      <router-link ref='tag' class="tags-view-item" :class="isActive(tag)?'active':''" :style="isActive(tag)?objStyle:''" v-for="tag in Array.from(visitedViews)"
+        :to="tag.fullPath" :key="tag.fullPath" @contextmenu.prevent.native="openMenu(tag,$event)">
+        {{generate(tag.title)}}
+        <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
+      </router-link>
+    </scroll-pane>
     <ul class='contextmenu' v-show="menuVisible" :style="{left:left+'px',top:top+'px'}">
       <li @click="closeSelectedTag(selectedTag)">{{$t('tagsView.close')}}</li>
       <li @click="closeOthersTags">{{$t('tagsView.closeOthers')}}</li>
@@ -18,18 +16,15 @@
 </template>
 
 <script>
-import GlAppScrollPane from '@/packages/ScrollPane'
-import draggable from 'vuedraggable'
+import ScrollPane from '@/components/ScrollPane'
 const ORIGINAL_THEME = '#409EFF' // default color
 export default {
-  name: 'GlAppTagsView',
-  components: { GlAppScrollPane, draggable },
+  components: { ScrollPane },
   props: {
     activeColor: {
       type: String,
       default: ORIGINAL_THEME
-    },
-    generate: Function,
+    }, generate: Function,
     visitedViews: Array
   },
   data() {
@@ -77,7 +72,7 @@ export default {
     moveToCurrentTag() {
       const tags = this.$refs.tag
       this.$nextTick(() => {
-        tags.forEach((tag) => {
+        this._.forEach(tags, (tag) => {
           if (tag.to === this.$route.fullPath) {
             this.$refs.scrollPane.moveToTarget(tag.$el)
             return false

@@ -2,11 +2,11 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 01:57:48
+ * @Last Modified time: 2018-07-08 13:56:16
  */
 
 import { mapGetters, mapActions } from 'vuex'
-import { recursionGet, get, set, firstUpperCase } from '@/utils'
+import { recursionGet, get, set, firstUpperCase, setConfig } from '@/utils'
 import { generateTitle } from '@/utils/i18n'
 import confMixin from '@/views/layout/config'
 import axios from 'axios'
@@ -33,7 +33,6 @@ export default {
       return this.Get(AsideConst.State.Key)
     },
     config() {
-      return this.getConfig()
     }
   },
   methods: {
@@ -45,18 +44,18 @@ export default {
     ]),
     getConfig() {
       axios.get('src/views/layout/config.json').then((res) => {
-        console.log(res.data)
+        const { header, aside, footer } = res.data
+        setConfig(header, 'header', this.Set)
+        setConfig(aside, 'aside', this.Set)
+        setConfig(footer, 'footer', this.Set)
       })
     },
     Get(key) {
-      console.log(key)
       var aKeys = key.split('_')
       var module = aKeys.shift()
       const vxValue = recursionGet(this[module], aKeys)
-      console.log(vxValue)
       if (!vxValue) {
         var storeValue = get(key)
-        console.log(storeValue)
         if (!storeValue) {
           if (key.endsWith('_visible')) {
             return AppConst.Visibility.VISIBLE
@@ -72,15 +71,13 @@ export default {
     },
     Set(key, value) {
       var module = key.split('_').shift()
-      console.log(firstUpperCase(module))
       this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
-        console.log(key, value)
         set(key, value)
       })
     },
     generateTitle
   },
   mounted() {
-    this.getConfig()
+    // this.getConfig()
   }
 }

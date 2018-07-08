@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:00
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-05 16:03:11
+ * @Last Modified time: 2018-07-08 02:16:49
  */
 import { setSession, getSession, removeSession, Consts, set, get } from './index'
 /**
@@ -54,18 +54,3 @@ export const ResInSession = new Set(getSession(Consts.RESOURCES.KEY))
 export function setResources(res) {
   return setSession(Consts.RESOURCES.KEY, res)
 }
-/**
- * Theme
- */
-export function setTheme(theme) {
-  return set(Consts.THEME.KEY, theme)
-}
-export const getTheme = get(Consts.THEME.KEY)
-
-/**
- * Language
- */
-export function setLanguage(lang) {
-  return set(Consts.LOCALE.KEY, lang)
-}
-export const getLanguage = get(Consts.LOCALE.KEY)

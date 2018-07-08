@@ -2,25 +2,39 @@
   <el-menu class="navbar" mode="horizontal">
     <gl-app-hamburger class="hamburger-container" :toggleClick="handleToggle" :isActive="isActive"></gl-app-hamburger>
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
-    <div class="right-menu">
-      <gl-app-nav-user :name="name" :avatar="avatar" class="right-menu-item"/>
-      <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
-      <el-tooltip effect="light" :content="language.content" placement="bottom" v-if="language.visible">
-        <gl-app-lang-select class="international right-menu-item" v-on:@setLanguage="handleSetLanguage" :language="language.value"></gl-app-lang-select>
-      </el-tooltip> 
-      <el-tooltip effect="light" :content="screenfull.content" placement="bottom" v-if="screenfull.visible">
-        <gl-app-screenfull class="screenfull right-menu-item"></gl-app-screenfull>
-      </el-tooltip>
-       <el-tooltip effect="light" :content="theme.content" placement="bottom" v-if="theme.visible">
-        <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="theme.value" :predefineColors="theme.preDefineColors" class="theme-switch right-menu-item"></gl-app-theme-picker>
-      </el-tooltip> 
-      <el-tooltip effect="light" :content="settings.content" placement="bottom" v-if="settings.visible">
-        <gl-app-settings  class="right-menu-item" />
-      </el-tooltip> 
-       <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible">
-        <gl-app-logout @click.native="handleLogout" class="right-menu-item" />
-      </el-tooltip>
-       
+    
+    <div class="right-menus">
+        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged">
+          <div slot='slot-1'>
+              <gl-app-nav-user :name="name" :avatar="avatar"/>
+           </div>
+          <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
+           <div slot='slot-2' v-if="language.visible">
+          <!-- <el-tooltip effect="light" :content="language.content" placement="bottom" v-if="language.visible"> -->
+            <gl-app-lang-select  v-on:@setLanguage="handleSetLanguage" :language="language.value"></gl-app-lang-select>
+          <!-- </el-tooltip>  -->
+           </div>
+            <div slot='slot-3' v-if="screenfull.visible">
+          <!-- <el-tooltip effect="light" :content="screenfull.content" placement="bottom" v-if="screenfull.visible"> -->
+            <gl-app-screenfull ></gl-app-screenfull>
+          <!-- </el-tooltip> -->
+            </div>
+             <div slot='slot-4' v-if="theme.visible">
+          <!-- <el-tooltip effect="light" :content="theme.content" placement="bottom" v-if="theme.visible"> -->
+            <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="theme.value" :predefineColors="theme.preDefineColors"></gl-app-theme-picker>
+          <!-- </el-tooltip>  -->
+             </div>
+              <div slot='slot-5' v-if="settings.visible">
+          <!-- <el-tooltip effect="light" :content="settings.content" placement="bottom" v-if="settings.visible"> -->
+            <gl-app-settings />
+          <!-- </el-tooltip>  -->
+              </div>
+               <div slot='slot-6' v-if="logout.visible">
+          <!-- <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible"> -->
+            <gl-app-logout @click.native="handleLogout" />
+          <!-- </el-tooltip> -->
+               </div>
+        </slots>
       <!-- <span @click="handleLockScreen"><svg-icon icon-class="lock" class-name="lock" /></span> -->
     </div>
   </el-menu>
@@ -36,6 +50,8 @@ import GlAppThemePicker from '@/packages/ThemePicker'
 import GlAppNavUser from '@/packages/NavUser'
 import GlAppLogout from '@/packages/Logout'
 import GlAppSettings from '@/packages/Settings'
+import Slots from './slots'
+
 // import glLock from '@/packages/lock'
 
 export default {
@@ -49,6 +65,7 @@ export default {
     logout: Object,
     language: Object,
     settings: Object,
+    itemsArray: Array,
     generate: Function
   },
   components: {
@@ -60,7 +77,8 @@ export default {
     GlAppThemePicker,
     GlAppNavUser,
     GlAppLogout,
-    GlAppSettings
+    GlAppSettings,
+    Slots
     // glLock
   },
   methods: {
@@ -75,6 +93,9 @@ export default {
     },
     handleSetLanguage(lang) {
       this.$emit('@setLanguage', lang)
+    },
+    handleItemChanged(value) {
+      this.$emit('@itemChanged', value)
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')
@@ -104,16 +125,15 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
-    .right-menu {
+    .right-menus {
     float: right;
     height: 100%;
-    margin-right: 10px;
+    margin-right: 30px;
+    position: relative;
+    z-index: 99999;
+    width: 320px;
     &:focus{
      outline: none;
-    }
-    .right-menu-item {
-      display: inline-block;
-      margin: 0 8px;
     }
     .screenfull {
       vertical-align: inherit
