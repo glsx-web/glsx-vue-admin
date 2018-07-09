@@ -25,8 +25,8 @@ export default {
     permission_routers: {
       type: Array
     },
-    asideState: {
-      type: Number
+    isCollapse: {
+      type: Boolean
     },
     generate: {
       type: Function
@@ -45,9 +45,6 @@ export default {
     }
   },
   computed: {
-    isCollapse() {
-      return !this.asideState
-    },
     oColors() {
       return Object.assign(this.color, this.colors)
     }

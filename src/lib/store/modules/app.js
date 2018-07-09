@@ -2,14 +2,14 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 21:39:15
+ * @Last Modified time: 2018-07-10 01:51:51
  */
 import { recursionSet } from '@/utils'
 
 const app = {
   state: {
     device: 'desktop',
-    clientHeight: document.body.clientHeight,
+    clientHeight: '',
     defaultColor: ''
   },
   mutations: {

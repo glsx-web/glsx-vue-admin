@@ -7,21 +7,28 @@
 <script>
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
-import pub from '@/lib/mixins/public'
-const EXCLUDE = 124
+import { AppMixin } from '@/lib/mixins'
+import { mapGetters } from 'vuex'
+/**
 /**
  * 默认颜色
  */
 export default {
   name: 'GlAppMain',
-  mixins: [pub],
+  mixins: [AppMixin],
   components: {
     AppMain,
     GlAppScroll
   },
   computed: {
+    ...mapGetters([
+      'footer',
+      'app',
+      'header',
+      'cachedViews'
+    ]),
     nHeight() {
-      return this.clientHeight - EXCLUDE
+      return this.app.clientHeight - this.footer.height - this.header.height
     }
   }
 }

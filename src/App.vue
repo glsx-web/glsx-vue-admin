@@ -30,4 +30,12 @@ export default {
       padding: 0 !important;
     }
 </style>
-
+<style rel="stylesheet/scss" lang="scss" >
+   *{
+     padding:0;
+     margin:0;
+   }
+   body{
+     overflow-x: hidden;
+   }
+</style>

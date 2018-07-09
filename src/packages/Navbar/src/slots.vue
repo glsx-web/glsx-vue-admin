@@ -1,6 +1,6 @@
 <template>
   <div >
-    <draggable class="right-menu" v-model="myList" :options="{animation:300}" >
+    <draggable class="right-menu" v-model="myList" :options="{animation:100}" >
         <slot v-for="(name) in myList" :name="name" class="right-menu-item"></slot>
     </draggable>
   </div> 

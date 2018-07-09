@@ -2,34 +2,25 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 17:27:49
+ * @Last Modified time: 2018-07-10 02:46:33
  */
 
 import { mapGetters, mapActions } from 'vuex'
 import { recursionGet, recursionSet, get, set, firstUpperCase, getSession, setSession, Consts } from '@/common'
 import { generateTitle } from '@/utils/i18n'
 import axios from 'axios'
-// const Actions = { 'header': 'SetHeader', 'aside': 'SetAside', 'footer': 'SetFooter', 'app': 'SetApp' }
-const ThemeColor = '#409EFF'
-// import { AsideConst, AppConst } from '@/lib/consts'
 export default {
   name: 'PublicMixin',
   computed: {
     ...mapGetters([
-      'permission_routers',
-      'clientHeight',
-      'visitedViews',
-      'cachedViews',
-      'header',
-      'aside',
-      'app'
-    ]),
-    themeColor() {
-      return this.app.defaultColor || ThemeColor
-    },
-    asideState() {
-      return this.aside.state
-    }
+      // 'permission_routers',
+      // 'clientHeight',
+      // 'visitedViews',
+      // 'cachedViews',
+      // 'header',
+      // 'aside',
+      // 'app'
+    ])
   },
   methods: {
     ...mapActions([

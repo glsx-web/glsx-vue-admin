@@ -1,5 +1,5 @@
 <template>
-    <div :style="oStyle" v-if="headerVisible"> 
+    <div :style="oStyle" v-if="header.visible"> 
       <draggable>
       <gl-app-navbar  v-if="oNavbar.visible"
         v-on:@themeHandler="handleTheme" 
@@ -46,7 +46,7 @@ export default {
   computed: {
     oStyle() {
       return {
-        backgroundColor: this.themeColor
+        backgroundColor: this.app.defaultColor
       }
     },
     Navbar() {
@@ -56,54 +56,54 @@ export default {
       return this.header.tagsView
     },
     isActive() {
-      return this.asideState === AppConst.States.OPEN
+      return this.aside.state === AppConst.States.OPEN
     },
     oNavbar() {
       return {
-        visible: this.navbarVisible,
+        visible: this.Navbar.visible,
         user: {
-          visible: this.userVisible,
+          visible: this.Navbar.user.visible,
           avatar: {
-            visible: this.avatarVisible,
+            visible: this.Navbar.user.avatar.visible,
             value: this.Navbar.user.avatar.value
           },
           name: {
-            visible: this.nameVisible,
+            visible: this.Navbar.user.name.visible,
             value: this.Navbar.user.name.value
           }
         },
         screenfull: {
-          visible: this.screenfullVisible,
+          visible: this.Navbar.screenfull.visible,
           content: this.$t(this.Navbar.screenfull.i18n)
         },
         logout: {
-          visible: this.logoutVisible,
+          visible: this.Navbar.logout.visible,
           content: this.$t(this.Navbar.logout.i18n)
         },
         language: {
-          visible: this.langVisible,
+          visible: this.Navbar.language.visible,
           content: this.$t(this.Navbar.language.i18n),
           value: this.Navbar.language.value
         },
         settings: {
-          visible: this.settingsVisible,
+          visible: this.Navbar.settings.visible,
           content: this.$t(this.Navbar.settings.i18n),
           value: this.Navbar.settings.value
         },
-        itemsArray: this.itemsArray,
+        itemsArray: this.Navbar.itemsArray,
         theme: {
-          visible: this.themeVisible,
+          visible: this.Navbar.theme.visible,
           content: this.$t(this.Navbar.theme.i18n),
           preDefineColors: this.Navbar.theme.preDefineColors,
-          value: this.themeColor
+          value: this.app.defaultColor
         },
         generate: this.generateTitle
       }
     },
     oTagsView() {
       return {
-        visible: this.tagsViewVisible,
-        activeColor: this.TagsView.activeColor || this.themeColor,
+        visible: this.TagsView.visible,
+        activeColor: this.TagsView.activeColor || this.app.defaultColor,
         visitedViews: this.visitedViews || [],
         generate: this.generateTitle
       }
@@ -122,7 +122,7 @@ export default {
       })
     },
     handleToggle() {
-      const state = (this.asideState === AppConst.States.OPEN) ? AppConst.States.CLOSE : AppConst.States.OPEN
+      const state = this.isActive ? AppConst.States.CLOSE : AppConst.States.OPEN
       this.Set(AsideConst.State.Key, state)
     },
     handleSetLanguage(lang) {

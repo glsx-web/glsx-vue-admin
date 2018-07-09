@@ -2,18 +2,18 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 17:16:18
+ * @Last Modified time: 2018-07-10 02:44:02
  */
 <template>
-  <div  class="aside" :class="oClass" :style="oStyle" v-if="asideVisible">
-      <gl-app-logo v-if="logoVisible"
+  <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
+      <gl-app-logo v-if="Logo.visible"
         :width="oLogo.width" 
         :height="oLogo.height" 
         :backgroundColor="oLogo.backgroundColor" 
         :backgroundImage="oLogo.backgroundImage" />
-        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="sidebarVisible">
+        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
           <gl-app-sidebar 
-            :asideState="asideState" 
+            :isCollapse="oSidebar.isCollapse" 
             :permission_routers="oSidebar.permission_routers" 
             :generate="oSidebar.generate"
             :colors="oSidebar.colors" />
@@ -36,6 +36,14 @@ export default {
     GlAppScroll
   },
   computed: {
+    Aside() {
+      return {
+        visible: this.aside.visible,
+        state: this.aside.state,
+        isOpend: this.aside.state === AppConst.States.OPEN,
+        isClosed: this.aside.state === AppConst.States.CLOSE
+      }
+    },
     Sidebar() {
       return this.aside.sidebar
     },
@@ -44,7 +52,7 @@ export default {
     },
     oSidebar() {
       return {
-        opened: this.asideState,
+        isCollapse: this.aside.state === AppConst.States.CLOSE,
         permission_routers: this.permission_routers,
         generate: this.generateTitle,
         colors: {
@@ -62,28 +70,26 @@ export default {
     },
     oClass() {
       return {
-        hideSidebar: !this.asideState,
+        hideSidebar: !this.Sidebar.state,
         minsize: this.isMinSize
       }
     },
     oStyle() {
       return {
-        width: ((this.asideState === AppConst.States.CLOSE && this.isMinSize) ? 0 : (this.asideState === AppConst.States.OPEN ? this.Sidebar.maxWidth : this.Sidebar.minWidth)) + 'px',
-        backgroundColor: this.themeColor,
+        width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Sidebar.maxWidth : this.Sidebar.minWidth)) + 'px',
+        backgroundColor: this.app.defaultColor,
         height: '100%'
       }
     },
     oLogo() {
       return {
         // width: '',
-        visible: this.logoVisible,
+        visible: this.Logo.visible,
         height: this.Logo.height,
         backgroundColor: this.Logo.backgroundColor,
         backgroundImage: this.Logo.image
       }
     }
-  }, mounted() {
-    console.log(this.aside)
   }
 }
 </script>
