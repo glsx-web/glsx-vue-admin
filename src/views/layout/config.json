@@ -1,42 +1,42 @@
 {
   "header": {
-    "visible": 1,
+    "visible": true,
     "height": 60,
     "navbar": {
-      "visible": "12",
+      "visible": true,
       "user": {
-        "visible": "12",
+        "visible": true,
         "avatar": {
-          "visible": "",
+          "visible": true,
           "value": ""
         },
         "name": {
-          "visible": "",
+          "visible": true,
           "value": ""
         }
       },
       "screenfull": {
-        "visible": "",
+        "visible": true,
         "i18n": "navbar.screenfull",
         "value": ""
       },
       "logout": {
-        "visible": "",
+        "visible": true,
         "i18n": "navbar.logOut",
         "value": ""
       },
       "language": {
-        "visible": "",
+        "visible": true,
         "i18n": "navbar.language",
         "value": ""
       },
       "settings": {
-        "visible": "",
+        "visible": true,
         "i18n": "navbar.settings",
         "value": ""
       },
       "theme": {
-        "visible": "",
+        "visible": true,
         "i18n": "navbar.theme",
         "value": "",
         "preDefineColors": [
@@ -46,15 +46,15 @@
       }
     },
     "tagsView": {
-      "visible": "",
+      "visible": true,
       "activeColor": ""
     }
   },
   "aside": {
-    "visible": "",
-    "state": "",
+    "visible": true,
+    "state": 2,
     "sidebar": {
-      "visible": "",
+      "visible": true,
       "maxWidth": 200,
       "minWidth": 36,
       "textColor": "#fff",
@@ -62,17 +62,19 @@
       "backgroundColor": "#304156"
     },
     "logo": {
-      "visible": "",
+      "visible": true,
       "height": 100,
       "image": "../../static/logo.png",
       "backgroundColor": "transparent"
     }
   },
   "footer": {
-    "visible": "",
+    "visible": true,
     "color": "",
     "backgroundColor": "transparent",
     "height": 20
   },
-  "theme_color": "#409EFF"
+  "app":{
+    "defaultColor":"#409EFF"
+  }
 }

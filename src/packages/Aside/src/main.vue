@@ -2,11 +2,11 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 01:22:28
+ * @Last Modified time: 2018-07-09 17:16:18
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="asideVisible">
-      <gl-app-logo v-if="oLogo.visible"
+      <gl-app-logo v-if="logoVisible"
         :width="oLogo.width" 
         :height="oLogo.height" 
         :backgroundColor="oLogo.backgroundColor" 
@@ -29,7 +29,7 @@ import GlAppScroll from '@/packages/Scroll'
 import { AppConst } from '@/lib/consts'
 export default {
   name: 'GlAppAside',
-  mixins: [PublicMixin, AsideMixin],
+  mixins: [AsideMixin, PublicMixin],
   components: {
     GlAppSidebar,
     GlAppLogo,
@@ -76,11 +76,14 @@ export default {
     oLogo() {
       return {
         // width: '',
+        visible: this.logoVisible,
         height: this.Logo.height,
         backgroundColor: this.Logo.backgroundColor,
         backgroundImage: this.Logo.image
       }
     }
+  }, mounted() {
+    console.log(this.aside)
   }
 }
 </script>

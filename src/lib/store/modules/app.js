@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 01:11:14
+ * @Last Modified time: 2018-07-09 21:39:15
  */
 import { recursionSet } from '@/utils'
 
@@ -16,6 +16,9 @@ const app = {
     SET_APP: (state, args) => {
       const { arr, value } = args
       recursionSet(state, arr, value)
+    },
+    INIT_APP: (state, args) => {
+      state = Object.assign(state, args)
     }
   },
   actions: {
@@ -27,8 +30,15 @@ const app = {
       const arr = key.split('_')
       arr.shift()
       commit('SET_APP', { arr: arr, value: value })
+    },
+    InitApp: ({ commit }, objApp) => {
+      commit('INIT_APP', objApp)
     }
+  },
+  getters: {
+    device: state => state.device,
+    clientHeight: state => state.clientHeight,
+    app: state => state
   }
 }
-
 export default app

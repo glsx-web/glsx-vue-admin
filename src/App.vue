@@ -2,21 +2,19 @@
 <el-container>
   <el-aside width="auto"><gl-app-aside /></el-aside>
   <el-container>
-    <el-header><gl-app-header/></el-header>
-    <el-main> <gl-app-main/></el-main>
-    <el-footer><gl-app-footer/></el-footer>
+    <el-header><gl-app-header /></el-header>
+    <el-main> <gl-app-main /></el-main>
+    <el-footer><gl-app-footer /></el-footer>
   </el-container>
 </el-container>
 </template>
 <script>
-import draggable from 'vuedraggable'
+// import config from '@/views/layout/config'
+// import { setSession, Consts } from '@/common'
 export default {
-  components: {
-    draggable
-  },
   name: 'app',
-  mounted() {
-    console.log(111)
+  beforeMount() {
+    // setSession(Consts.SESSION_CONFIG.KEY, config)
   }
 }
 </script>

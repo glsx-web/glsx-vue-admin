@@ -1,8 +1,8 @@
 /*
  * @Author: limin
  * @Date: 2018-06-25 10:29:36
- * @Last Modified by:   limin
- * @Last Modified time: 2018-06-25 10:29:36
+ * @Last Modified by: limin
+ * @Last Modified time: 2018-07-09 21:55:55
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -14,22 +14,26 @@ import permission from './modules/permission'
 import header from './modules/header'
 import aside from './modules/aside'
 import footer from './modules/footer'
-import getters from './getters'
+// import getters from './getters'
 
 Vue.use(Vuex)
+const arrModule =
+ [
+   app,
+   user,
+   permission,
+   tagsView,
+   errorLog,
+   header,
+   aside,
+   footer
+ ]
+export const modules = arrModule
 
 const store = new Vuex.Store({
   modules: {
-    app,
-    user,
-    permission,
-    tagsView,
-    errorLog,
-    header,
-    aside,
-    footer
-  },
-  getters
+    ...arrModule
+  }
+  // getters
 })
-
 export default store

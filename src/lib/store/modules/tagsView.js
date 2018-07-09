@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-06-26 18:54:48
+ * @Last Modified time: 2018-07-09 21:18:57
  */
 const tagsView = {
   state: {
@@ -76,6 +76,10 @@ const tagsView = {
         resolve([...state.visitedViews])
       })
     }
+  },
+  getters: {
+    visitedViews: state => state.visitedViews,
+    cachedViews: state => state.cachedViews
   }
 }
 

@@ -104,7 +104,7 @@ export default {
       return {
         visible: this.tagsViewVisible,
         activeColor: this.TagsView.activeColor || this.themeColor,
-        visitedViews: this.visitedViews,
+        visitedViews: this.visitedViews || [],
         generate: this.generateTitle
       }
     }
@@ -154,6 +154,9 @@ export default {
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
     }
+  },
+  mounted() {
+    // /console.log(this.navbarVisible)
   }
 }
 </script>

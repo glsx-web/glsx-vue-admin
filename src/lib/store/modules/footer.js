@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-06 01:30:56
+ * @Last Modified time: 2018-07-09 21:18:34
  */
-import { recursionSet } from '@/utils'
+import { recursionSet } from '@/common'
 
 const footer = {
   state: {
@@ -17,6 +17,9 @@ const footer = {
     SET_FOOTER: (state, args) => {
       const { arr, value } = args
       recursionSet(state, arr, value)
+    },
+    INIT_FOOTER: (state, args) => {
+      state = Object.assign(state, args)
     }
   },
   actions: {
@@ -28,7 +31,13 @@ const footer = {
       const arr = key.split('_')
       arr.shift()
       commit('SET_FOOTER', { arr: arr, value: value })
+    },
+    InitFooter: ({ commit }, objFooter) => {
+      commit('INIT_FOOTER', objFooter)
     }
+  },
+  getters: {
+    footer: state => state
   }
 }
 

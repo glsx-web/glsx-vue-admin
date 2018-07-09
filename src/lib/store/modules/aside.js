@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 01:58:45
+ * @Last Modified time: 2018-07-09 21:18:24
  */
-import { recursionSet } from '@/utils'
+import { recursionSet } from '@/common'
 
 const aside = {
   state: {
@@ -21,7 +21,7 @@ const aside = {
     'logo': {
       'visible': '',
       'height': 100,
-      'image': '../../static/logo.png',
+      'image': '',
       'backgroundColor': 'transparent'
     }
   },
@@ -29,6 +29,9 @@ const aside = {
     SET_ASIDE: (state, args) => {
       const { arr, value } = args
       recursionSet(state, arr, value)
+    },
+    INIT_ASIDE: (state, args) => {
+      state = Object.assign(state, args)
     }
   },
   actions: {
@@ -40,7 +43,13 @@ const aside = {
       const arr = key.split('_')
       arr.shift()
       commit('SET_ASIDE', { arr: arr, value: value })
+    },
+    InitAside: ({ commit }, objAside) => {
+      commit('INIT_ASIDE', objAside)
     }
+  },
+  getters: {
+    aside: state => state
   }
 }
 

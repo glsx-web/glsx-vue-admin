@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 13:52:52
+ * @Last Modified time: 2018-07-09 21:18:40
  */
-import { recursionSet } from '@/utils'
+import { recursionSet } from '@/common'
 const header = {
   state: {
     'visible': '',
@@ -58,25 +58,13 @@ const header = {
       'activeColor': ''
     }
   },
-  //   getHeaderVisible,
-  //   getHeaderHeight,
-  //   getNavbarVisible,
-  //   getUserVisible,
-  //   getAvatarVisible,
-  //   getNameVisible,
-  //   getScreenfullVisible,
-  //   getLogoutVisible,
-  //   getLanguageVisible,
-  //   getSettingsVisible,
-  //   getThemeVisible,
-  //   getThemePredefineColors,
-  //   getTagsViewVisible,
-  //   getTagsViewActiveColor,
-  //   getTagsViewBackgroundColo
   mutations: {
     SET_HEADER: (state, args) => {
       const { arr, value } = args
       recursionSet(state, arr, value)
+    },
+    INIT_HEADER: (state, args) => {
+      state = Object.assign(state, args)
     }
   },
   actions: {
@@ -88,7 +76,13 @@ const header = {
       const arr = key.split('_')
       arr.shift()
       commit('SET_HEADER', { arr: arr, value: value })
+    },
+    InitHeader: ({ commit }, objHeader) => {
+      commit('INIT_HEADER', objHeader)
     }
+  },
+  getters: {
+    header: state => state
   }
 }
 

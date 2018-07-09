@@ -2,19 +2,17 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 13:56:16
+ * @Last Modified time: 2018-07-09 17:27:49
  */
 
 import { mapGetters, mapActions } from 'vuex'
-import { recursionGet, get, set, firstUpperCase, setConfig } from '@/utils'
+import { recursionGet, recursionSet, get, set, firstUpperCase, getSession, setSession, Consts } from '@/common'
 import { generateTitle } from '@/utils/i18n'
-import confMixin from '@/views/layout/config'
 import axios from 'axios'
 // const Actions = { 'header': 'SetHeader', 'aside': 'SetAside', 'footer': 'SetFooter', 'app': 'SetApp' }
 const ThemeColor = '#409EFF'
-import { AsideConst, AppConst } from '@/lib/consts'
+// import { AsideConst, AppConst } from '@/lib/consts'
 export default {
-  mixins: [confMixin],
   name: 'PublicMixin',
   computed: {
     ...mapGetters([
@@ -27,12 +25,10 @@ export default {
       'app'
     ]),
     themeColor() {
-      return this.app.defaultColor || this.Get(AppConst.DefaultColor.Key) || ThemeColor
+      return this.app.defaultColor || ThemeColor
     },
     asideState() {
-      return this.Get(AsideConst.State.Key)
-    },
-    config() {
+      return this.aside.state
     }
   },
   methods: {
@@ -40,44 +36,61 @@ export default {
       'SetHeader',
       'SetAside',
       'SetFooter',
-      'SetApp'
+      'SetApp',
+      'InitHeader',
+      'InitAside',
+      'InitFooter',
+      'InitApp'
     ]),
     getConfig() {
-      axios.get('src/views/layout/config.json').then((res) => {
-        const { header, aside, footer } = res.data
-        setConfig(header, 'header', this.Set)
-        setConfig(aside, 'aside', this.Set)
-        setConfig(footer, 'footer', this.Set)
+      return new Promise((resole, reject) => {
+        axios.get('src/views/layout/config.json').then((res) => {
+          resole(res.data)
+        })
       })
     },
     Get(key) {
       var aKeys = key.split('_')
       var module = aKeys.shift()
-      const vxValue = recursionGet(this[module], aKeys)
-      if (!vxValue) {
-        var storeValue = get(key)
-        if (!storeValue) {
-          if (key.endsWith('_visible')) {
-            return AppConst.Visibility.VISIBLE
-          } else {
-            return ''
-          }
-        } else {
-          return storeValue
-        }
-      } else {
-        return vxValue
-      }
+      return new Promise((resolve, reject) => {
+        get(Consts.LOCAL_CONFIG.KEY).then(configLocal => {
+          getSession(Consts.SESSION_CONFIG.KEY).then(configSession => {
+            Promise.all([recursionGet(this[module], aKeys), recursionGet(configLocal[module], aKeys), recursionGet(configSession[module], aKeys)]).then(function(values) {
+              const result = (values[0] || values[1] || values[2])
+              resolve(result)
+            }).catch(error => {
+              reject(error)
+            })
+          })
+        })
+      })
     },
     Set(key, value) {
+      var aKeys = key.split('_')
       var module = key.split('_').shift()
       this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
-        set(key, value)
+        get(Consts.LOCAL_CONFIG.KEY).then(config => {
+          config = config || {}
+          recursionSet(config, aKeys, value)
+          set(Consts.LOCAL_CONFIG.KEY, config)
+        })
+      })
+    },
+    initConfig() {
+      get(Consts.LOCAL_CONFIG.KEY).then(configLocal => {
+        this.getConfig().then(config => {
+          const cfg = Object.assign({}, config, configLocal)
+          setSession(Consts.SESSION_CONFIG.KEY, config)
+          set(Consts.LOCAL_CONFIG.KEY, cfg)
+          for (var key in cfg) {
+            this[`Init${firstUpperCase(key)}`](cfg[key])
+          }
+        })
       })
     },
     generateTitle
   },
   mounted() {
-    // this.getConfig()
+    this.initConfig()
   }
 }

@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:14
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-03 19:48:53
+ * @Last Modified time: 2018-07-09 21:18:42
  */
 import { asyncRouterMap, constantRouterMap } from '@/lib/router'
 
@@ -59,6 +59,10 @@ const permission = {
         resolve()
       })
     }
+  },
+  getters: {
+    permission_routers: state => state.routers,
+    addRouters: state => state.addRouters
   }
 }
 

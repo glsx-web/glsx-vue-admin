@@ -20,8 +20,7 @@ import {
   TagsView,
   ThemePicker
 } from './packages'
-import { protos, store } from '@/lib'
-const GlsxVueAdmin = {}
+import { protos } from '@/lib'
 const components = [
   Aside,
   Breadcrumb,
@@ -44,9 +43,9 @@ const components = [
   TagsView,
   ThemePicker
 ]
+const GlsxVueAdmin = {}
 GlsxVueAdmin.install = function(Vue, opts = {}) {
   Vue.use(protos)
-  Vue.prototype.$store = store
   components.map(component => {
     Vue.component(component.name, component)
   })
@@ -55,4 +54,5 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
 if (typeof window !== 'undefined' && window.Vue) {
   GlsxVueAdmin.install(window.Vue)
 }
+export { modules as GlAppStore } from '@/lib/store'
 export default GlsxVueAdmin

@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:28
  * @Last Modified by: limin
- * @Last Modified time: 2018-06-25 12:37:46
+ * @Last Modified time: 2018-07-09 21:19:04
  */
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/cache'
@@ -88,6 +88,9 @@ const user = {
         resolve()
       })
     }
+  },
+  getters: {
+    roles: state => state.roles
   }
 }
 
