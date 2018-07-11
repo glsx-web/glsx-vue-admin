@@ -67,6 +67,18 @@ export default {
         })
       })
     },
+    SetMulti(obj) {
+      /**
+       * 1 调用 InitXXX 覆盖 vuex 状态
+       */
+      for (var key in obj) {
+        this[`Init${firstUpperCase(key)}`](obj[key])
+      }
+      /**
+       * 2 . 调用 set  设置 localstorage
+       */
+      set(Consts.LOCAL_CONFIG.KEY, obj)
+    },
     initConfig() {
       get(Consts.LOCAL_CONFIG.KEY).then(configLocal => {
         this.getConfig().then(config => {

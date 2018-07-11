@@ -4,7 +4,7 @@
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
     
     <div class="right-menus">
-        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged">
+        <slots :itemsArray="itemsArray" v-on:formChange="handleSetVisible">
           <div slot='slot-1'>
               <gl-app-nav-user :name="name" :avatar="avatar"/>
            </div>
@@ -26,7 +26,7 @@
              </div>
               <div slot='slot-5' v-if="settings.visible">
           <!-- <el-tooltip effect="light" :content="settings.content" placement="bottom" v-if="settings.visible"> -->
-            <gl-app-settings />
+            <gl-app-settings :settingParams="settingParams" v-on:@setVisible="handleSetVisible" />
           <!-- </el-tooltip>  -->
               </div>
                <div slot='slot-6' v-if="logout.visible">
@@ -66,7 +66,8 @@ export default {
     language: Object,
     settings: Object,
     itemsArray: Array,
-    generate: Function
+    generate: Function,
+    settingParams: Object
   },
   components: {
     GlAppBreadcrumb,
@@ -96,6 +97,9 @@ export default {
     },
     handleItemChanged(value) {
       this.$emit('@itemChanged', value)
+    },
+    handleSetVisible(params) {
+      this.$emit('@setVisible', params)
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')

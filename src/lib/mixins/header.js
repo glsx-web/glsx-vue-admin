@@ -12,7 +12,8 @@ export default {
     ...mapGetters([
       'header',
       'app',
-      'aside'
+      'aside',
+      'footer'
     ])
   },
   methods: {

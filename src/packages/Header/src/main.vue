@@ -7,6 +7,7 @@
         v-on:@toggleSideBar="handleToggle"
         v-on:@setLanguage="handleSetLanguage"
         v-on:@itemChanged="handleItemChanged"
+        v-on:@setVisible="handleSetVisible"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
         :name="oNavbar.user.name"
@@ -16,7 +17,8 @@
         :settings="oNavbar.settings"
         :generate="oNavbar.generate"
         :itemsArray="oNavbar.itemsArray"
-        :isActive="isActive"/>
+        :isActive="isActive"
+        :settingParams="settingParams"/>
       <gl-app-tags-view  v-if="oTagsView.visible"
         v-on:@addViewTag="handleAddViewTag"
         v-on:@closeSeletedTag="handleCloseTag"
@@ -57,6 +59,14 @@ export default {
     },
     isActive() {
       return this.aside.state === AppConst.States.OPEN
+    },
+    settingParams() {
+      return {
+        header: this.header,
+        app: this.app,
+        footer: this.footer,
+        aside: this.aside
+      }
     },
     oNavbar() {
       return {
@@ -153,6 +163,10 @@ export default {
     },
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
+    },
+    handleSetVisible(params) {
+      this.SetMulti(params)
+      console.log(params)
     }
   },
   mounted() {
