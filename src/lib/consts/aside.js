@@ -6,16 +6,16 @@ export default {
   State: {
     Key: 'aside_state'
   },
+  MaxWidth: {
+    Key: 'aside_maxWidth'
+  },
+  MinWidth: {
+    Key: 'aside_minWidth'
+  },
   Sidebar: {
     Key: 'aside_sidebar',
     Visible: {
       Key: 'aside_sidebar_visible'
-    },
-    MaxWidth: {
-      Key: 'aside_sidebar_maxWidth'
-    },
-    MinWidth: {
-      Key: 'aside_sidebar_minWidth'
     },
     TextColor: {
       Key: 'aside_sidebar_textColor'

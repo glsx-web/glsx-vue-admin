@@ -4,7 +4,7 @@
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
     
     <div class="right-menus">
-        <slots :itemsArray="itemsArray" v-on:formChange="handleSetVisible">
+        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged">
           <div slot='slot-1'>
               <gl-app-nav-user :name="name" :avatar="avatar"/>
            </div>

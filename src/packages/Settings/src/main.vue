@@ -16,18 +16,29 @@
                           用户信息 
                       </template>
                       <el-form :model="params.header.navbar.user">
-                        <el-col :span="8">
+                        <el-col :span="5">
                           <div class="grid-content">用户头像</div>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="6">
                           <el-form-item>
                             <el-switch v-model="params.header.navbar.user.avatar.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="8">
+                        <el-col :span="5">
+                          <div class="grid-content">头像上传</div>
+                        </el-col>
+                        <el-col :span="6">
+                          <el-form-item>
+                            <el-upload class="avatar-uploader"  action="GLSX-VUE-ADMIN/static" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                          </el-form-item>
+                        </el-col>
+                        <el-col :span="5">
                           <div class="grid-content">用户名称</div>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="6">
                           <el-form-item>
                             <el-switch v-model="params.header.navbar.user.name.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
@@ -39,11 +50,11 @@
                           选择语言 
                       </template>
                       <el-form :model="params.header.navbar.language">
-                        <el-col :span="8">
+                        <el-col :span="5">
                           <div class="grid-content">语言</div>
                           <lang-select class="international" v-on:@setLanguage="handleSetLanguage" :language="params.header.navbar.language.value"></lang-select>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="6">
                           <el-form-item>
                             <el-switch v-model="params.header.navbar.language.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
@@ -54,29 +65,34 @@
                       <template slot="title"  @click="handeleTitleClick">
                           窗口设置 
                       </template>
-                      <el-form :model="params.header.navbar.screenfull">
-                        <el-col :span="8">
-                          <div class="grid-content">全屏</div>
-                        </el-col>
-                        <el-col :span="16">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.screenfull.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
                       <el-form :model="params.header.navbar.theme">
-                        <el-col :span="8">
+                        <el-col :span="5">
                           <div class="grid-content">皮肤</div>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="6">
                           <el-form-item >
                             <el-switch v-model="params.header.navbar.theme.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
                         </el-col>
-                        <div class="block">
-                          <span class="demonstration">有默认值</span>
-                          <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="params.header.navbar.theme.value" :predefineColors="params.header.navbar.theme.preDefineColors"></gl-app-theme-picker>
-                        </div>
+                        <el-col :span="5">
+                          <div class="grid-content">添加预选色</div>
+                        </el-col>
+                        <el-col :span="6">
+                          <el-form-item >
+                            <el-color-picker v-model="pickColor"></el-color-picker>
+                            <!-- <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="params.header.navbar.theme.value"></gl-app-theme-picker> -->
+                          </el-form-item>
+                        </el-col>
+                      </el-form>
+                      <el-form :model="params.header.navbar.screenfull">
+                        <el-col :span="5">
+                          <div class="grid-content">全屏</div>
+                        </el-col>
+                        <el-col :span="6">
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.screenfull.visible" active-text="开" inactive-text="关"></el-switch>
+                          </el-form-item>
+                        </el-col>
                       </el-form>
                     </el-collapse-item>
                     <el-collapse-item>
@@ -84,10 +100,10 @@
                           注销入口 
                       </template>
                       <el-form :model="params.header.navbar.logout">
-                        <el-col :span="8">
+                        <el-col :span="5">
                           <div class="grid-content">注销</div>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="6">
                           <el-form-item>
                             <el-switch v-model="params.header.navbar.logout.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
@@ -103,12 +119,37 @@
                         logo 
                     </template>
                     <el-form :model="params.aside.logo">
-                      <el-col :span="8">
+                      <el-col :span="5">
                         <div class="grid-content">logo</div>
                       </el-col>
-                      <el-col :span="16">
+                      <el-col :span="6">
                         <el-form-item>
                           <el-switch v-model="params.aside.logo.visible" active-text="开" inactive-text="关"></el-switch>
+                        </el-form-item>
+                      </el-col>
+                    </el-form>
+                    <el-form :model="params.aside.logo">
+                      <el-col :span="5">
+                        <div class="grid-content">高度设置</div>
+                      </el-col>
+                      <el-col :span="6">
+                        <el-form-item>
+                          <el-input-number v-model="params.aside.logo.height" placeholder="请输入内容"></el-input-number>
+                        </el-form-item>
+                      </el-col>
+                    </el-form>
+                  </el-collapse-item>
+                  <el-collapse-item>
+                    <template slot="title"  @click="handeleTitleClick">
+                        sidebar 
+                    </template>
+                    <el-form :model="params.aside.sidebar">
+                      <el-col :span="5">
+                        <div class="grid-content">sidebar</div>
+                      </el-col>
+                      <el-col :span="6">
+                        <el-form-item>
+                          <el-switch v-model="params.aside.sidebar.visible" active-text="开" inactive-text="关"></el-switch>
                         </el-form-item>
                       </el-col>
                     </el-form>
@@ -122,10 +163,10 @@
                         版权信息 
                     </template>
                     <el-form :model="params.footer">
-                      <el-col :span="8">
+                      <el-col :span="5">
                         <div class="grid-content">footer</div>
                       </el-col>
-                      <el-col :span="16">
+                      <el-col :span="6">
                         <el-form-item>
                           <el-switch v-model="params.footer.visible" active-text="开" inactive-text="关"></el-switch>
                         </el-form-item>
@@ -166,6 +207,7 @@ export default {
       tabPosition: 'left',
       dialogFormVisible: false,
       params: JSON.parse(JSON.stringify(this.settingParams)),
+
       // header: {
       //   user: {
       //     visible: true,
@@ -181,7 +223,9 @@ export default {
       //     value: ''
       //   }
       // },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      imageUrl: '',
+      pickColor: '#409EFF'
     }
   },
   methods: {
@@ -200,9 +244,25 @@ export default {
       this.dialogFormVisible = !this.dialogFormVisible
       if (!this.dialogFormVisible) {
         this.$emit('@setVisible', this.params)
+        this.push
       } else {
         this.params = JSON.parse(JSON.stringify(this.settingParams))
       }
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -228,6 +288,36 @@ export default {
  .el-tabs--left .el-tabs__header.is-left{
     margin-right: 40px !important;
   }
+  .avatar-uploader {
+    display: inline;
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+  }
+  .avatar {
+    width: 50px;
+    height: 50px;
+    display: block;
+  }
 }
+.el-color-dropdown {
+    z-index: 111111 !important;
+}
+
 </style>
 sys-settings

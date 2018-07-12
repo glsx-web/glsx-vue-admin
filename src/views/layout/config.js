@@ -58,10 +58,10 @@ export default {
          */
     'visible': true,
     'state': true,
+    'maxWidth': 200,
+    'minWidth': 36,
     'sidebar': {
       'visible': true,
-      'maxWidth': 200,
-      'minWidth': 36,
       'textColor': '#fff',
       'activeTextColor': '#ffd04b',
       'backgroundColor': '#304156'
