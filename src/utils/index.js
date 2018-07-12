@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-23 11:57:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 04:23:14
+ * @Last Modified time: 2018-07-11 17:14:29
  */
 import { setSession, getSession, removeSession, get, set, remove } from './store'
 import * as Consts from './const'

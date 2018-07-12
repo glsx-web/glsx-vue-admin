@@ -2,26 +2,26 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:18
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-03 19:42:08
+ * @Last Modified time: 2018-07-11 20:31:18
  */
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import store from '../store'
-import { getToken, ResInSession } from '@/utils/cache'
-
+// import { ResInSession } from '@/utils/cache'
+import { PublicMixin } from '@/lib/mixins'
+const whiteList = new Set(['user/login', 'user/info'])
+import { AppConst } from '@/lib/consts'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 15000 // 请求超时时间
 })
-
 // request拦截器
 service.interceptors.request.use(config => {
-  if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带自定义token
-  }
-  // 校验权限
-  if (!ResInSession.has(config.url) && config.url !== 'user/login' && config.url !== 'user/info') {
+  // config.headers['X-Token'] = getToken() // 让每个请求携带自定义token
+  const token = PublicMixin.methods.GetSession(AppConst.Auth.Token.Key)
+  config.headers['X-Token'] = token
+  const resources = PublicMixin.methods.GetSession(AppConst.Auth.Resources.Key)
+  if (!whiteList.has(config.url) && resources && !resources.has(config.url)) {
     // 拦截请求
     return Promise.reject({
       message: `${config.url} 无访问权限，请联管理员`
@@ -55,9 +55,9 @@ service.interceptors.response.use(
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          store.dispatch('FedLogOut').then(() => {
-            location.reload()// 为了重新实例化vue-router对象 避免bug
-          })
+          // store.dispatch('FedLogOut').then(() => {
+          //   location.reload()// 为了重新实例化vue-router对象 避免bug
+          // })
         })
       }
       return Promise.reject('error')

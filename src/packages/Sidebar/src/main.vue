@@ -9,7 +9,7 @@
         :background-color="oColors.backgroundColor"
         :active-text-color="oColors.activeTextColor"
       >
-      <gl-app-sidebar-item :routes="permission_routers" :generate="generate"></gl-app-sidebar-item>
+      <gl-app-sidebar-item :routes="routers" :generate="generate"></gl-app-sidebar-item>
       </el-menu>
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     GlAppSidebarItem
   },
   props: {
-    permission_routers: {
+    routers: {
       type: Array
     },
     isCollapse: {

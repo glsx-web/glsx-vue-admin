@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:00
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-08 02:16:49
+ * @Last Modified time: 2018-07-11 16:47:27
  */
-import { setSession, getSession, removeSession, Consts, set, get } from './index'
+import { setSession, getSession, removeSession, Consts } from './index'
 /**
  * token
  */
@@ -19,24 +19,6 @@ export function setToken(token) {
 export function removeToken() {
   return removeSession(Consts.TOKEN.KEY)
 }
-
-/**
- * sidebar
- */
-export const getSidebarStatus = get(Consts.SIDEBAR.KEY)
-
-export function setSidebarClose() {
-  return set(Consts.SIDEBAR.KEY, Consts.SIDEBAR.CLOSE)
-}
-
-export function setSidebarOpen() {
-  return set(Consts.SIDEBAR.KEY, Consts.SIDEBAR.OPEN)
-}
-
-export function setSidebar(Status) {
-  return set(Consts.SIDEBAR.KEY, Status)
-}
-
 /**
  * locale
  */

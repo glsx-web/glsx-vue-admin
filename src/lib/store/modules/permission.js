@@ -2,13 +2,54 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:14
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 21:18:42
+ * @Last Modified time: 2018-07-11 20:46:17
  */
-import { asyncRouterMap, constantRouterMap } from '@/lib/router'
+import { AppConst } from '@/lib/consts'
 
-import { setResources } from '@/utils/cache'
-
-import { ADMIN } from '@/utils/const'
+const permission = {
+  state: {
+    routers: []
+    // addRouters: []
+  },
+  mutations: {
+    SET_ROUTERS: (state, routers) => {
+      state.routers = routers
+    }
+  },
+  actions: {
+    GenerateRoutes({ commit }, data) {
+      return new Promise(resolve => {
+        const { routers, routes, roles } = data
+        const routesSet = new Set(routes)
+        const rolesSet = new Set(roles)
+        const filetrRouters = rolesSet.has(AppConst.Auth.Admin.Key) ? routers : routerFilter(routers, routesSet)
+        commit('SET_ROUTERS', filetrRouters)
+        resolve()
+      })
+    }
+  },
+  getters: {
+    routers: state => state.routers
+    // addRouters: state => state.addRouters
+  }
+}
+/**
+ * 递归过滤异步路由表，返回符合用户角色权限的路由表
+ * @param routerMap
+ * @param routes
+ */
+function routerFilter(routerMap, routes) {
+  const filetrRouters = routerMap.filter(route => {
+    if (hasPermission(routes, route)) {
+      if (route.children && route.children.length) {
+        route.children = routerFilter(route.children, routes)
+      }
+      return true
+    }
+    return false
+  })
+  return filetrRouters
+}
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param routes
@@ -16,54 +57,6 @@ import { ADMIN } from '@/utils/const'
  */
 function hasPermission(routes, route) {
   return route.meta && route.meta.permission && routes.has(route.meta.permission)
-}
-
-/**
- * 递归过滤异步路由表，返回符合用户角色权限的路由表
- * @param asyncRouterMap
- * @param routes
- */
-function filterAsyncRouter(asyncRouterMap, routes) {
-  const accessedRouters = asyncRouterMap.filter(route => {
-    if (hasPermission(routes, route)) {
-      if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, routes)
-      }
-      return true
-    }
-    return false
-  })
-  return accessedRouters
-}
-
-const permission = {
-  state: {
-    routers: constantRouterMap,
-    addRouters: []
-  },
-  mutations: {
-    SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers
-      state.routers = constantRouterMap.concat(routers)
-    }
-  },
-  actions: {
-    GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { routes, roles, resources } = data
-        setResources(resources)
-        const routesSet = new Set(routes)
-        const rolesSet = new Set(roles)
-        const accessedRouters = rolesSet.has(ADMIN.KEY) ? asyncRouterMap : filterAsyncRouter(asyncRouterMap, routesSet)
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
-      })
-    }
-  },
-  getters: {
-    permission_routers: state => state.routers,
-    addRouters: state => state.addRouters
-  }
 }
 
 export default permission

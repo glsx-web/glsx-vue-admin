@@ -2,10 +2,10 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:36
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-10 02:48:35
+ * @Last Modified time: 2018-07-11 14:06:20
  */
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+// import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
 import tagsView from './modules/tagsView'
@@ -15,7 +15,7 @@ import header from './modules/header'
 import aside from './modules/aside'
 import footer from './modules/footer'
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 const arrModule =
  [
    app,
@@ -29,9 +29,9 @@ const arrModule =
  ]
 export const modules = arrModule
 
-const store = new Vuex.Store({
-  modules: {
-    ...arrModule
-  }
-})
-export default store
+// const store = new Vuex.Store({
+//   modules: {
+//     ...arrModule
+//   }
+// })
+// export default store

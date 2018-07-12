@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-10 02:44:02
+ * @Last Modified time: 2018-07-12 11:07:36
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -14,7 +14,7 @@
         <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
           <gl-app-sidebar 
             :isCollapse="oSidebar.isCollapse" 
-            :permission_routers="oSidebar.permission_routers" 
+            :routers="oSidebar.routers" 
             :generate="oSidebar.generate"
             :colors="oSidebar.colors" />
         </gl-app-scroll>
@@ -22,14 +22,14 @@
   </div>
 </template>
 <script>
-import { AsideMixin, PublicMixin } from '@/lib/mixins'
+import { AsideMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
 import { AppConst } from '@/lib/consts'
 export default {
   name: 'GlAppAside',
-  mixins: [AsideMixin, PublicMixin],
+  mixins: [AsideMixin, PublicMixin, BeforeRoute],
   components: {
     GlAppSidebar,
     GlAppLogo,
@@ -53,12 +53,12 @@ export default {
     oSidebar() {
       return {
         isCollapse: this.aside.state === AppConst.States.CLOSE,
-        permission_routers: this.permission_routers,
+        routers: this.routers,
         generate: this.generateTitle,
         colors: {
           textColor: this.Sidebar.textColor,
           activeTextColor: this.Sidebar.activeTextColor,
-          backgroundColor: this.Sidebar.backgroundColor
+          backgroundColor: this.app.defaultColor
         }
       }
     },
@@ -70,7 +70,7 @@ export default {
     },
     oClass() {
       return {
-        hideSidebar: !this.Sidebar.state,
+        hideSidebar: this.Aside.isClosed,
         minsize: this.isMinSize
       }
     },
@@ -90,6 +90,11 @@ export default {
         backgroundImage: this.Logo.image
       }
     }
+  },
+  mounted() {
+    this.routerfilter().then((resources) => {
+      this.SetSession(AppConst.Auth.Resources.Key, resources)
+    })
   }
 }
 </script>

@@ -44,10 +44,12 @@ const components = [
   ThemePicker
 ]
 const GlsxVueAdmin = {}
+// import './styles/index.scss'
 GlsxVueAdmin.install = function(Vue, opts = {}) {
   Vue.use(protos)
+  Vue.prototype.$config = opts
   components.map(component => {
-    Vue.component(component.name, component)
+    Vue.component(component.name, component, opts)
   })
 }
 /* istanbul ignore if */

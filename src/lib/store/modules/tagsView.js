@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 21:18:57
+ * @Last Modified time: 2018-07-12 10:06:06
  */
 const tagsView = {
   state: {

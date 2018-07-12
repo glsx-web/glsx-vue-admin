@@ -20,5 +20,17 @@ export default {
   },
   DefaultColor: {
     Key: 'app_defaultColor'
+  },
+  Auth: {
+    Key: 'app_auth',
+    Resources: {
+      Key: 'app_auth_resources'
+    },
+    Token: {
+      Key: 'app_auth_token'
+    },
+    Admin: {
+      Key: 'admin'
+    }
   }
 }

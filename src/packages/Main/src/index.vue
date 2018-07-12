@@ -7,7 +7,7 @@
 <script>
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
-import { AppMixin } from '@/lib/mixins'
+import { AppMixin, ConfigMixin } from '@/lib/mixins'
 import { mapGetters } from 'vuex'
 /**
 /**
@@ -15,7 +15,7 @@ import { mapGetters } from 'vuex'
  */
 export default {
   name: 'GlAppMain',
-  mixins: [AppMixin],
+  mixins: [AppMixin, ConfigMixin],
   components: {
     AppMain,
     GlAppScroll

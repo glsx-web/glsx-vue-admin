@@ -37,7 +37,7 @@
         return {
           logoStyle: {
             height: this.height + 'px',
-            width: this.width + 'px',
+            width: '100%',
             backgroundColor: 'transparent',
             backgroundImage: 'url("' + this.backgroundImage + '")',
             backgroundRepeat: 'no-repeat',
@@ -79,11 +79,11 @@
       overflow: hidden;
       z-index:9;
       /*背景渐变*/
-      background: -moz-linear-gradient(left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
+      background: -moz-linear-gradient(to left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
       background: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(255,255,255,0)),color-stop(50%,rgba(255,255,255,.3)),color-stop(100%,rgba(255,255,255,0)));
-      background: -webkit-linear-gradient(left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
-      background: -o-linear-gradient(left,rgba(255,255,255,0) 0,rgba(255,255,255,.3)50%,rgba(255,255,255,0) 100%);
-      background: linear-gradient(left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
+      background: -webkit-linear-gradient(to left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(to left,rgba(255,255,255,0) 0,rgba(255,255,255,.3)50%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to left,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0) 100%);
       -webkit-transform: skewX(-25deg);/*倾斜*/
       -moz-transform: skewX(-25deg);
       transform: skewX(-25deg);

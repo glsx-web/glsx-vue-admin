@@ -1,9 +1,7 @@
 <template>
-  <div >
     <draggable class="right-menu" v-model="myList" :options="{animation:100}" >
-        <slot v-for="(name) in myList" :name="name" class="right-menu-item"></slot>
+        <slot v-for="(name) in myList" :name="name" ></slot>
     </draggable>
-  </div> 
 </template> 
 <script>
 import draggable from 'vuedraggable'
@@ -45,6 +43,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
   .right-menu {
+      height: 100%;
       .el-color-picker__trigger{
         background: linear-gradient(to bottom right, red , blue);
       }
