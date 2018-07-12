@@ -15,61 +15,129 @@
                       <template slot="title"  @click="handeleTitleClick">
                           用户信息 
                       </template>
-                      <el-form :model="header.user">
+                      <el-form :model="params.header.navbar.user">
                         <el-col :span="8">
-                          <div class="grid-content">用户头像:</div>
+                          <div class="grid-content">用户头像</div>
                         </el-col>
                         <el-col :span="16">
-                          <el-form-item label="状态栏">
-                            <el-switch v-model="header.user.avatar.show"></el-switch>
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.user.avatar.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                          <div class="grid-content">用户名称:</div>
+                          <div class="grid-content">用户名称</div>
                         </el-col>
                         <el-col :span="16">
-                          <el-form-item label="状态栏" >
-                            <el-switch v-model="header.user.name.show"></el-switch>
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.user.name.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
                         </el-col>
                       </el-form>
                     </el-collapse-item>
                     <el-collapse-item>
                       <template slot="title"  @click="handeleTitleClick">
-                          本地化 
+                          选择语言 
                       </template>
-                      <el-form :model="header.language">
+                      <el-form :model="params.header.navbar.language">
                         <el-col :span="8">
-                           <lang-select class="international" v-on:@setLanguage="handleSetLanguage" :language="header.language.value"></lang-select>
+                          <div class="grid-content">语言</div>
+                          <lang-select class="international" v-on:@setLanguage="handleSetLanguage" :language="params.header.navbar.language.value"></lang-select>
                         </el-col>
                         <el-col :span="16">
-                          <el-form-item  label="状态栏">
-                            <el-switch v-model="header.language.show"></el-switch>
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.language.visible" active-text="开" inactive-text="关"></el-switch>
                           </el-form-item>
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item title="效率 Efficiency">
-                      <div>简化流程：设计简洁直观的操作流程；</div>
-                      <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
-                      <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
+                    <el-collapse-item>
+                      <template slot="title"  @click="handeleTitleClick">
+                          窗口设置 
+                      </template>
+                      <el-form :model="params.header.navbar.screenfull">
+                        <el-col :span="8">
+                          <div class="grid-content">全屏</div>
+                        </el-col>
+                        <el-col :span="16">
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.screenfull.visible" active-text="开" inactive-text="关"></el-switch>
+                          </el-form-item>
+                        </el-col>
+                      </el-form>
+                      <el-form :model="params.header.navbar.theme">
+                        <el-col :span="8">
+                          <div class="grid-content">皮肤</div>
+                        </el-col>
+                        <el-col :span="16">
+                          <el-form-item >
+                            <el-switch v-model="params.header.navbar.theme.visible" active-text="开" inactive-text="关"></el-switch>
+                          </el-form-item>
+                        </el-col>
+                        <div class="block">
+                          <span class="demonstration">有默认值</span>
+                          <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="params.header.navbar.theme.value" :predefineColors="params.header.navbar.theme.preDefineColors"></gl-app-theme-picker>
+                        </div>
+                      </el-form>
                     </el-collapse-item>
-                    <el-collapse-item title="可控 Controllability">
-                      <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-                      <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+                    <el-collapse-item>
+                      <template slot="title"  @click="handeleTitleClick">
+                          注销入口 
+                      </template>
+                      <el-form :model="params.header.navbar.logout">
+                        <el-col :span="8">
+                          <div class="grid-content">注销</div>
+                        </el-col>
+                        <el-col :span="16">
+                          <el-form-item>
+                            <el-switch v-model="params.header.navbar.logout.visible" active-text="开" inactive-text="关"></el-switch>
+                          </el-form-item>
+                        </el-col>
+                      </el-form>
                     </el-collapse-item>
                 </el-collapse>
               </el-tab-pane>
               <el-tab-pane label="左侧菜单">
-                左侧菜单
+                <el-collapse accordion>
+                  <el-collapse-item>
+                    <template slot="title"  @click="handeleTitleClick">
+                        logo 
+                    </template>
+                    <el-form :model="params.aside.logo">
+                      <el-col :span="8">
+                        <div class="grid-content">logo</div>
+                      </el-col>
+                      <el-col :span="16">
+                        <el-form-item>
+                          <el-switch v-model="params.aside.logo.visible" active-text="开" inactive-text="关"></el-switch>
+                        </el-form-item>
+                      </el-col>
+                    </el-form>
+                  </el-collapse-item>
+                </el-collapse>
               </el-tab-pane>
               <el-tab-pane label="版权信息">
-                版权信息
+                <el-collapse accordion>
+                  <el-collapse-item>
+                    <template slot="title"  @click="handeleTitleClick">
+                        版权信息 
+                    </template>
+                    <el-form :model="params.footer">
+                      <el-col :span="8">
+                        <div class="grid-content">footer</div>
+                      </el-col>
+                      <el-col :span="16">
+                        <el-form-item>
+                          <el-switch v-model="params.footer.visible" active-text="开" inactive-text="关"></el-switch>
+                        </el-form-item>
+                      </el-col>
+                    </el-form>
+                  </el-collapse-item>
+                </el-collapse>
               </el-tab-pane>
           </el-tabs>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="handleSetVisible">确 定</el-button>
         </div>
       </el-dialog>
   </div>
@@ -77,31 +145,42 @@
 
 <script>
 import LangSelect from '@/packages/LangSelect'
+import GlAppThemePicker from '@/packages/ThemePicker'
 export default {
   name: 'GlAppSettings',
   components: {
-    LangSelect
-    // ThemePicker,
+    LangSelect,
+    GlAppThemePicker
   },
+  props: {
+    settingParams: Object,
+    theme: Object
+  },
+  // computed: {
+  //   params() {
+  //     return this.settingParams
+  //   }
+  // },
   data() {
     return {
       tabPosition: 'left',
       dialogFormVisible: false,
-      header: {
-        user: {
-          show: true,
-          avatar: {
-            show: true
-          },
-          name: {
-            show: true
-          }
-        },
-        language: {
-          show: true,
-          value: ''
-        }
-      },
+      params: JSON.parse(JSON.stringify(this.settingParams)),
+      // header: {
+      //   user: {
+      //     visible: true,
+      //     avatar: {
+      //       visible: false
+      //     },
+      //     name: {
+      //       visible: true
+      //     }
+      //   },
+      //   language: {
+      //     visible: true,
+      //     value: ''
+      //   }
+      // },
       formLabelWidth: '120px'
     }
   },
@@ -113,6 +192,17 @@ export default {
     },
     handleSetLanguage(lang) {
       this.$emit('@setLanguage', lang)
+    },
+    handleTheme(theme) {
+      this.$emit('@themeHandler', theme)
+    },
+    handleSetVisible() {
+      this.dialogFormVisible = !this.dialogFormVisible
+      if (!this.dialogFormVisible) {
+        this.$emit('@setVisible', this.params)
+      } else {
+        this.params = JSON.parse(JSON.stringify(this.settingParams))
+      }
     }
   }
 }

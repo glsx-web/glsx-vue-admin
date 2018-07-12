@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="footer" v-if="footer.visible">
     <p>
 			Copyright © 2012-2022 深圳广联赛讯有限公司 版权所有
 		</p>
@@ -7,8 +7,10 @@
 </template>
 
 <script>
+import { FooterMixin, PublicMixin } from '@/lib/mixins'
 export default {
-  name: 'GlAppFooter'
+  name: 'GlAppFooter',
+  mixins: [FooterMixin, PublicMixin]
 }
 </script>
 

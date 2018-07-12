@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 14:49:50
+ * @Last Modified time: 2018-07-12 17:04:41
  */
 
 import { mapActions } from 'vuex'
@@ -70,6 +70,18 @@ export default {
           console.log(error)
         })
       })
+    },
+    SetMulti(obj) {
+      /**
+       * 1 调用 InitXXX 覆盖 vuex 状态
+       */
+      for (var key in obj) {
+        this[`Init${firstUpperCase(key)}`](obj[key])
+      }
+      /**
+       * 2 . 调用 set  设置 localstorage
+       */
+      set(Consts.LOCAL_CONFIG.KEY, obj)
     },
     generateTitle
   }
