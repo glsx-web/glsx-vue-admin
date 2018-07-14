@@ -19,6 +19,7 @@ import SidebarItem from './SidebarItem'
 import SvgIcon from './SvgIcon'
 import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
+import Toggle from './Toggle'
 export {
   Aside,
   Breadcrumb,
@@ -39,5 +40,6 @@ export {
   SidebarItem,
   SvgIcon,
   TagsView,
-  ThemePicker
+  ThemePicker,
+  Toggle
 }

@@ -5,7 +5,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 const views = 'views'
 /* Layout */
-import Layout from '@/views/layout/Layout'
+import Layout from '@/views/layout'
 export const routers = [
   // { path: '/login', component: () => import(`@/${views}/login/index`), hidden: true },
   // { path: '/404', component: () => import(`@/${views}/errorPage/404`), hidden: true },

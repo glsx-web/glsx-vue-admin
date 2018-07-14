@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 11:07:36
+ * @Last Modified time: 2018-07-13 01:56:22
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -52,7 +52,7 @@ export default {
     },
     oSidebar() {
       return {
-        isCollapse: this.aside.state === AppConst.States.CLOSE,
+        isCollapse: this.Aside.isClosed,
         routers: this.routers,
         generate: this.generateTitle,
         colors: {
@@ -76,7 +76,7 @@ export default {
     },
     oStyle() {
       return {
-        width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Sidebar.maxWidth : this.Sidebar.minWidth)) + 'px',
+        width: (this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Sidebar.maxWidth : this.Sidebar.minWidth) + 'px',
         backgroundColor: this.app.defaultColor,
         height: '100%'
       }

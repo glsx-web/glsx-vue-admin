@@ -2,9 +2,11 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:09
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-07 23:08:39
+ * @Last Modified time: 2018-07-14 00:42:21
  */
-import { ResInSession } from '@/utils/cache'
+import { PublicMixin } from '@/lib/mixins'
+import { AppConst } from '@/lib/consts'
+const resources = PublicMixin.methods.GetSession(AppConst.Auth.Resources.Key)
 export default {
   install(Vue, options) {
     Vue.prototype.$gl_has = (res) => {
@@ -20,7 +22,7 @@ export default {
       }
       // 校验权限
       aRes.forEach((p) => {
-        if (!ResInSession.has(p)) {
+        if (!resources.has(p)) {
           has = false
           return false
         }

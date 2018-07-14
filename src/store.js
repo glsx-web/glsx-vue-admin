@@ -2,15 +2,16 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:36
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-11 02:14:09
+ * @Last Modified time: 2018-07-14 02:38:08
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import { GlAppStore } from './index'
+import { storeModules, axios } from './index'
+console.log(storeModules, axios)
 const store = new Vuex.Store({
   modules: {
-    ...GlAppStore
+    ...storeModules
   }
 })
 export default store

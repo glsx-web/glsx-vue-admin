@@ -49,8 +49,9 @@ export default {
   },
   watch: {
     $route() {
-      this.addViewTags()
-      this.moveToCurrentTag()
+      this.addViewTags().then(() => {
+        this.moveToCurrentTag()
+      })
     },
     menuVisible(value) {
       document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
@@ -67,11 +68,14 @@ export default {
       return route.fullPath === this.$route.fullPath
     },
     addViewTags() {
-      const route = this.generateRoute()
-      if (!route) {
-        return false
-      }
-      this.$emit('@addViewTag', route)
+      return new Promise((resole, reject) => {
+        const route = this.generateRoute()
+        if (!route) {
+          return false
+        }
+        this.$emit('@addViewTag', route)
+        resole(true)
+      })
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag

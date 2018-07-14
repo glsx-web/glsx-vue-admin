@@ -16,7 +16,7 @@ import aside from './modules/aside'
 import footer from './modules/footer'
 
 // Vue.use(Vuex)
-const arrModule =
+const modules =
  [
    app,
    user,
@@ -27,7 +27,7 @@ const arrModule =
    aside,
    footer
  ]
-export const modules = arrModule
+export const store = modules
 
 // const store = new Vuex.Store({
 //   modules: {

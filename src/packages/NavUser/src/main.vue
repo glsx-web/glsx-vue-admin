@@ -1,6 +1,6 @@
 <template>
     <div class="user-container">
-      <el-tag v-if="name.visible">{{name.value}}</el-tag>
+      <el-tag v-if="name.visible">{{name.value|| 'visitor'}}</el-tag>
       <img v-if="avatar.visible" class="user-avatar" :src="avatar.value+'?imageView2/1/w/80/h/80'">
     </div>
 </template>
@@ -25,12 +25,13 @@
 <style  rel="stylesheet/scss" lang="scss" scoped>
   .user-container{
     height: 100%;
-    margin-top: -9px;
+    margin-top: -2px;
     .el-tag{
+      float: left;
       color: #fff;
     }
     .user-avatar {
-      height: 40px;
+      height: 30px;
       border-radius: 20px;
       
     }
