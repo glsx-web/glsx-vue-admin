@@ -28,7 +28,11 @@ export default {
       'cachedViews'
     ]),
     nHeight() {
-      return this.app.clientHeight - this.footer.height - this.header.height
+      const nClientHeight = this.app.clientHeight
+      const nFooterHeight = this.footer.visible ? this.footer.height : 0
+      const nNavbarHeight = this.header.navbar.visible ? this.header.navbar.height || 60 : 0
+      const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
+      return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight
     }
   }
 }

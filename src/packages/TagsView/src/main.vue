@@ -112,10 +112,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "~@/styles/variables.scss";
 .tags-view-container {
   .tags-view-wrapper {
-    width: calc(100% + 3px);
+    width: calc(100% + 1px);
     margin-left: -1px;
     background: #fff;
     height: 34px;

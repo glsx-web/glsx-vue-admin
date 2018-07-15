@@ -1,9 +1,9 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
+  <el-menu class="navbar" :style="navbarStyle" mode="horizontal">
     <gl-app-hamburger class="hamburger-container" :toggleClick="handleToggleSideBar" :isActive="isActive"></gl-app-hamburger>
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
     
-    <div class="right-menus">
+    <div class="right-menus" :style="{lineHeight:navbarStyle.height+'px'}">
         <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged" class="right-menus-slots">
           <div slot='slot-1'>
             <gl-app-nav-user :name="name" :avatar="avatar"/>
@@ -65,7 +65,8 @@ export default {
     settings: Object,
     itemsArray: Array,
     generate: Function,
-    settingParams: Object
+    settingParams: Object,
+    navbarStyle: Object
   },
   components: {
     GlAppBreadcrumb,
@@ -119,24 +120,17 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  height: 50px;
   border-radius: 0px !important;
-  background-color: transparent;
   .hamburger-container {
-    line-height: 58px;
-    height: 50px;
+    line-height: 60px;
     float: left;
     padding: 0 10px;
-  }
-  .breadcrumb-container{
-    float: left;
   }
   .right-menus {
     float: right;
     height: 100%;
     margin-right: 30px;
-    position: relative;
-    z-index: 99999;
+    line-height: 60px;
     &:focus{
      outline: none;
     }
@@ -187,19 +181,20 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
   .right-menu {
     .el-color-picker__trigger{
-      background: linear-gradient(to bottom right, red , blue);
-    }
-    .el-color-picker--mini .el-color-picker__trigger {
-        height: 25px;
-        width: 25px;
+      background-color: linear-gradient(to bottom right, red , blue);
     }
     &>div{
-      padding: 12px 10px 0;
+      padding: 0 15px;
       position: relative;
+      &:hover{
+       background-color: rgba($color: #fff, $alpha: 0.1) ;
+      }
     }
   svg{
     cursor: pointer;
+    vertical-align: middle;
     fill:#fff;
+    height: 20px;
   }
 }
 </style>

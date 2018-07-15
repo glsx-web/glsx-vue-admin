@@ -37,7 +37,8 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped >
     .right-menu{
         display: flex;
-         -webkit-justify-content: space-between; 
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
@@ -46,6 +47,8 @@ export default {
       height: 100%;
       .el-color-picker__trigger{
         background: linear-gradient(to bottom right, red , blue);
+            height: 22px !important;
+            width: 22px !important;
       }
     }
 </style>
