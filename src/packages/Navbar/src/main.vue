@@ -4,18 +4,15 @@
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
     
     <div class="right-menus">
-        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged">
+        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged" class="right-menus-slots">
           <div slot='slot-1'>
-              <gl-app-nav-user :name="name" :avatar="avatar"/>
-           </div>
+            <gl-app-nav-user :name="name" :avatar="avatar"/>
+          </div>
           <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
-           <div slot='slot-2' v-if="language.visible">
-          <!-- <el-tooltip effect="light" :content="language.content" placement="bottom" v-if="language.visible"> -->
-            <gl-app-lang-select  v-on:@setLanguage="handleSetLanguage" :language="language.value"></gl-app-lang-select>
-          <!-- </el-tooltip>  -->
-           </div>
-            <div slot='slot-3' v-if="screenfull.visible">
-          <!-- <el-tooltip effect="light" :content="screenfull.content" placement="bottom" v-if="screenfull.visible"> -->
+          <div slot='slot-2' v-if="language.visible">
+            <gl-app-lang-select  v-on:@setLanguage="handleSetLanguage" :language="language.value" />
+          </div>
+          <div slot='slot-3' v-if="screenfull.visible">
             <gl-app-screenfull ></gl-app-screenfull>
           <!-- </el-tooltip> -->
             </div>
@@ -32,10 +29,8 @@
                <div slot='slot-6' v-if="logout.visible">
           <!-- <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible"> -->
             <gl-app-logout @click.native="handleLogout" />
-          <!-- </el-tooltip> -->
-               </div>
+          </div>
         </slots>
-      <!-- <span @click="handleLockScreen"><svg-icon icon-class="lock" class-name="lock" /></span> -->
     </div>
   </el-menu>
 </template>
@@ -113,7 +108,6 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
   height: 50px;
-  line-height: 50px;
   border-radius: 0px !important;
   background-color: transparent;
   .hamburger-container {
@@ -125,54 +119,38 @@ export default {
   .breadcrumb-container{
     float: left;
   }
-  .errLog-container {
-    display: inline-block;
-    vertical-align: top;
-  }
-    .right-menus {
+  .right-menus {
     float: right;
     height: 100%;
     margin-right: 30px;
     position: relative;
     z-index: 99999;
-    width: 320px;
     &:focus{
      outline: none;
     }
-    .screenfull {
-      vertical-align: inherit
-    }
-    .international{
-      vertical-align: top;
-    }
-    .avatar-container {
-      height: 50px;
-      margin-right: 30px;
-      .avatar-wrapper {
-        cursor: pointer;
-        margin-top: 5px;
-        position: relative;
-        .user-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-        .el-icon-caret-bottom {
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
+    &-slots{
+      height: 100%;
     }
   }
 }
 </style>
 <style rel="stylesheet/scss" lang="scss">
   .right-menu {
-      .el-color-picker__trigger{
-        background: linear-gradient(to bottom right, red , blue);
-      }
+    .el-color-picker__trigger{
+      background: linear-gradient(to bottom right, red , blue);
     }
+    .el-color-picker--mini .el-color-picker__trigger {
+        height: 25px;
+        width: 25px;
+    }
+    &>div{
+      padding: 12px 10px 0;
+      position: relative;
+    }
+  svg{
+    cursor: pointer;
+    fill:#fff;
+  }
+}
 </style>
 

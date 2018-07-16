@@ -72,7 +72,6 @@ export default {
         return false
       }
       this.$emit('@addViewTag', route)
-      // this.$store.dispatch('addVisitedViews', route)
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
@@ -86,26 +85,13 @@ export default {
       })
     },
     closeSelectedTag(view) {
-      // this.$store.dispatch('delVisitedViews', view).then((views) => {
-      //   if (this.isActive(view)) {
-      //     const latestView = views.slice(-1)[0]
-      //     this.$router.push(latestView ? latestView.fullPath : '/')
-      //   }
-      // })
       this.$emit('@closeSeletedTag', view, this.isActive(view))
     },
     closeOthersTags() {
-      // this.$router.push(this.selectedTag.fullPath)
-      // this.$store.dispatch('delOthersViews', this.selectedTag).then(() => {
-      //   this.moveToCurrentTag()
-      // })
       this.$emit('@closeOthersTags', this.selectedTag)
       this.moveToCurrentTag()
     },
     closeAllTags() {
-      // this.$store.dispatch('delAllViews').then(() => {
-      //   this.$router.push('/')
-      // })
       this.$emit('@closeAllTags')
     },
     openMenu(tag, e) {

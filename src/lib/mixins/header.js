@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-10 02:46:05
+ * @Last Modified time: 2018-07-12 17:02:13
  */
 
 import { mapGetters, mapActions } from 'vuex'
@@ -13,6 +13,7 @@ export default {
       'header',
       'app',
       'aside',
+      'visitedViews',
       'footer'
     ])
   },

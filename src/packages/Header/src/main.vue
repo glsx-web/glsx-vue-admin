@@ -170,7 +170,7 @@ export default {
     }
   },
   mounted() {
-    // /console.log(this.navbarVisible)
+    // console.log(this.$router)
   }
 }
 </script>

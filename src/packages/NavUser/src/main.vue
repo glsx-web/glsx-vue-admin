@@ -24,16 +24,15 @@
 
 <style  rel="stylesheet/scss" lang="scss" scoped>
   .user-container{
-    display: inline-block;
+    height: 100%;
+    margin-top: -9px;
     .el-tag{
       color: #fff;
     }
     .user-avatar {
-      width: 40px;
       height: 40px;
-      border-radius: 10px;
-      vertical-align: middle;
-      margin-right: 20px;
+      border-radius: 20px;
+      
     }
   }
 </style>
