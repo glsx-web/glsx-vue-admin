@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 21:18:40
+ * @Last Modified time: 2018-07-16 00:33:00
  */
 import { recursionSet } from '@/common'
 const header = {
@@ -12,6 +12,7 @@ const header = {
     'navbar': {
       'visible': '',
       'itemsArray': '',
+      'height': 60,
       'user': {
         'visible': '',
         'avatar': {
@@ -55,6 +56,7 @@ const header = {
     },
     'tagsView': {
       'visible': '',
+      'height': '',
       'activeColor': ''
     }
   },

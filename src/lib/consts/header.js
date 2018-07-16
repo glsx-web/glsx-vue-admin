@@ -11,6 +11,9 @@ export default {
   },
   Navbar: {
     Key: 'header_navbar',
+    Height: {
+      Key: 'header_navbar_height'
+    },
     Visible: {
       Key: 'header_navbar_visible'
     },
@@ -73,6 +76,9 @@ export default {
     Key: 'header_tagsView',
     Visible: {
       Key: 'header_tagsView_visible'
+    },
+    Height: {
+      Key: 'header_tagsView_height'
     },
     ActiveColor: {
       Key: 'header_tagsView_activeColor'

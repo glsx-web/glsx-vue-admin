@@ -18,9 +18,9 @@ import {
   SidebarItem,
   SvgIcon,
   TagsView,
-  ThemePicker
+  ThemePicker,
+  Toggle
 } from './packages'
-import { protos } from '@/lib'
 const components = [
   Aside,
   Breadcrumb,
@@ -41,12 +41,15 @@ const components = [
   SidebarItem,
   SvgIcon,
   TagsView,
-  ThemePicker
+  ThemePicker,
+  Toggle
 ]
+import './styles/index.scss'
+import { prototypes, store, axios } from '@/lib'
 const GlsxVueAdmin = {}
-// import './styles/index.scss'
+
 GlsxVueAdmin.install = function(Vue, opts = {}) {
-  Vue.use(protos)
+  Vue.use(prototypes)
   Vue.prototype.$config = opts
   components.map(component => {
     Vue.component(component.name, component, opts)
@@ -56,5 +59,5 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
 if (typeof window !== 'undefined' && window.Vue) {
   GlsxVueAdmin.install(window.Vue)
 }
-export { modules as GlAppStore } from '@/lib/store'
+export { store as storeModules, axios }
 export default GlsxVueAdmin

@@ -1,7 +1,7 @@
 <template>
     <div class="user-container">
-      <el-tag v-if="name.visible">{{name.value}}</el-tag>
-      <img v-if="avatar.visible" class="user-avatar" :src="avatar.value+'?imageView2/1/w/80/h/80'">
+      <span v-if="name.visible" class="user-container-name">{{name.value|| 'visitor'}}</span>
+      <img v-if="avatar.visible" class="user-container-avatar" :src="avatar.value+'?imageView2/1/w/80/h/80'">
     </div>
 </template>
 
@@ -24,14 +24,15 @@
 
 <style  rel="stylesheet/scss" lang="scss" scoped>
   .user-container{
-    height: 100%;
-    margin-top: -9px;
-    .el-tag{
+    &-name {
+      float: left;
       color: #fff;
+      padding: 0 20px;
     }
-    .user-avatar {
-      height: 40px;
+    &-avatar {
+      height: 30px;
       border-radius: 20px;
+      vertical-align: middle;
       
     }
   }

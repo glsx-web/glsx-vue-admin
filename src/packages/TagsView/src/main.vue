@@ -49,8 +49,9 @@ export default {
   },
   watch: {
     $route() {
-      this.addViewTags()
-      this.moveToCurrentTag()
+      this.addViewTags().then(() => {
+        this.moveToCurrentTag()
+      })
     },
     menuVisible(value) {
       document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
@@ -68,11 +69,14 @@ export default {
       return route.fullPath === this.$route.fullPath
     },
     addViewTags() {
-      const route = this.generateRoute()
-      if (!route) {
-        return false
-      }
-      this.$emit('@addViewTag', route)
+      return new Promise((resole, reject) => {
+        const route = this.generateRoute()
+        if (!route) {
+          return false
+        }
+        this.$emit('@addViewTag', route)
+        resole(true)
+      })
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
@@ -109,10 +113,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "~@/styles/variables.scss";
 .tags-view-container {
   .tags-view-wrapper {
-    width: calc(100% + 3px);
+    width: calc(100% + 1px);
     margin-left: -1px;
     background: #fff;
     height: 34px;

@@ -63,9 +63,6 @@
             width: 100%;
             overflow: hidden;
         }
-        .svg-icon {
-            margin-right: 16px;
-        }
         .el-menu {
             border: none;
             height: 100%;
@@ -74,15 +71,15 @@
         }
     }
     .hideSidebar {
-        h1 {
-            width: 36px !important;
-        }
-        .sidebar-container {
-            width: 36px !important;
-        }
-        .main-container {
-            margin-left: 36px;
-        }
+        // h1 {
+        //     width: 36px !important;
+        // }
+        // .sidebar-container {
+        //     width: 36px !important;
+        // }
+        // .main-container {
+        //     margin-left: 36px;
+        // }
         .submenu-title-noDropdown {
             padding-left: 10px !important;
             position: relative;
@@ -127,7 +124,7 @@
         }
     }
     //适配移动端
-    .mobile {
+    .minsize {
         .main-container {
             margin-left: 0px;
         }

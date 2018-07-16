@@ -1,9 +1,9 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
-    <gl-app-hamburger class="hamburger-container" :toggleClick="handleToggle" :isActive="isActive"></gl-app-hamburger>
+  <el-menu class="navbar" :style="navbarStyle" mode="horizontal">
+    <gl-app-hamburger class="hamburger-container" :toggleClick="handleToggleSideBar" :isActive="isActive"></gl-app-hamburger>
     <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
     
-    <div class="right-menus">
+    <div class="right-menus" :style="{lineHeight:navbarStyle.height+'px'}">
         <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged" class="right-menus-slots">
           <div slot='slot-1'>
             <gl-app-nav-user :name="name" :avatar="avatar"/>
@@ -30,7 +30,9 @@
           <!-- <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible"> -->
             <gl-app-logout @click.native="handleLogout" />
           </div>
+          
         </slots>
+        <!-- <gl-toggle  v-on:@toggle="handleToggle" class="right-menus-toggle" :isActive="toogleActive"></gl-toggle> -->
     </div>
   </el-menu>
 </template>
@@ -45,6 +47,7 @@ import GlAppThemePicker from '@/packages/ThemePicker'
 import GlAppNavUser from '@/packages/NavUser'
 import GlAppLogout from '@/packages/Logout'
 import GlAppSettings from '@/packages/Settings'
+import GlToggle from '@/packages/Toggle'
 import Slots from './slots'
 
 // import glLock from '@/packages/lock'
@@ -62,7 +65,8 @@ export default {
     settings: Object,
     itemsArray: Array,
     generate: Function,
-    settingParams: Object
+    settingParams: Object,
+    navbarStyle: Object
   },
   components: {
     GlAppBreadcrumb,
@@ -74,11 +78,17 @@ export default {
     GlAppNavUser,
     GlAppLogout,
     GlAppSettings,
+    GlToggle,
     Slots
     // glLock
   },
+  data() {
+    return {
+      toogleActive: true
+    }
+  },
   methods: {
-    handleToggle() {
+    handleToggleSideBar() {
       this.$emit('@toggleSideBar')
     },
     handleLogout() {
@@ -95,6 +105,9 @@ export default {
     },
     handleSetParamsConfig(params) {
       this.$emit('@setParamsConfig', params)
+    },
+    handleToggle() {
+      this.toogleActive = !this.toogleActive
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')
@@ -107,49 +120,81 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  height: 50px;
   border-radius: 0px !important;
-  background-color: transparent;
   .hamburger-container {
-    line-height: 58px;
-    height: 50px;
+    line-height: 60px;
     float: left;
     padding: 0 10px;
-  }
-  .breadcrumb-container{
-    float: left;
   }
   .right-menus {
     float: right;
     height: 100%;
     margin-right: 30px;
-    position: relative;
-    z-index: 99999;
+    line-height: 60px;
     &:focus{
      outline: none;
     }
     &-slots{
       height: 100%;
+      // float:left;
+      // transition :transform .2s ease-out forwards, opacity .2s ease-out forwards;
+    }
+    &-toggle{
+      float: right;
+      margin-top: 11px;
+      margin-left: 40px;
     }
   }
+   /* 动画绑定 */
+.move_right {
+    animation-name            : move_right;
+    animation-duration        : 1s;
+    animation-iteration-count : 1;
+    animation-fill-mode : forwards;
+ }
+.move_left {
+    animation-name            : move_left;
+    animation-duration        : 1s;
+    animation-iteration-count : 1;
+    animation-fill-mode : forwards;
+}
+}
+@keyframes move_right {
+  from {
+          opacity: 1;
+  }
+  to {
+      opacity: 0;
+      transform: translateX(100px);
+  }
+ }
+ @keyframes move_left {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-100px);
+    }
 }
 </style>
 <style rel="stylesheet/scss" lang="scss">
   .right-menu {
     .el-color-picker__trigger{
-      background: linear-gradient(to bottom right, red , blue);
-    }
-    .el-color-picker--mini .el-color-picker__trigger {
-        height: 25px;
-        width: 25px;
+      background-color: linear-gradient(to bottom right, red , blue);
     }
     &>div{
-      padding: 12px 10px 0;
+      padding: 0 15px;
       position: relative;
+      &:hover{
+       background-color: rgba($color: #fff, $alpha: 0.1) ;
+      }
     }
   svg{
     cursor: pointer;
+    vertical-align: middle;
     fill:#fff;
+    height: 20px;
   }
 }
 </style>

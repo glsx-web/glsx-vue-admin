@@ -1,5 +1,5 @@
 <template>
-    <div :style="oStyle" v-if="header.visible"> 
+    <div v-if="header.visible"> 
       <draggable>
       <gl-app-navbar  v-if="oNavbar.visible"
         v-on:@themeHandler="handleTheme" 
@@ -8,6 +8,7 @@
         v-on:@setLanguage="handleSetLanguage"
         v-on:@itemChanged="handleItemChanged"
         v-on:@setParamsConfig="handleSetParamsConfig"
+        :navbarStyle="oNavbarStyle"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
         :name="oNavbar.user.name"
@@ -49,9 +50,10 @@ export default {
     draggable
   },
   computed: {
-    oStyle() {
+    oNavbarStyle() {
       return {
-        backgroundColor: this.app.defaultColor
+        backgroundColor: this.app.defaultColor,
+        height: this.header.height + 'px'
       }
     },
     Navbar() {

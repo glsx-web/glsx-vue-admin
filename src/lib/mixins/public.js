@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 17:04:41
+ * @Last Modified time: 2018-07-12 18:29:38
  */
 
 import { mapActions } from 'vuex'

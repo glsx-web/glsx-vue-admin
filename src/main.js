@@ -11,6 +11,7 @@ Vue.use(GlsxVueAdmin, config)
 import { i18n } from '@/lib'
 import router from './router'
 import store from './store'
+import './icons'
 new Vue({
   el: '#app',
   router,
