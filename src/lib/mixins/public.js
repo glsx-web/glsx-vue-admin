@@ -15,7 +15,11 @@ export default {
       'SetHeader',
       'SetAside',
       'SetFooter',
-      'SetApp'
+      'SetApp',
+      'InitHeader',
+      'InitAside',
+      'InitFooter',
+      'InitApp'
     ]),
     Get(key) {
       var aKeys = key.split('_')

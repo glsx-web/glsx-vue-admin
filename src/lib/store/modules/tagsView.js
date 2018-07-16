@@ -19,6 +19,19 @@ const tagsView = {
         state.cachedViews.push(view.name)
       }
     },
+    VISITED_VIEWS: (state, view) => {
+      if (view.meta.keepAlive) {
+        state.cachedViews.push(view.name)
+      } else {
+        for (const i of state.cachedViews) {
+          if (i === view.name) {
+            const index = state.cachedViews.indexOf(i)
+            state.cachedViews.splice(index, 1)
+            break
+          }
+        }
+      }
+    },
     DEL_VISITED_VIEWS: (state, view) => {
       for (const [i, v] of state.visitedViews.entries()) {
         if (v.fullPath === view.fullPath) {
@@ -75,6 +88,9 @@ const tagsView = {
         commit('DEL_ALL_VIEWS')
         resolve([...state.visitedViews])
       })
+    },
+    saveKeepStatus({ commit, state }, view) {
+      commit('VISITED_VIEWS', view)
     }
   },
   getters: {

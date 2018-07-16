@@ -23,7 +23,7 @@
              </div>
               <div slot='slot-5' v-if="settings.visible">
           <!-- <el-tooltip effect="light" :content="settings.content" placement="bottom" v-if="settings.visible"> -->
-            <gl-app-settings :settingParams="settingParams" v-on:@setVisible="handleSetVisible" />
+            <gl-app-settings :settingParams="settingParams" v-on:@setParamsConfig="handleSetParamsConfig" />
           <!-- </el-tooltip>  -->
               </div>
                <div slot='slot-6' v-if="logout.visible">
@@ -93,8 +93,8 @@ export default {
     handleItemChanged(value) {
       this.$emit('@itemChanged', value)
     },
-    handleSetVisible(params) {
-      this.$emit('@setVisible', params)
+    handleSetParamsConfig(params) {
+      this.$emit('@setParamsConfig', params)
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')

@@ -77,7 +77,6 @@ export default {
       }
     },
     oStyle() {
-      console.log(this)
       return {
         width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Aside.maxWidth : this.Aside.minWidth)) + 'px',
         backgroundColor: this.app.defaultColor,
