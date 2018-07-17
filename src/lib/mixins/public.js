@@ -2,12 +2,13 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 18:29:38
+ * @Last Modified time: 2018-07-17 14:51:00
  */
 
 import { mapActions } from 'vuex'
-import { recursionGet, recursionSet, get, set, firstUpperCase, getSession, setSession, Consts } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
 import { generateTitle } from '@/utils/i18n'
+const { set, get, getSession, recursionGet, firstUpperCase, recursionSet, setSession, Consts, remove, removeSession } = GlCommon
 export default {
   name: 'PublicMixin',
   methods: {
@@ -86,6 +87,12 @@ export default {
        * 2 . 调用 set  设置 localstorage
        */
       set(Consts.LOCAL_CONFIG.KEY, obj)
+    },
+    Remove() {
+      remove(Consts.LOCAL_CONFIG.KEY)
+    },
+    RemoveSession() {
+      removeSession(Consts.SESSION_CONFIG.KEY)
     },
     generateTitle
   }

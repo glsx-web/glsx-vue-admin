@@ -2,14 +2,15 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:28
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-11 11:16:27
+ * @Last Modified time: 2018-07-17 15:18:19
  */
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/cache'
-
+import { GlConst } from 'glsx-vue-common'
+import { PublicMixin } from '@/lib/mixins'
+const Publik = PublicMixin.methods
 const user = {
   state: {
-    token: getToken(),
+    token: Publik.GetSession(GlConst.AppConst.Auth.Token.Key),
     name: '',
     avatar: '',
     roles: []
@@ -38,7 +39,8 @@ const user = {
       return new Promise((resolve, reject) => {
         login.req({ username, password }).then(response => {
           const { token } = response.data
-          setToken(token)
+          Publik.SetSession(GlConst.AppConst.Auth.Token.Key, token)
+          // setToken(token)
           commit('SET_TOKEN', token)
           resolve()
         }).catch(error => {
@@ -67,27 +69,27 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit, state }) {
+    Logout({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout.req(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
+          // commit('SET_TOKEN', '')
+          // commit('SET_ROLES', [])
+          Publik.RemoveSession()
           resolve()
         }).catch(error => {
           reject(error)
         })
       })
-    },
+    }
 
     // 前端 登出
-    FedLogOut({ commit }) {
-      return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resolve()
-      })
-    }
+    // FedLogOut({ commit }) {
+    //   return new Promise(resolve => {
+    //     commit('SET_TOKEN', '')
+    //     removeToken()
+    //     resolve()
+    //   })
+    // }
   },
   getters: {
     roles: state => state.roles,

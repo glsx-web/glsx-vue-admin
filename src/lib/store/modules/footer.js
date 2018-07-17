@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-09 21:18:34
+ * @Last Modified time: 2018-07-17 15:17:10
  */
-import { recursionSet } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
 
 const footer = {
   state: {
@@ -16,7 +16,7 @@ const footer = {
   mutations: {
     SET_FOOTER: (state, args) => {
       const { arr, value } = args
-      recursionSet(state, arr, value)
+      GlCommon.recursionSet(state, arr, value)
     },
     INIT_FOOTER: (state, args) => {
       state = Object.assign(state, args)

@@ -45,11 +45,11 @@ const components = [
   Toggle
 ]
 import './styles/index.scss'
-import { prototypes, store, axios } from '@/lib'
+import { store } from '@/lib'
 const GlsxVueAdmin = {}
 
 GlsxVueAdmin.install = function(Vue, opts = {}) {
-  Vue.use(prototypes)
+  // Vue.use(prototypes)
   Vue.prototype.$config = opts
   components.map(component => {
     Vue.component(component.name, component, opts)
@@ -59,5 +59,5 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
 if (typeof window !== 'undefined' && window.Vue) {
   GlsxVueAdmin.install(window.Vue)
 }
-export { store as storeModules, axios }
+export { store as storeModules }
 export default GlsxVueAdmin

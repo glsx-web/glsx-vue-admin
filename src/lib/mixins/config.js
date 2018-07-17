@@ -2,11 +2,13 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 11:54:18
+ * @Last Modified time: 2018-07-17 15:37:51
  */
 
 import { mapActions } from 'vuex'
-import { get, set, firstUpperCase, setSession, Consts } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
+const { set, get, firstUpperCase, setSession, Consts } = GlCommon
+
 export default {
   name: 'ConfigMixin',
   methods: {

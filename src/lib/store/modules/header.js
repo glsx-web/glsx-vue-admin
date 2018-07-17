@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-16 00:33:00
+ * @Last Modified time: 2018-07-17 15:17:18
  */
-import { recursionSet } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
 const header = {
   state: {
     'visible': '',
@@ -63,7 +63,7 @@ const header = {
   mutations: {
     SET_HEADER: (state, args) => {
       const { arr, value } = args
-      recursionSet(state, arr, value)
+      GlCommon.recursionSet(state, arr, value)
     },
     INIT_HEADER: (state, args) => {
       state = Object.assign(state, args)

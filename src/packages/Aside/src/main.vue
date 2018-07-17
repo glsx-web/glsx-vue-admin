@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-13 01:56:22
+ * @Last Modified time: 2018-07-17 16:25:06
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -26,7 +26,8 @@ import { AsideMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
-import { AppConst } from '@/lib/consts'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
 export default {
   name: 'GlAppAside',
   mixins: [AsideMixin, PublicMixin, BeforeRoute],

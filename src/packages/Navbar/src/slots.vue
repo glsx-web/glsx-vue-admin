@@ -47,8 +47,8 @@ export default {
       height: 100%;
       .el-color-picker__trigger{
         background: linear-gradient(to bottom right, red , blue);
-            height: 22px !important;
-            width: 22px !important;
+            height: 26px !important;
+            width: 26px !important;
       }
     }
 </style>
