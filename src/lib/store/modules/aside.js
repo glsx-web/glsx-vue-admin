@@ -10,10 +10,10 @@ const aside = {
   state: {
     'visible': '',
     'state': '', // 状态   1:开启  2. 关闭
+    'maxWidth': 200,
+    'minWidth': 36,
     'sidebar': {
       'visible': '',
-      'maxWidth': 200,
-      'minWidth': 36,
       'textColor': '#fff',
       'activeTextColor': '#ffd04b',
       'backgroundColor': '#304156'

@@ -23,7 +23,8 @@ export default {
       'addVisitedViews',
       'delVisitedViews',
       'delOthersViews',
-      'delAllViews'
+      'delAllViews',
+      'saveKeepStatus'
     ])
   }
 }

@@ -41,6 +41,8 @@ export default {
       return {
         visible: this.aside.visible,
         state: this.aside.state,
+        maxWidth: this.aside.maxWidth,
+        minWidth: this.aside.minWidth,
         isOpend: this.aside.state === AppConst.States.OPEN,
         isClosed: this.aside.state === AppConst.States.CLOSE
       }
@@ -77,7 +79,7 @@ export default {
     },
     oStyle() {
       return {
-        width: (this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Sidebar.maxWidth : this.Sidebar.minWidth) + 'px',
+        width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Aside.maxWidth : this.Aside.minWidth)) + 'px',
         backgroundColor: this.app.defaultColor,
         height: '100%'
       }

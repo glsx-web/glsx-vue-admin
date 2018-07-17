@@ -33,9 +33,12 @@
           default: '/'
         }
       },
-      data() {
-        return {
-          logoStyle: {
+      computed: {
+        logoClass() {
+          return this.className || 'logo'
+        },
+        logoStyle() {
+          return {
             height: this.height + 'px',
             width: '100%',
             backgroundColor: 'transparent',
@@ -43,11 +46,6 @@
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center'
           }
-        }
-      },
-      computed: {
-        logoClass() {
-          return this.className || 'logo'
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <!-- <div class="dashboard-text">name:admin</div>
-    <div class="dashboard-text">roles:aaaaaa</div> -->
+    <div class="dashboard-text">name:admin</div>
+    <div class="dashboard-text">roles:aaaaaa</div>
     <input type="text">
   </div>
 </template>

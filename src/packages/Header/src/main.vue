@@ -7,7 +7,7 @@
         v-on:@toggleSideBar="handleToggle"
         v-on:@setLanguage="handleSetLanguage"
         v-on:@itemChanged="handleItemChanged"
-        v-on:@setVisible="handleSetVisible"
+        v-on:@setParamsConfig="handleSetParamsConfig"
         :navbarStyle="oNavbarStyle"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
@@ -28,6 +28,7 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
+        <gl-keep-alive />
         </draggable>
     </div>
 </template>
@@ -39,12 +40,14 @@ import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
 import { GlConst } from 'glsx-vue-common'
 const { HeaderConst, AsideConst, AppConst } = GlConst
+import GlKeepAlive from '@/packages/KeepAlive'
 export default {
   name: 'GlAppHeader',
   mixins: [HeaderMixin, PublicMixin],
   components: {
     GlAppNavbar,
     GlAppTagsView,
+    GlKeepAlive,
     draggable
   },
   computed: {
@@ -167,7 +170,7 @@ export default {
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
     },
-    handleSetVisible(params) {
+    handleSetParamsConfig(params) {
       this.SetMulti(params)
     }
   },

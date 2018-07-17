@@ -47,7 +47,7 @@ export const routers = [
     children: [
       {
         path: 'index',
-        name: 'gl-form',
+        name: 'GlForm',
         component: () => import(`@/${views}/form/index`),
         meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: false }
       }

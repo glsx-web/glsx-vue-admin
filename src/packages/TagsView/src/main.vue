@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     generateRoute() {
+      console.log('tags=========' + this.$route.meta.keepAlive)
       return this.$route.name ? this.$route : false
     },
     isActive(route) {
