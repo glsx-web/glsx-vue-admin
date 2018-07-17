@@ -19,7 +19,7 @@ import {
   SvgIcon,
   TagsView,
   ThemePicker,
-  Toggle
+  GlKeepAlive
 } from './packages'
 const components = [
   Aside,
@@ -42,7 +42,7 @@ const components = [
   SvgIcon,
   TagsView,
   ThemePicker,
-  Toggle
+  GlKeepAlive
 ]
 import './styles/index.scss'
 import { store } from '@/lib'
