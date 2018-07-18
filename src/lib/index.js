@@ -1,5 +1,2 @@
-export { default as axios } from './axios'
 export { default as i18n } from './lang'
-export { default as prototypes } from './prototypes'
-export { default as router } from './router'
 export { store } from './store'

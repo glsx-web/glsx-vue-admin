@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:14
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-11 20:46:17
+ * @Last Modified time: 2018-07-17 12:32:59
  */
-import { AppConst } from '@/lib/consts'
+import { GlConst } from 'glsx-vue-common'
 
 const permission = {
   state: {
@@ -22,7 +22,7 @@ const permission = {
         const { routers, routes, roles } = data
         const routesSet = new Set(routes)
         const rolesSet = new Set(roles)
-        const filetrRouters = rolesSet.has(AppConst.Auth.Admin.Key) ? routers : routerFilter(routers, routesSet)
+        const filetrRouters = rolesSet.has(GlConst.AppConst.Auth.Admin.Key) ? routers : routerFilter(routers, routesSet)
         commit('SET_ROUTERS', filetrRouters)
         resolve()
       })

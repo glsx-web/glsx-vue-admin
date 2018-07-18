@@ -2,11 +2,12 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:32
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-13 01:35:56
+ * @Last Modified time: 2018-07-17 15:34:26
  */
 import { mapGetters, mapActions } from 'vuex'
-import { AppConst, AsideConst } from '@/lib/consts'
+import { GlConst } from 'glsx-vue-common'
 const { body } = document
+const { AppConst, AsideConst } = GlConst
 const WIDTH = 1024
 const RATIO = 3
 

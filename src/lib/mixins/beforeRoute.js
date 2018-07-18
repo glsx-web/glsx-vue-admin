@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-11 17:08:29
+ * @Last Modified time: 2018-07-17 15:17:22
  */
 
 import { Message } from 'element-ui'
@@ -42,7 +42,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['GetInfo', 'GenerateRoutes', 'FedLogOut']),
+    ...mapActions(['GetInfo', 'GenerateRoutes', 'Logout']),
     routerfilter() {
       return new Promise((resole, reject) => {
         const router = this.$router
@@ -54,7 +54,7 @@ export default {
               resole(resources)
             })
           }).catch((err) => {
-            this.FedLogOut().then(() => {
+            this.Logout().then(() => {
               Message.error(err || 'Verification failed, please login again')
             })
           })

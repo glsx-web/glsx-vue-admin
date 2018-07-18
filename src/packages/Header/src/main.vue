@@ -37,7 +37,8 @@ import draggable from 'vuedraggable'
 import { HeaderMixin, PublicMixin } from '@/lib/mixins'
 import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
-import { HeaderConst, AsideConst, AppConst } from '@/lib/consts'
+import { GlConst } from 'glsx-vue-common'
+const { HeaderConst, AsideConst, AppConst } = GlConst
 export default {
   name: 'GlAppHeader',
   mixins: [HeaderMixin, PublicMixin],

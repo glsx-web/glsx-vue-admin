@@ -2,12 +2,22 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 18:29:38
+ * @Last Modified time: 2018-07-18 15:21:37
  */
 
 import { mapActions } from 'vuex'
-import { recursionGet, recursionSet, get, set, firstUpperCase, getSession, setSession, Consts } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
 import { generateTitle } from '@/utils/i18n'
+const {
+  recursionGet,
+  firstUpperCase,
+  SetConfig,
+  SetConfigByKey,
+  GetConfigByKey,
+  GetSessionConfigByKey,
+  SetSessionConfigByKey,
+  RemoveSessionConfig,
+  RemoveConfig } = GlCommon
 export default {
   name: 'PublicMixin',
   methods: {
@@ -24,56 +34,32 @@ export default {
     Get(key) {
       var aKeys = key.split('_')
       var module = aKeys.shift()
-      return new Promise((resolve, reject) => {
-        get(Consts.LOCAL_CONFIG.KEY).then(configLocal => {
-          getSession(Consts.SESSION_CONFIG.KEY).then(configSession => {
-            Promise.all([recursionGet(this[module], aKeys), recursionGet(configLocal[module], aKeys), recursionGet(configSession[module], aKeys)]).then(function(values) {
-              const result = (values[0] || values[1] || values[2])
-              resolve(result)
-            }).catch(error => {
-              reject(error)
-            })
-          })
-        })
-      })
+      const vxValue = recursionGet(this[module], aKeys)
+      if (vxValue) { return vxValue }
+      const localValue = GetConfigByKey(key)
+      if (localValue) { return localValue }
+      const sessionValue = GetSessionConfigByKey(key)
+      return sessionValue
     },
     Set(key, value) {
-      var aKeys = key.split('_')
       var module = key.split('_').shift()
-      return new Promise((resole) => {
-        this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
-          get(Consts.LOCAL_CONFIG.KEY).then(config => {
-            config = config || {}
-            recursionSet(config, aKeys, value)
-            set(Consts.LOCAL_CONFIG.KEY, config)
-          })
-          resole()
-        })
+      this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
+        SetConfigByKey(key, value)
       })
     },
     SetSession(key, value) {
-      var aKeys = key.split('_')
       var module = key.split('_').shift()
       this[`Set${firstUpperCase(module)}`]({ key: key, value: value }).then(() => {
-        getSession(Consts.SESSION_CONFIG.KEY).then(config => {
-          config = config || {}
-          recursionSet(config, aKeys, value)
-          setSession(Consts.SESSION_CONFIG.KEY, config)
-        })
+        SetSessionConfigByKey(key, value)
       })
     },
     GetSession(key) {
       var aKeys = key.split('_')
       var module = aKeys.shift()
-      getSession(Consts.SESSION_CONFIG.KEY).then(configSession => {
-        configSession = configSession || {}
-        Promise.all([recursionGet(this[module], aKeys), recursionGet(configSession[module], aKeys)]).then(function(values) {
-          const result = (values[0] || values[1])
-          return (result)
-        }).catch(error => {
-          console.log(error)
-        })
-      })
+      const vuxValue = recursionGet(this[module], aKeys)
+      if (vuxValue) { return vuxValue }
+      const sessionValue = GetSessionConfigByKey(key)
+      return (sessionValue)
     },
     SetMulti(obj) {
       /**
@@ -85,7 +71,17 @@ export default {
       /**
        * 2 . 调用 set  设置 localstorage
        */
-      set(Consts.LOCAL_CONFIG.KEY, obj)
+      SetConfig(obj)
+    },
+    Remove() {
+      RemoveConfig()
+    },
+    RemoveSession() {
+      this.InitHeader({})
+      this.InitAside({})
+      this.InitFooter({})
+      this.InitApp({})
+      RemoveSessionConfig()
     },
     generateTitle
   }

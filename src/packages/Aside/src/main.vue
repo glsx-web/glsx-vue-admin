@@ -2,15 +2,17 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-13 01:56:22
+ * @Last Modified time: 2018-07-17 22:45:30
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
+    <transition name="fade-transform" mode="out-in">
       <gl-app-logo v-if="Logo.visible"
         :width="oLogo.width" 
         :height="oLogo.height" 
         :backgroundColor="oLogo.backgroundColor" 
         :backgroundImage="oLogo.backgroundImage" />
+      </transition>
         <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
           <gl-app-sidebar 
             :isCollapse="oSidebar.isCollapse" 
@@ -26,7 +28,8 @@ import { AsideMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
-import { AppConst } from '@/lib/consts'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
 export default {
   name: 'GlAppAside',
   mixins: [AsideMixin, PublicMixin, BeforeRoute],

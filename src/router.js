@@ -49,7 +49,7 @@ export const routers = [
         path: 'index',
         name: 'GlForm',
         component: () => import(`@/${views}/form/index`),
-        meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: true }
+        meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: false }
       }
     ]
   },

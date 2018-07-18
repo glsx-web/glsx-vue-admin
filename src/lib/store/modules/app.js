@@ -2,9 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-13 00:37:52
+ * @Last Modified time: 2018-07-18 14:58:40
  */
-import { recursionSet } from '@/utils'
+import { GlCommon } from 'glsx-vue-common'
 
 const app = {
   state: {
@@ -13,13 +13,14 @@ const app = {
     defaultColor: '',
     auth: {
       resources: [],
+      roles: [],
       token: ''
     }
   },
   mutations: {
     SET_APP: (state, args) => {
       const { arr, value } = args
-      recursionSet(state, arr, value)
+      GlCommon.recursionSet(state, arr, value)
     },
     INIT_APP: (state, args) => {
       state = Object.assign(state, args)

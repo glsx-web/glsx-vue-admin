@@ -2,11 +2,17 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-12 11:54:18
+ * @Last Modified time: 2018-07-18 14:11:55
  */
 
 import { mapActions } from 'vuex'
-import { get, set, firstUpperCase, setSession, Consts } from '@/common'
+import { GlCommon } from 'glsx-vue-common'
+const {
+  firstUpperCase,
+  SetConfig,
+  SetSessionConfig
+} = GlCommon
+
 export default {
   name: 'ConfigMixin',
   methods: {
@@ -18,15 +24,12 @@ export default {
     ]),
     initConfig() {
       return new Promise(resole => {
-        get(Consts.LOCAL_CONFIG.KEY).then(configLocal => {
-          const config = this.$config
-          const cfg = Object.assign({}, config, configLocal)
-          setSession(Consts.SESSION_CONFIG.KEY, config)
-          set(Consts.LOCAL_CONFIG.KEY, cfg)
-          for (var key in cfg) {
-            this[`Init${firstUpperCase(key)}`](cfg[key])
-          }
-        })
+        const config = this.$config
+        SetSessionConfig(config)
+        const cfg = SetConfig(config)
+        for (var key in cfg) {
+          this[`Init${firstUpperCase(key)}`](cfg[key])
+        }
         resole()
       })
     }
