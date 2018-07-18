@@ -77,6 +77,11 @@ export default{
     height: 60
   },
   app: {
-    defaultColor: '#409EFF'
+    defaultColor: '#409EFF',
+    axios: {
+      baseURL: 'http://192.168.3.171:7300/mock/5b0ed7dbf189006180803286/standard',
+      'whiteList': ['user/login', 'user/info'],
+      'timeout': 15000
+    }
   }
 }

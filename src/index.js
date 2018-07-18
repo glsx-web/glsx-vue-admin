@@ -1,58 +1,28 @@
 import {
   Aside,
-  Breadcrumb,
   Footer,
-  Hamburger,
   Header,
-  LangSelect,
-  Logo,
-  Logout,
   Main,
-  Navbar,
-  NavUser,
-  Screenfull,
-  Scroll,
-  ScrollPane,
-  Settings,
-  Sidebar,
-  SidebarItem,
   SvgIcon,
-  TagsView,
-  ThemePicker,
-  GlKeepAlive
+  Scroll
 } from './packages'
 const components = [
   Aside,
-  Breadcrumb,
   Footer,
-  Hamburger,
   Header,
-  LangSelect,
-  Logo,
-  Logout,
   Main,
-  Navbar,
-  NavUser,
-  Screenfull,
-  Scroll,
-  ScrollPane,
-  Settings,
-  Sidebar,
-  SidebarItem,
   SvgIcon,
-  TagsView,
-  ThemePicker,
-  GlKeepAlive
+  Scroll
 ]
 import './styles/index.scss'
 import { store } from '@/lib'
 const GlsxVueAdmin = {}
-
 GlsxVueAdmin.install = function(Vue, opts = {}) {
-  // Vue.use(prototypes)
   Vue.prototype.$config = opts
   components.map(component => {
-    Vue.component(component.name, component, opts)
+    Vue.component(component.name, (resolve, reject) => {
+      resolve(component)
+    })
   })
 }
 /* istanbul ignore if */
