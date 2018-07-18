@@ -45,7 +45,7 @@
                         </el-col>
                         <el-col :span="6">
                           <el-form-item>
-                            <el-input v-model="params.header.navbar.user.name.value"></el-input>
+                            <el-input v-model="params.header.navbar.user.name.value" :disabled="true"></el-input>
                           </el-form-item>
                         </el-col>
                       </el-form>
@@ -131,7 +131,7 @@
                         <el-col :span="17">
                           <el-form-item >
                             <div>
-                              <div class="preColor" v-for="item in list" :key="item" :style="{background: item}"></div>
+                              <div class="preColor" v-for="item in list" :key="item" :style="{background: item}"></div><div class="preColor" :style="{background: this.currentColor}" ></div>
                             </div>
                           </el-form-item>
                         </el-col>
@@ -297,7 +297,8 @@
               </el-tab-pane>
           </el-tabs>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="info" @click="restoreDefault">回复默认设置</el-button>
+          <el-button @click="cancel">取 消</el-button>
           <el-button type="primary" @click="handleSetParamsConfig">确 定</el-button>
         </div>
       </el-dialog>
@@ -307,8 +308,10 @@
 <script>
 import LangSelect from '@/packages/LangSelect'
 import GlAppThemePicker from '@/packages/ThemePicker'
+import { PublicMixin } from '@/lib/mixins'
 export default {
   name: 'GlAppSettings',
+  mixins: [PublicMixin],
   components: {
     LangSelect,
     GlAppThemePicker
@@ -323,7 +326,7 @@ export default {
         return this.color
       },
       set: function(value) {
-        this.color = value
+        this.currentColor = value
       }
     }
   },
@@ -334,9 +337,11 @@ export default {
       params: JSON.parse(JSON.stringify(this.settingParams)),
       formLabelWidth: '120px',
       imageUrl: '',
-      color: '#409EFF',
+      color: '',
+      currentColor: '',
       list: [],
-      flag: true
+      flag: true,
+      show: true
     }
   },
   methods: {
@@ -358,14 +363,16 @@ export default {
       if (!this.dialogFormVisible) {
         // 遍历数组是否有重复添加
         for (var i = 0; i < array.length; i++) {
-          if (this.color === array[i]
-          ) {
+          if (this.currentColor === array[i] || this.currentColor === null) {
             this.flag = false
           }
         }
         // 无重复元素，push颜色
         if (this.flag === true) {
-          this.params.header.navbar.theme.preDefineColors.push(this.color)
+          this.params.header.navbar.theme.preDefineColors.push(this.currentColor)
+          this.color = this.currentColor
+          this.currentColor = ''
+          this.show = false
         }
         this.$emit('@setParamsConfig', this.params)
         console.log(this.params)
@@ -374,6 +381,16 @@ export default {
         this.list = this.params.header.navbar.theme.preDefineColors
         this.params = JSON.parse(JSON.stringify(this.settingParams))
       }
+    },
+    // 取消
+    cancel() {
+      this.dialogFormVisible = false
+      this.color = this.currentColor
+      this.currentColor = ''
+    },
+    // 恢复默认设置
+    restoreDefault(key) {
+      this.$get_session_config(key)
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
