@@ -1,13 +1,15 @@
 <template>
-   <gl-app-scroll :height="nHeight">
-          <app-main :cachedViews="cachedViews" />
-      </gl-app-scroll>
+  <gl-app-scroll :height="nHeight">
+    <gl-keep-alive />
+    <app-main :cachedViews="cachedViews" />
+  </gl-app-scroll>
 </template>
 
 <script>
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
 import { AppMixin } from '@/lib/mixins'
+import GlKeepAlive from '@/packages/KeepAlive'
 import { mapGetters } from 'vuex'
 /**
 /**
@@ -18,7 +20,8 @@ export default {
   mixins: [AppMixin],
   components: {
     AppMain,
-    GlAppScroll
+    GlAppScroll,
+    GlKeepAlive
   },
   computed: {
     ...mapGetters([

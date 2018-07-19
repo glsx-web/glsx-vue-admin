@@ -28,7 +28,6 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
-        <gl-keep-alive />
         </draggable>
     </div>
 </template>
@@ -40,14 +39,12 @@ import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
 import { GlConst } from 'glsx-vue-common'
 const { HeaderConst, AsideConst, AppConst } = GlConst
-import GlKeepAlive from '@/packages/KeepAlive'
 export default {
   name: 'GlAppHeader',
   mixins: [HeaderMixin, PublicMixin],
   components: {
     GlAppNavbar,
     GlAppTagsView,
-    GlKeepAlive,
     draggable
   },
   computed: {
