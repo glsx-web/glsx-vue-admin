@@ -2,17 +2,10 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-18 14:11:55
+ * @Last Modified time: 2018-07-19 20:04:53
  */
 
 import { mapActions } from 'vuex'
-import { GlCommon } from 'glsx-vue-common'
-const {
-  firstUpperCase,
-  SetConfig,
-  SetSessionConfig
-} = GlCommon
-
 export default {
   name: 'ConfigMixin',
   methods: {
@@ -25,18 +18,13 @@ export default {
     initConfig() {
       return new Promise(resole => {
         const config = this.$config
-        SetSessionConfig(config)
-        const cfg = SetConfig(config)
+        this.$set_session_config(config)
+        const cfg = this.$set_config(config)
         for (var key in cfg) {
-          this[`Init${firstUpperCase(key)}`](cfg[key])
+          this[`Init${this.$fist_uppercase(key)}`](cfg[key])
         }
         resole()
       })
     }
-  },
-  mounted() {
-    this.initConfig().then(() => {
-      this.$config = null
-    })
   }
 }

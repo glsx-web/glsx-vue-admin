@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-18 14:58:40
+ * @Last Modified time: 2018-07-19 20:23:06
  */
 import { GlCommon } from 'glsx-vue-common'
 
@@ -32,8 +32,7 @@ const app = {
       if (!key || !key.startsWith('app_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.split('_')
-      arr.shift()
+      const arr = key.replace('app_', '')
       commit('SET_APP', { arr: arr, value: value })
     },
     InitApp: ({ commit }, objApp) => {

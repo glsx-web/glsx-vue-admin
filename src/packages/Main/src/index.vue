@@ -7,7 +7,7 @@
 <script>
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
-import { AppMixin, ConfigMixin } from '@/lib/mixins'
+import { AppMixin } from '@/lib/mixins'
 import { mapGetters } from 'vuex'
 /**
 /**
@@ -15,7 +15,7 @@ import { mapGetters } from 'vuex'
  */
 export default {
   name: 'GlAppMain',
-  mixins: [AppMixin, ConfigMixin],
+  mixins: [AppMixin],
   components: {
     AppMain,
     GlAppScroll
@@ -34,6 +34,9 @@ export default {
       const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
       return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight
     }
+  },
+  beforeMount() {
+    if (!this.$get_token()) { this.$router.push('/login') }
   }
 }
 </script>

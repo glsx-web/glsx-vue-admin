@@ -129,15 +129,12 @@ export default {
   .right-menus {
     float: right;
     height: 100%;
-    margin-right: 30px;
-    line-height: 60px;
+    margin-right: 20px;
     &:focus{
      outline: none;
     }
     &-slots{
       height: 100%;
-      // float:left;
-      // transition :transform .2s ease-out forwards, opacity .2s ease-out forwards;
     }
     &-toggle{
       float: right;
@@ -182,9 +179,12 @@ export default {
   .right-menu {
     .el-color-picker__trigger{
       background-color: linear-gradient(to bottom right, red , blue);
+      height: 22px !important;
+      width: 22px !important;
+      top:2px;
     }
     &>div{
-      padding: 0 15px;
+      padding: 0 8px;
       position: relative;
       &:hover{
        background-color: rgba($color: #fff, $alpha: 0.1) ;
@@ -194,7 +194,7 @@ export default {
     cursor: pointer;
     vertical-align: middle;
     fill:#fff;
-    height: 20px;
+    height: 18px;
   }
 }
 </style>

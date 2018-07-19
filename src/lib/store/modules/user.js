@@ -2,67 +2,47 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:28
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-18 15:09:16
+ * @Last Modified time: 2018-07-19 20:41:36
  */
-import { login, logout, getInfo } from '@/api/user'
-import { GlConst } from 'glsx-vue-common'
-import { PublicMixin } from '@/lib/mixins'
-const Publik = PublicMixin.methods
+import { logout, getInfo } from '@/api/user'
+import { GlConst, GlCommon } from 'glsx-vue-common'
 const { AppConst, HeaderConst } = GlConst
+const { SetSessionConfigByKey } = GlCommon
 const user = {
-  state: {
-  },
-  mutations: {
-  },
   actions: {
-    // 登录
-    Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
-      const password = userInfo.password
-      return new Promise((resolve, reject) => {
-        login.req({ username, password }).then(response => {
-          const { token } = response.data
-          Publik.SetSession(AppConst.Auth.Token.Key, token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo({ dispatch }, token) {
       return new Promise((resolve, reject) => {
-        getInfo.req(state.token).then(response => {
+        getInfo.req(token).then(response => {
           const { roles, name, avatar } = response.data
           if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            Publik.SetSession(AppConst.Auth.Roles.Key, roles)
-            Publik.SetSession(HeaderConst.Navbar.User.Name.Key, name)
-            Publik.SetSession(HeaderConst.Navbar.User.Avatar.Key, avatar)
+            dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles }, { root: true })
+              .then(() => SetSessionConfigByKey(AppConst.Auth.Roles.Key, roles))
+            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name }, { root: true })
+              .then(() => SetSessionConfigByKey(HeaderConst.Navbar.User.Name.Key, name))
+            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar }, { root: true })
+              .then(() => SetSessionConfigByKey(HeaderConst.Navbar.User.Avatar.Key, avatar))
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
           resolve(response)
         }).catch(error => {
-          reject(error)
+          throw error
         })
       })
     },
 
     // 登出
-    Logout({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        logout.req(state.token).then(() => {
-          Publik.RemoveSession()
+    Logout({ dispatch }, token) {
+      return new Promise(resolve => {
+        logout.req(token).then(() => {
           resolve()
         }).catch(error => {
-          reject(error)
+          resolve()
+          throw error
         })
       })
     }
-  },
-  getters: {
   }
 }
-
 export default user

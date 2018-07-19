@@ -7,23 +7,24 @@ const views = 'views'
 /* Layout */
 import Layout from '@/views/layout'
 export const routers = [
-  // { path: '/login', component: () => import(`@/${views}/login/index`), hidden: true },
-  // { path: '/404', component: () => import(`@/${views}/errorPage/404`), hidden: true },
-  // { path: '/401', component: () => import(`@/${views}/errorPage/401`), hidden: true },
   {
-    path: '',
-    component: Layout,
-    children: [{
-      path: 'dashboard',
-      component: () => import(`@/${views}/dashboard/index`),
-      name: 'dashboard',
-      meta: { title: 'dashboard', icon: 'form', keepAlive: true }
-    }]
+    path: '/index/:token',
+    name: 'index',
+    component: () => import(`@/${views}/index`),
+    hidden: true
+  },
+  { path: '/login', component: () => import(`@/${views}/login/index`), hidden: true },
+  { path: '/404', component: () => import(`@/${views}/errorPage/404`), hidden: true },
+  { path: '/401', component: () => import(`@/${views}/errorPage/401`), hidden: true },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    meta: { title: 'dashboard', icon: 'dashboard', permission: '/dashboard' },
+    component: () => import(`@/${views}/dashboard/index`)
   },
   {
     path: '/example',
     component: Layout,
-    redirect: 'noredirect',
     name: 'example',
     meta: { title: 'example', icon: 'example', permission: '/example' },
     children: [
