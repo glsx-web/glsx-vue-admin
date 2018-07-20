@@ -340,8 +340,7 @@ export default {
       color: '',
       currentColor: '',
       list: [],
-      flag: true,
-      show: true
+      flag: true
     }
   },
   methods: {
@@ -363,7 +362,7 @@ export default {
       if (!this.dialogFormVisible) {
         // 遍历数组是否有重复添加
         for (var i = 0; i < array.length; i++) {
-          if (this.currentColor === array[i] || this.currentColor === null) {
+          if (this.currentColor === array[i] || this.currentColor === '') {
             this.flag = false
           }
         }
@@ -372,7 +371,6 @@ export default {
           this.params.header.navbar.theme.preDefineColors.push(this.currentColor)
           this.color = this.currentColor
           this.currentColor = ''
-          this.show = false
         }
         this.$emit('@setParamsConfig', this.params)
         console.log(this.params)
@@ -389,8 +387,9 @@ export default {
       this.currentColor = ''
     },
     // 恢复默认设置
-    restoreDefault(key) {
-      this.$get_session_config(key)
+    restoreDefault() {
+      this.params = this.$get_session_config()
+      this.currentColor = ''
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
