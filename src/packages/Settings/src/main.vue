@@ -8,10 +8,11 @@
         </svg>
       </span>
       <el-dialog title="系统设置" :visible.sync="dialogFormVisible">
-          <el-tabs :tab-position="tabPosition" style="height: auto;" >
+          <el-tabs :tab-position="tabPosition"   >
               <el-tab-pane label="头部导航">
-                <el-collapse accordion>
-                  <el-collapse-item>
+                <gl-app-scroll :height=300 style="min-height:200px;">
+                <el-collapse v-model="activeNames" >
+                  <el-collapse-item name="1">
                       <template slot="title"  @click="handeleTitleClick">
                           用户信息 
                       </template>
@@ -50,7 +51,7 @@
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item>
+                    <el-collapse-item name="2">
                       <template slot="title"  @click="handeleTitleClick">
                           选择语言 
                       </template>
@@ -66,7 +67,7 @@
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item>
+                    <el-collapse-item name="3">
                       <template slot="title"  @click="handeleTitleClick">
                           窗口设置 
                       </template>
@@ -81,7 +82,7 @@
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item>
+                    <el-collapse-item name="4">
                       <template slot="title"  @click="handeleTitleClick">
                           tagsView 
                       </template>
@@ -104,7 +105,7 @@
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item>
+                    <el-collapse-item name="5">
                       <template slot="title"  @click="handeleTitleClick">
                           主题设置 
                       </template>
@@ -131,13 +132,13 @@
                         <el-col :span="17">
                           <el-form-item >
                             <div>
-                              <div class="preColor" v-for="item in list" :key="item" :style="{background: item}"></div><div class="preColor" :style="{background: this.currentColor}" ></div>
+                              <div class="preColor" v-for="(item , index) in this.params.header.navbar.theme.preDefineColors" :key="index" :style="{background: item}" @click="close(index)"></div>
                             </div>
                           </el-form-item>
                         </el-col>
                       </el-form>
                     </el-collapse-item>
-                    <el-collapse-item>
+                    <el-collapse-item name="6">
                       <template slot="title"  @click="handeleTitleClick">
                           注销入口 
                       </template>
@@ -153,10 +154,12 @@
                       </el-form>
                     </el-collapse-item>
                 </el-collapse>
+                </gl-app-scroll>
               </el-tab-pane>
               <el-tab-pane label="左侧菜单">
-                <el-collapse accordion>
-                  <el-collapse-item>
+                <gl-app-scroll :height=300>
+                <el-collapse v-model="activeNames">
+                  <el-collapse-item name="1">
                     <template slot="title"  @click="handeleTitleClick">
                         左侧菜单 
                     </template>
@@ -195,7 +198,7 @@
                       </el-col>
                     </el-form>
                   </el-collapse-item>
-                  <el-collapse-item>
+                  <el-collapse-item name="2">
                     <template slot="title"  @click="handeleTitleClick">
                         logo 
                     </template>
@@ -229,7 +232,7 @@
                       </el-col>
                     </el-form>
                   </el-collapse-item>
-                  <el-collapse-item>
+                  <el-collapse-item name="3">
                     <template slot="title"  @click="handeleTitleClick">
                         sidebar 
                     </template>
@@ -267,9 +270,11 @@
                     </el-form>
                   </el-collapse-item>
                 </el-collapse>
+                </gl-app-scroll>
               </el-tab-pane>
               <el-tab-pane label="版权信息">
-                <el-collapse accordion>
+                <gl-app-scroll :height=200 style="min-height:200px;">
+                <el-collapse v-model="activeNames">
                   <el-collapse-item>
                     <template slot="title"  @click="handeleTitleClick">
                         版权信息 
@@ -294,10 +299,19 @@
                     </el-form>
                   </el-collapse-item>
                 </el-collapse>
+                </gl-app-scroll>
               </el-tab-pane>
           </el-tabs>
         <div slot="footer" class="dialog-footer">
-          <el-button type="info" @click="restoreDefault">回复默认设置</el-button>
+          <el-popover placement="top" width="160" v-model="visible">
+            <p>即将清空所有修改的设置，是否确定？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="restoreDefault">确定</el-button>
+            </div>
+            <el-button slot="reference">恢复默认设置</el-button>
+          </el-popover>
+          <!-- <el-button type="info" @click="restoreDefault">回复默认设置</el-button> -->
           <el-button @click="cancel">取 消</el-button>
           <el-button type="primary" @click="handleSetParamsConfig">确 定</el-button>
         </div>
@@ -326,7 +340,11 @@ export default {
         return this.color
       },
       set: function(value) {
-        this.currentColor = value
+        this.color = value
+        const set = new Set(this.params.header.navbar.theme.preDefineColors)
+        if (!set.has(this.color)) {
+          this.params.header.navbar.theme.preDefineColors.push(this.color)
+        }
       }
     }
   },
@@ -337,10 +355,10 @@ export default {
       params: JSON.parse(JSON.stringify(this.settingParams)),
       formLabelWidth: '120px',
       imageUrl: '',
-      color: '',
-      currentColor: '',
-      list: [],
-      flag: true
+      color: '#409EFF',
+      flag: true,
+      visible: false
+      // activeNames: ['1']
     }
   },
   methods: {
@@ -355,41 +373,53 @@ export default {
     handleTheme(theme) {
       this.$emit('@themeHandler', theme)
     },
+    // 删除预选颜色
+    close(index) {
+      this.params.header.navbar.theme.preDefineColors.splice(index, 1)
+    },
+    // 确定按钮
     handleSetParamsConfig() {
       this.dialogFormVisible = !this.dialogFormVisible
-      var array = this.params.header.navbar.theme.preDefineColors
-      // 窗口关闭
+      // var array = this.params.header.navbar.theme.preDefineColors
+      // // 窗口关闭
       if (!this.dialogFormVisible) {
-        // 遍历数组是否有重复添加
-        for (var i = 0; i < array.length; i++) {
-          if (this.currentColor === array[i] || this.currentColor === '') {
-            this.flag = false
-          }
-        }
+      //   // 遍历数组是否有重复添加
+      //   for (var i = 0; i < array.length; i++) {
+      //     if (this.currentColor === array[i] || this.currentColor === '') {
+      //       this.flag = false
+      //       break
+      //     } else {
+      //       this.flag = true
+      //       break
+      //     }
+      //   }
         // 无重复元素，push颜色
-        if (this.flag === true) {
-          this.params.header.navbar.theme.preDefineColors.push(this.currentColor)
-          this.color = this.currentColor
-          this.currentColor = ''
-        }
+        // if (this.flag === true) {
+        //   this.params.header.navbar.theme.preDefineColors.push(...this.currentColor)
+        //   this.color = this.currentColor
+        //   this.currentColor = ''
+        // }
         this.$emit('@setParamsConfig', this.params)
         console.log(this.params)
       } else {
         // 窗口打开
-        this.list = this.params.header.navbar.theme.preDefineColors
         this.params = JSON.parse(JSON.stringify(this.settingParams))
       }
     },
     // 取消
     cancel() {
       this.dialogFormVisible = false
-      this.color = this.currentColor
-      this.currentColor = ''
+      // this.color = this.currentColor
+      // this.currentColor = ''
     },
     // 恢复默认设置
     restoreDefault() {
       this.params = this.$get_session_config()
-      this.currentColor = ''
+      // console.log(this.$get_session_config())
+      this.$emit('@setParamsConfig', this.params)
+      this.dialogFormVisible = false
+      this.visible = false
+      // this.currentColor = ''
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
@@ -418,9 +448,10 @@ export default {
   }
   .preColor {
     display: inline-block;
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     margin-right: 10px;
+    position: relative
   }
 </style>
 <style  rel="stylesheet/scss" lang="scss">

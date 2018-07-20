@@ -13,7 +13,7 @@ NProgress.configure({ showSpinner: true })// NProgress Configuration
 export default {
   name: 'BeforeRoute',
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['app'])
   },
   mounted() {
     const router = this.$router
@@ -46,7 +46,7 @@ export default {
     routerfilter() {
       return new Promise((resole, reject) => {
         const router = this.$router
-        if (this.user.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        if (this.app.auth.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
           this.GetInfo().then(res => { // 拉取user_info
             const { roles, routes, resources } = res.data // note: roles must be a array! such as: ['editor','develop']
             this.GenerateRoutes({ roles, routes, routers: router.options.routes }).then(() => { // 根据roles权限生成可访问的路由表

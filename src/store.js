@@ -8,7 +8,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.config.devtools = true
 Vue.use(Vuex)
-import { storeModules } from 'glsx-vue-admin'
+import { storeModules } from './index'
 const store = new Vuex.Store({
   modules: {
     ...storeModules
