@@ -2,10 +2,9 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:50
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-17 15:54:46
+ * @Last Modified time: 2018-07-18 20:44:50
  */
 import { GlAxios } from 'glsx-vue-common'
-
 const path = 'user'
 
 const __sLogin = `${path}/login`
@@ -14,23 +13,17 @@ const __sLogout = `${path}/logout`
 
 const login = {
   p: [__sLogin],
-  req: params => {
-    return GlAxios.post(__sLogin, params)
-  }
+  req: params => GlAxios.post(__sLogin, params)
 }
 
 const getInfo = {
   p: [__sGetInfo],
-  req: params => {
-    return GlAxios.post(__sGetInfo, params)
-  }
+  req: params => GlAxios.post(__sGetInfo, params)
 }
 
 const logout = {
   p: [__sLogout],
-  req: () => {
-    return GlAxios.post(__sLogout)
-  }
+  req: () => GlAxios.post(__sLogout)
 }
 export {
   login,

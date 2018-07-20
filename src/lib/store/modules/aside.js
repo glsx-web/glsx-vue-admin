@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-17 12:02:37
+ * @Last Modified time: 2018-07-19 20:23:11
  */
 import { GlCommon } from 'glsx-vue-common'
 
@@ -40,8 +40,7 @@ const aside = {
       if (!key || !key.startsWith('aside_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.split('_')
-      arr.shift()
+      const arr = key.replace('aside_', '')
       commit('SET_ASIDE', { arr: arr, value: value })
     },
     InitAside: ({ commit }, objAside) => {

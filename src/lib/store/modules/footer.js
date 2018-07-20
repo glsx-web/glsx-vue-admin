@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-17 15:17:10
+ * @Last Modified time: 2018-07-19 20:23:18
  */
 import { GlCommon } from 'glsx-vue-common'
 
@@ -28,8 +28,7 @@ const footer = {
       if (!key || !key.startsWith('footer_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.split('_')
-      arr.shift()
+      const arr = key.replace('footer_', '')
       commit('SET_FOOTER', { arr: arr, value: value })
     },
     InitFooter: ({ commit }, objFooter) => {

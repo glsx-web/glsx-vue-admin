@@ -130,8 +130,9 @@ export default {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
-      this.LogOut().then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
+      this.Logout().then(() => {
+        // location.reload() // 为了重新实例化vue-router对象 避免bug
+        this.$router.push('/example/table')
       })
     },
     handleToggle() {

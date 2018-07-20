@@ -41,14 +41,3 @@ export default {
         align-items: center;
     }
 </style>
-
-<style rel="stylesheet/scss" lang="scss">
-  .right-menu {
-      height: 100%;
-      .el-color-picker__trigger{
-        background: linear-gradient(to bottom right, red , blue);
-            height: 26px !important;
-            width: 26px !important;
-      }
-    }
-</style>

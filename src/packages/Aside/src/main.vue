@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-17 22:45:30
+ * @Last Modified time: 2018-07-19 20:18:37
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -23,8 +23,9 @@
         <!-- <i class="dragger" v-drag="greet"></i> -->
   </div>
 </template>
+
 <script>
-import { AsideMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
+import { AsideMixin, PublicMixin, BeforeRoute, ConfigMixin } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
@@ -32,11 +33,14 @@ import { GlConst } from 'glsx-vue-common'
 const { AppConst } = GlConst
 export default {
   name: 'GlAppAside',
-  mixins: [AsideMixin, PublicMixin, BeforeRoute],
+  mixins: [AsideMixin, PublicMixin, BeforeRoute, ConfigMixin],
   components: {
     GlAppSidebar,
     GlAppLogo,
     GlAppScroll
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to)
   },
   computed: {
     Aside() {
@@ -97,8 +101,11 @@ export default {
     }
   },
   mounted() {
-    this.routerfilter().then((resources) => {
+    this.initConfig().then(() => {
+      return this.routerfilter()
+    }).then((resources) => {
       this.SetSession(AppConst.Auth.Resources.Key, resources)
+      this.$config = null
     })
   }
 }
