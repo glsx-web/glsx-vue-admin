@@ -51,6 +51,14 @@ export default {
     hasOneShowingChildren(children) {
       return children.filter((item) => { return !item.hidden }).length === 1
     }
+  },
+  created() {
+    for (const o in this.routes) {
+      const obj = this.routes[o]
+      if (obj.path.indexOf('iframe') >= 0) {
+        obj.children[0].path = 'urlPath?src=http://www.qq.com'
+      }
+    }
   }
 }
 </script>

@@ -1,44 +1,32 @@
 <template>
-  <el-menu class="navbar" :style="navbarStyle" mode="horizontal">
-    <gl-app-hamburger class="hamburger-container" :toggleClick="handleToggleSideBar" :isActive="isActive"></gl-app-hamburger>
-    <gl-app-breadcrumb class="breadcrumb-container" :generate="generate"></gl-app-breadcrumb>
-    
-    <div class="right-menus" :style="{lineHeight:navbarStyle.height+'px'}">
-        <slots :itemsArray="itemsArray" v-on:itemChanged="handleItemChanged" class="right-menus-slots">
-          <div slot='slot-1'>
-            <gl-app-nav-user :name="name" :avatar="avatar"/>
-          </div>
-          <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
-          <div slot='slot-2' v-if="language.visible">
-            <gl-app-lang-select  v-on:@setLanguage="handleSetLanguage" :language="language.value" />
-          </div>
-          <div slot='slot-3' v-if="screenfull.visible">
-            <gl-app-screenfull ></gl-app-screenfull>
-          <!-- </el-tooltip> -->
-            </div>
-             <div slot='slot-4' v-if="theme.visible">
-          <!-- <el-tooltip effect="light" :content="theme.content" placement="bottom" v-if="theme.visible"> -->
-            <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="theme.value" :predefineColors="theme.preDefineColors"></gl-app-theme-picker>
-          <!-- </el-tooltip>  -->
-             </div>
-              <div slot='slot-5' v-if="settings.visible">
-          <!-- <el-tooltip effect="light" :content="settings.content" placement="bottom" v-if="settings.visible"> -->
-            <gl-app-settings :settingParams="settingParams" v-on:@setParamsConfig="handleSetParamsConfig" />
-          <!-- </el-tooltip>  -->
-              </div>
-               <div slot='slot-6' v-if="logout.visible">
-          <!-- <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible"> -->
-            <gl-app-logout @click.native="handleLogout" />
-          </div>
-          
-        </slots>
+  <div class="navbar" :style={lineHeight:navbarStyle.height}>
+    <gl-app-hamburger 
+        class="hamburger-container" 
+        :toggleClick="handleToggleSideBar" 
+        :isActive="isActive"/>
+    <nav2nd :oStyle="navbarStyle" :oNav2nd="oNav2nd"/>
+    <gl-management-center 
+        v-on:@themeHandler="handleTheme" 
+        v-on:@logout="handleLogout"
+        v-on:@setLanguage="handleSetLanguage"
+        v-on:@itemChanged="handleItemChanged"
+        v-on:@setParamsConfig="handleSetParamsConfig"
+        :theme="theme" 
+        :avatar="avatar" 
+        :name="name"
+        :language="language"
+        :screenfull="screenfull"
+        :logout="logout"
+        :settings="settings"
+        :generate="generate"
+        :itemsArray="itemsArray"
+        :settingParams="settingParams"/>
         <!-- <gl-toggle  v-on:@toggle="handleToggle" class="right-menus-toggle" :isActive="toogleActive"></gl-toggle> -->
-    </div>
-  </el-menu>
+  </div>
 </template>
 
 <script>
-import GlAppBreadcrumb from '@/packages/Breadcrumb'
+
 import GlAppHamburger from '@/packages/Hamburger'
 // import ErrorLog from '@/packages/ErrorLog'
 import GlAppScreenfull from '@/packages/Screenfull'
@@ -49,6 +37,8 @@ import GlAppLogout from '@/packages/Logout'
 import GlAppSettings from '@/packages/Settings'
 import GlToggle from '@/packages/Toggle'
 import Slots from './slots'
+import Nav2nd from './nav2nd'
+import GlManagementCenter from './mc'
 
 // import glLock from '@/packages/lock'
 
@@ -66,10 +56,10 @@ export default {
     itemsArray: Array,
     generate: Function,
     settingParams: Object,
-    navbarStyle: Object
+    navbarStyle: Object,
+    oNav2nd: Object
   },
   components: {
-    GlAppBreadcrumb,
     GlAppHamburger,
     // GlAppErrorLog,
     GlAppScreenfull,
@@ -79,7 +69,9 @@ export default {
     GlAppLogout,
     GlAppSettings,
     GlToggle,
-    Slots
+    Slots,
+    Nav2nd,
+    GlManagementCenter
     // glLock
   },
   data() {
@@ -88,9 +80,6 @@ export default {
     }
   },
   methods: {
-    handleToggleSideBar() {
-      this.$emit('@toggleSideBar')
-    },
     handleLogout() {
       this.$emit('@logout')
     },
@@ -108,6 +97,9 @@ export default {
     },
     handleToggle() {
       this.toogleActive = !this.toogleActive
+    },
+    handleToggleSideBar() {
+      this.$emit('@toggleSideBar')
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')
@@ -120,82 +112,16 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  border-radius: 0px !important;
+  position: relative;
   .hamburger-container {
-    line-height: 60px;
     float: left;
-    padding: 0 10px;
-  }
-  .right-menus {
-    float: right;
-    height: 100%;
-    margin-right: 20px;
-    &:focus{
-     outline: none;
-    }
-    &-slots{
-      height: 100%;
-    }
-    &-toggle{
-      float: right;
-      margin-top: 11px;
-      margin-left: 40px;
-    }
-  }
-   /* 动画绑定 */
-.move_right {
-    animation-name            : move_right;
-    animation-duration        : 1s;
-    animation-iteration-count : 1;
-    animation-fill-mode : forwards;
- }
-.move_left {
-    animation-name            : move_left;
-    animation-duration        : 1s;
-    animation-iteration-count : 1;
-    animation-fill-mode : forwards;
-}
-}
-@keyframes move_right {
-  from {
-          opacity: 1;
-  }
-  to {
-      opacity: 0;
-      transform: translateX(100px);
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+    top: 5px;
+    bottom: 0;
   }
  }
- @keyframes move_left {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-      transform: translateX(-100px);
-    }
-}
 </style>
-<style rel="stylesheet/scss" lang="scss">
-  .right-menu {
-    .el-color-picker__trigger{
-      background-color: linear-gradient(to bottom right, red , blue);
-      height: 22px !important;
-      width: 22px !important;
-      top:2px;
-    }
-    &>div{
-      padding: 0 8px;
-      position: relative;
-      &:hover{
-       background-color: rgba($color: #fff, $alpha: 0.1) ;
-      }
-    }
-  svg{
-    cursor: pointer;
-    vertical-align: middle;
-    fill:#fff;
-    height: 18px;
-  }
-}
-</style>
+
 

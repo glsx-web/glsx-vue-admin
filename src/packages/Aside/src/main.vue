@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-19 20:18:37
+ * @Last Modified time: 2018-07-25 22:40:48
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -25,22 +25,19 @@
 </template>
 
 <script>
-import { AsideMixin, PublicMixin, BeforeRoute, ConfigMixin } from '@/lib/mixins'
+import { AsideMixin, ConfigMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
-import { GlConst } from 'glsx-vue-common'
+import { GlConst, GlCommon } from 'glsx-vue-common'
 const { AppConst } = GlConst
 export default {
   name: 'GlAppAside',
-  mixins: [AsideMixin, PublicMixin, BeforeRoute, ConfigMixin],
+  mixins: [AsideMixin, ConfigMixin, PublicMixin, BeforeRoute],
   components: {
     GlAppSidebar,
     GlAppLogo,
     GlAppScroll
-  },
-  beforeRouteEnter(to, from, next) {
-    console.log(to)
   },
   computed: {
     Aside() {
@@ -63,7 +60,7 @@ export default {
       return {
         isCollapse: this.Aside.isClosed,
         routers: this.routers,
-        generate: this.generateTitle,
+        generate: GlCommon.GenerateTitle,
         colors: {
           textColor: this.Sidebar.textColor,
           activeTextColor: this.Sidebar.activeTextColor,
@@ -100,13 +97,32 @@ export default {
       }
     }
   },
+  methods: {
+    init() {
+      this.initConfig().then(() => {
+        return this.routerfilter()
+      }).then((navs) => {
+        this.SetSession(AppConst.Auth.Navs.Key, navs)
+        this.SetSession(AppConst.Auth.Resources.Key, navs.resources)
+        // this.SetSession(AppConst.Auth.CurNav.First.Key, navs.First)
+        this.SetSession(AppConst.Auth.CurNav.Second.Key, Object.keys(navs.second)[0])
+        this.SetSession(AppConst.Auth.CurNav.Third.Key, Object.keys(navs.third)[0])
+        this.SetSession(AppConst.Auth.CurNav.Fourth.Key, Object.keys(navs.fourth)[0])
+        this.SetSession(AppConst.Auth.CurNav.Fifth.Key, Object.keys(navs.fifth)[0])
+        this.$config = null
+      })
+    },
+    count() {
+      return this.app.count
+    }
+  },
+  watch: {
+    // 'app.count': function(val, oldval) {
+    //   this.init()
+    // } //
+  },
   mounted() {
-    this.initConfig().then(() => {
-      return this.routerfilter()
-    }).then((resources) => {
-      this.SetSession(AppConst.Auth.Resources.Key, resources)
-      this.$config = null
-    })
+    this.init()
   }
 }
 </script>

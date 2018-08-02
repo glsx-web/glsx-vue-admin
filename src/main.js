@@ -4,6 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'glsx-vue-admin/dist/glsx-vue-admin.css'
 // import './styles/index.scss'
 import ElementUI from 'element-ui'
+// import { GlApp } from './index'
 import GlsxVueAdmin from './index'
 import config from './config'
 Vue.use(ElementUI)
@@ -11,10 +12,9 @@ Vue.use(GlsxVueAdmin, config)
 import GlsxVueCommon from 'glsx-vue-common'
 Vue.use(GlsxVueCommon)
 import { i18n } from '@/lib'
-import router from './router'
+import router from '@/router/index.js'
 import store from './store'
 import './icons'
-
 new Vue({
   el: '#app',
   router,

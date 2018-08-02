@@ -1,13 +1,18 @@
+<template>
+  
+</template>
+
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'dashboard',
-  data() {
-    return {
-    }
-  },
-  computed: {
-  },
+  name: 'login',
   methods: {
+    ...mapActions([
+      'Logout'
+    ])
+  },
+  beforeMount() {
+    this.Logout()
   }
 }
 </script>

@@ -1,4 +1,4 @@
-
+import { App, AppEntry } from './App'
 import Aside from './Aside'
 import Breadcrumb from './Breadcrumb'
 import Footer from './Footer'
@@ -20,7 +20,10 @@ import SvgIcon from './SvgIcon'
 import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
 import GlKeepAlive from './KeepAlive'
+import IFrame from './IFrame'
 export {
+  App,
+  AppEntry,
   Aside,
   Breadcrumb,
   Footer,
@@ -41,5 +44,6 @@ export {
   SvgIcon,
   TagsView,
   ThemePicker,
-  GlKeepAlive
+  GlKeepAlive,
+  IFrame
 }

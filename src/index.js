@@ -4,7 +4,8 @@ import {
   Header,
   Main,
   SvgIcon,
-  Scroll
+  Scroll,
+  IFrame
 } from './packages'
 const components = [
   Aside,
@@ -12,7 +13,8 @@ const components = [
   Header,
   Main,
   SvgIcon,
-  Scroll
+  Scroll,
+  IFrame
 ]
 import './styles/index.scss'
 import { store } from '@/lib'

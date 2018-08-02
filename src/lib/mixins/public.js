@@ -2,11 +2,12 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-19 20:00:05
+ * @Last Modified time: 2018-07-20 14:58:44
  */
 
 import { mapActions } from 'vuex'
-import { generateTitle } from '@/utils/i18n'
+import { GlCommon } from 'glsx-vue-common'
+const { GenerateTitle } = GlCommon
 export default {
   name: 'PublicMixin',
   methods: {
@@ -54,6 +55,6 @@ export default {
        */
       this.$set_config(obj)
     },
-    generateTitle
+    GenerateTitle
   }
 }

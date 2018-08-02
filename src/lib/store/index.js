@@ -2,24 +2,25 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:36
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-18 17:39:24
+ * @Last Modified time: 2018-07-25 18:04:16
  */
 // import Vue from 'vue'
 // import Vuex from 'vuex'
 import app from './modules/app'
-import user from './modules/user'
+// import user from './modules/user'
 import tagsView from './modules/tagsView'
 import errorLog from './modules/errorLog'
 import permission from './modules/permission'
 import header from './modules/header'
 import aside from './modules/aside'
 import footer from './modules/footer'
-
+import subscribe from './modules/subscribe'
 // Vue.use(Vuex)
 const modules =
  [
    app,
-   user,
+   subscribe,
+   // user,
    permission,
    tagsView,
    errorLog,
