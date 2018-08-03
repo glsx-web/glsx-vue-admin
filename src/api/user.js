@@ -10,6 +10,7 @@ const path = 'user'
 const __sLogin = `${path}/login`
 const __sGetInfo = `${path}/info`
 const __sLogout = `${path}/logout`
+const __sHome = `${path}/home`
 
 const login = {
   p: [__sLogin],
@@ -25,8 +26,14 @@ const logout = {
   p: [__sLogout],
   req: () => GlAxios.post(__sLogout)
 }
+
+const getHomeInfo = {
+  p: [__sHome],
+  req: params => GlAxios.post(__sHome, params)
+}
 export {
   login,
   getInfo,
-  logout
+  logout,
+  getHomeInfo
 }

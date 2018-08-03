@@ -357,8 +357,8 @@ export default {
       imageUrl: '',
       color: '#409EFF',
       flag: true,
-      visible: false
-      // activeNames: ['1']
+      visible: false,
+      activeNames: ['1']
     }
   },
   methods: {
@@ -380,25 +380,8 @@ export default {
     // 确定按钮
     handleSetParamsConfig() {
       this.dialogFormVisible = !this.dialogFormVisible
-      // var array = this.params.header.navbar.theme.preDefineColors
       // // 窗口关闭
       if (!this.dialogFormVisible) {
-      //   // 遍历数组是否有重复添加
-      //   for (var i = 0; i < array.length; i++) {
-      //     if (this.currentColor === array[i] || this.currentColor === '') {
-      //       this.flag = false
-      //       break
-      //     } else {
-      //       this.flag = true
-      //       break
-      //     }
-      //   }
-        // 无重复元素，push颜色
-        // if (this.flag === true) {
-        //   this.params.header.navbar.theme.preDefineColors.push(...this.currentColor)
-        //   this.color = this.currentColor
-        //   this.currentColor = ''
-        // }
         this.$emit('@setParamsConfig', this.params)
         console.log(this.params)
       } else {
@@ -409,17 +392,13 @@ export default {
     // 取消
     cancel() {
       this.dialogFormVisible = false
-      // this.color = this.currentColor
-      // this.currentColor = ''
     },
     // 恢复默认设置
     restoreDefault() {
       this.params = this.$get_session_config()
-      // console.log(this.$get_session_config())
       this.$emit('@setParamsConfig', this.params)
       this.dialogFormVisible = false
       this.visible = false
-      // this.currentColor = ''
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)

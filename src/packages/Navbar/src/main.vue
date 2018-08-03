@@ -27,10 +27,10 @@
           <!-- </el-tooltip>  -->
               </div>
                <div slot='slot-6' v-if="logout.visible">
+                 
           <!-- <el-tooltip effect="light" :content="logout.content" placement="bottom" v-if="logout.visible"> -->
             <gl-app-logout @click.native="handleLogout" />
           </div>
-          
         </slots>
         <!-- <gl-toggle  v-on:@toggle="handleToggle" class="right-menus-toggle" :isActive="toogleActive"></gl-toggle> -->
     </div>

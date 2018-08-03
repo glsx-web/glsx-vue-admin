@@ -20,6 +20,7 @@ import SvgIcon from './SvgIcon'
 import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
 import GlKeepAlive from './KeepAlive'
+import GlControl from './ControlPanel'
 export {
   Aside,
   Breadcrumb,
@@ -41,5 +42,6 @@ export {
   SvgIcon,
   TagsView,
   ThemePicker,
-  GlKeepAlive
+  GlKeepAlive,
+  GlControl
 }
