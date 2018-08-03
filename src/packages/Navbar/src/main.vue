@@ -4,7 +4,10 @@
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
         :isActive="isActive"/>
-    <nav2nd :oStyle="navbarStyle" :oNav2nd="oNav2nd"/>
+    <nav2nd 
+      v-on:@handleNav2="handleNav2" 
+      :oStyle="navbarStyle" 
+      :oNav2nd="oNav2nd"/>
     <gl-management-center 
         v-on:@themeHandler="handleTheme" 
         v-on:@logout="handleLogout"
@@ -100,6 +103,9 @@ export default {
     },
     handleToggleSideBar() {
       this.$emit('@toggleSideBar')
+    },
+    handleNav2(nav2Id) {
+      this.$emit('@handleNav2', nav2Id)
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')

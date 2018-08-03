@@ -19,6 +19,7 @@
         v-on:@setLanguage="handleSetLanguage"
         v-on:@itemChanged="handleItemChanged"
         v-on:@setParamsConfig="handleSetParamsConfig"
+        v-on:@handleNav2="handleNav2" 
         :navbarStyle="oNavbarStyle"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
@@ -44,7 +45,7 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
-        <nav5th/> 
+        <nav5th :oNav5th="oNav5th"/> 
         </draggable>
     </div>
 </template>
@@ -141,7 +142,7 @@ export default {
           value: this.app.defaultColor
         },
         generate: this.GenerateTitle,
-        oNav2nd: { src: this.app.auth.navs.second, cur: this.app.auth.curnav.second }
+        oNav2nd: { src: this.app.auth.resources, pid: this.app.auth.curnav.first }
       }
     },
     oTagsView() {
@@ -150,6 +151,11 @@ export default {
         activeColor: this.TagsView.activeColor || this.app.defaultColor,
         visitedViews: this.visitedViews || [],
         generate: this.GenerateTitle
+      }
+    },
+    oNav5th() {
+      return {
+        src: this.app.auth.resources, pid: this.app.auth.curnav.fourth
       }
     }
   },
@@ -162,7 +168,6 @@ export default {
     },
     handleLogout() {
       this.Logout().then(() => {
-        // location.reload() // 为了重新实例化vue-router对象 避免bug
         this.$router.push('/example/table')
       })
     },
@@ -200,6 +205,9 @@ export default {
     },
     handleSetParamsConfig(params) {
       this.SetMulti(params)
+    },
+    handleNav2(nav2Id) {
+      this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
     }
   },
   mounted() {

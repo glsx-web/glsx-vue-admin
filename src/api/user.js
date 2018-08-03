@@ -2,13 +2,13 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:50
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-18 20:44:50
+ * @Last Modified time: 2018-08-02 17:42:00
  */
 import { GlAxios } from 'glsx-vue-common'
 const path = 'user'
 
 const __sLogin = `${path}/login`
-const __sGetInfo = `${path}/info`
+const __sGetInfo = `${path}/getInfo`
 const __sLogout = `${path}/logout`
 
 const login = {

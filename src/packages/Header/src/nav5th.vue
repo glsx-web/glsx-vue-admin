@@ -1,26 +1,32 @@
 <template>
     <el-tabs tab-position="top" class="nav5th">
-      <el-tab-pane label="用户管理"></el-tab-pane>
+      <!-- <el-tab-pane label="用户管理"></el-tab-pane>
       <el-tab-pane label="配置管理"></el-tab-pane>
       <el-tab-pane label="角色管理"></el-tab-pane>
-      <el-tab-pane label="定时任务补偿"></el-tab-pane>
+      <el-tab-pane label="定时任务补偿"></el-tab-pane> -->
+      <el-tab-pane v-for="(item,index) in aNav5th" 
+      :key="index" :index="index+''" :label="item.title"></el-tab-pane>
     </el-tabs>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
   name: 'Nav5th',
-  components: {
+  props: {
+    oNav5th: Object
   },
   computed: {
-    ...mapGetters([
-      'app'
-    ])
+    aNav5th() {
+      if (this.oNav5th.src) {
+        return this.$get_menus(this.oNav5th.src, this.oNav5th.pid || 11)
+      } else {
+        return []
+      }
+    }
   },
   methods: {
-    handleClick() {
-      this.$store.commit('ADD_COUNT', 2)
+    handleNav5(nav5Id) {
+      this.$emit('@handleNav5', nav5Id)
     }
   }
 }

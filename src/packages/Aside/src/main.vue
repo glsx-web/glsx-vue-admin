@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-25 22:40:48
+ * @Last Modified time: 2018-08-03 09:15:42
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -18,7 +18,9 @@
             :isCollapse="oSidebar.isCollapse" 
             :routers="oSidebar.routers" 
             :generate="oSidebar.generate"
-            :colors="oSidebar.colors" />
+            :colors="oSidebar.colors"
+            :oNav3_4="oNav3_4"
+            v-on:@handleNav4="handleNav4"  />
         </gl-app-scroll>
         <!-- <i class="dragger" v-drag="greet"></i> -->
   </div>
@@ -95,6 +97,12 @@ export default {
         backgroundColor: this.Logo.backgroundColor,
         backgroundImage: this.Logo.image
       }
+    },
+    oNav3_4() {
+      return {
+        src: this.app.auth.resources,
+        pid: this.app.auth.curnav.second
+      }
     }
   },
   methods: {
@@ -112,14 +120,9 @@ export default {
         this.$config = null
       })
     },
-    count() {
-      return this.app.count
+    handleNav4(nav4Id) {
+      this.SetSession(AppConst.Auth.CurNav.Fourth.Key, nav4Id)
     }
-  },
-  watch: {
-    // 'app.count': function(val, oldval) {
-    //   this.init()
-    // } //
   },
   mounted() {
     this.init()

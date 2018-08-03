@@ -2,26 +2,14 @@
 <el-menu 
   :default-active="activeIndex" 
   mode="horizontal"
-  @select="handleSelect"
   :text-color="oStyle.textColor"
   :active-text-color="oStyle.activeTextColor"
   :background-color="oStyle.backgroundColor">
-  <!-- <el-menu-item index="1">处理中心</el-menu-item>
-  <el-submenu index="2">
-    <template slot="title">我的工作台</template>
-    <el-menu-item index="2-1">选项1</el-menu-item>
-    <el-menu-item index="2-2">选项2</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
-    <el-submenu index="2-4">
-      <template slot="title">选项4</template>
-      <el-menu-item index="2-4-1">选项1</el-menu-item>
-      <el-menu-item index="2-4-2">选项2</el-menu-item>
-      <el-menu-item index="2-4-3">选项3</el-menu-item>
-    </el-submenu>
-  </el-submenu>
-  <el-menu-item index="3" disabled>消息中心</el-menu-item>
-  <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
-  <el-menu-item v-if="aNav2nd.length" v-for="(item,index) in aNav2nd" :key="index" :index="index+''">{{item.title}}</el-menu-item>
+  <el-menu-item 
+    @click="handleNav2(item.id)"
+    v-if="aNav2nd.length" 
+    v-for="(item,index) in aNav2nd" 
+    :key="index" :index="index+''">{{item.title}}</el-menu-item>
 </el-menu>
 </template>
 
@@ -38,8 +26,8 @@ export default {
       'app'
     ]),
     aNav2nd() {
-      if (this.oNav2nd.src && this.oNav2nd.cur) {
-        return this.oNav2nd.src[this.oNav2nd.cur]
+      if (this.oNav2nd.src) {
+        return this.$get_menus(this.oNav2nd.src, this.oNav2nd.pid || 1)
       } else {
         return []
       }
@@ -51,10 +39,9 @@ export default {
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
+    handleNav2(nav2Id) {
+      this.$emit('@handleNav2', nav2Id)
     }
-  },
-  mounted() {
   }
 }
 </script>
