@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-03 09:15:42
+ * @Last Modified time: 2018-08-03 10:17:12
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -110,13 +110,13 @@ export default {
       this.initConfig().then(() => {
         return this.routerfilter()
       }).then((navs) => {
-        this.SetSession(AppConst.Auth.Navs.Key, navs)
-        this.SetSession(AppConst.Auth.Resources.Key, navs.resources)
+        // this.SetSession(AppConst.Auth.Navs.Key, navs)
+        // this.SetSession(AppConst.Auth.Resources.Key, navs.resources)
         // this.SetSession(AppConst.Auth.CurNav.First.Key, navs.First)
-        this.SetSession(AppConst.Auth.CurNav.Second.Key, Object.keys(navs.second)[0])
-        this.SetSession(AppConst.Auth.CurNav.Third.Key, Object.keys(navs.third)[0])
-        this.SetSession(AppConst.Auth.CurNav.Fourth.Key, Object.keys(navs.fourth)[0])
-        this.SetSession(AppConst.Auth.CurNav.Fifth.Key, Object.keys(navs.fifth)[0])
+        // this.SetSession(AppConst.Auth.CurNav.Second.Key, Object.keys(navs.second)[0])
+        // this.SetSession(AppConst.Auth.CurNav.Third.Key, Object.keys(navs.third)[0])
+        // this.SetSession(AppConst.Auth.CurNav.Fourth.Key, Object.keys(navs.fourth)[0])
+        // this.SetSession(AppConst.Auth.CurNav.Fifth.Key, Object.keys(navs.fifth)[0])
         this.$config = null
       })
     },

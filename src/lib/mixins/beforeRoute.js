@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-02 17:43:41
+ * @Last Modified time: 2018-08-03 10:17:32
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -54,7 +54,6 @@ export default {
     },
     menu_factory(resources) {
       return new Promise(resolve => {
-        console.log(resources)
         this.SetSession(AppConst.Auth.Resources.Key, resources)
         resolve()
       })
