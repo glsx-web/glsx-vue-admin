@@ -474,4 +474,7 @@ export default {
 .el-color-dropdown {
     z-index: 111111 !important;
 }
+.v-modal {
+  z-index: 1 !important;
+}
 </style>

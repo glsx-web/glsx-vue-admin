@@ -5,10 +5,29 @@
 </template>
 
 <script>
+import { AppMixin } from '@/lib/mixins'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 export default {
   name: 'AppHome',
-  props: ['content', 'isvertical']
+  mixins: [AppMixin],
+  props: ['content', 'isvertical'],
+  components: {
+    swiper,
+    swiperSlide
+  },
+  computed: {
+    aNav() {
+      console.log(this.app.auth)
+      if (this.app.auth.resources) {
+        return this.$get_menus(this.app.auth.resources, this.app.auth.curnav.second || 0)
+      } else {
+        return []
+      }
+    }
+  }
 }
+
 </script>
 
 <style>

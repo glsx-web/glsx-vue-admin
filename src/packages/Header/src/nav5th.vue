@@ -36,7 +36,8 @@ export default {
     .el-tabs__header{
       margin: 0;
       .el-tabs__nav{
-        transform: translateX(15px) !important
+        transform: translateX(15px) !important;
+        z-index: 1 ;
       }
     }
   }

@@ -1,25 +1,24 @@
 <template>
   <div>
-          <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
-          <swiper-slide v-for="(item,index) in list" :key="index">
-            <app-home :content="item" class="homeList" :isvertical='isvertical'></app-home>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
-      <!-- <swiper :options="swiperOption" ref="mySwiper"> -->
-      <!-- <app-home v-for="item in list" :key="item" :content="item"></app-home> -->
-      <!-- </swiper> -->
+    <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
+      <swiper-slide v-for="(item,index) in aNav" :key="index">
+        <app-home :content="item.title" class="homeList" :isvertical='isvertical'></app-home>
+      </swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
   </div>
+  
 </template>
 
 <script>
-import { getHomeInfo } from '@/api/user'
 import AppHome from './main'
+import { GlConst } from 'glsx-vue-common'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-
+const { AppConst, AsideConst } = GlConst
+import { PublicMixin } from '@/lib/mixins'
 export default {
   name: 'GlAppHome',
   components: {
@@ -27,16 +26,18 @@ export default {
     swiper,
     swiperSlide
   },
+  mixins: [PublicMixin],
   computed: {
-    GetHomeInfo({ dispatch }, token) {
-      return new Promise((resolve, reject) => {
-        getHomeInfo.req(token).then(response => {
-          var item = response.data.item
-          console.log(item)
-        })
-      })
+    aNav() {
+      return this.$get_menus(null, 0)
     }
-
+  },
+  mounted() {
+    this.asideVisible = this.GetSession(AsideConst.Visible.Key)
+    this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
+  },
+  beforeDestroy() {
+    this.SetSession(AsideConst.Visible.Key, this.asideVisible)
   },
   data() {
     return {
@@ -74,6 +75,17 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.el-main{
+  padding: 0 !important;
+}
+.el-header{
+  height: auto !important;
+  padding: 0 1px;
+}
+.el-footer{
+  padding: 0 !important;
+  height: auto !important;
+}
 .swiper-container {
     padding: 40px 20px;
     .swiper-scrollbar {

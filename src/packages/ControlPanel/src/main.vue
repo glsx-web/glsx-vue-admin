@@ -3,8 +3,8 @@
       <div class="controlEntrance" @click="showControlPanel"><i :class="flag ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
     <transition name="fade">
       <gl-app-scroll :height=nHeight >
-      <ul class="el-menu controlPanelMenu" id="ul" v-show="flag">
-        <app-home v-for="(item,index) in list" :key="index" :content="item" class="el-menu-item controlPanelList" style="" :isvertical="isvertical"></app-home>
+      <ul class="el-menu controlPanelMenu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="flag">
+        <app-home v-for="(item,index) in aNav" :key="index" :content="item.title" class="el-menu-item controlPanelList" :isvertical="isvertical"></app-home>
       </ul>
       </gl-app-scroll>
     </transition>
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       flag: false,
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 74, 89, 655, 422, 688, 77],
       isvertical: false
     }
   },
@@ -31,6 +31,13 @@ export default {
     nHeight() {
       const nClientHeight = this.app.clientHeight
       return parseInt(nClientHeight)
+    },
+    aNav() {
+      if (this.app.auth.resources) {
+        return this.$get_menus(this.app.auth.resources, 0)
+      } else {
+        return []
+      }
     }
   },
   methods: {
@@ -63,7 +70,6 @@ export default {
   opacity: 1;
 }
 .controlPanelMenu {
-  background-color: beige;
   position: absolute;
   top: 0;
   right: 0;

@@ -44,7 +44,7 @@ export default {
   computed: {
     Aside() {
       return {
-        visible: this.aside.visible,
+        visible: this.aside.visible === true || this.aside.visible === AppConst.Visibility.VISIBLE,
         state: this.aside.state,
         maxWidth: this.aside.maxWidth,
         minWidth: this.aside.minWidth,
@@ -141,5 +141,8 @@ export default {
       right: 0;
       cursor: w-resize;
       z-index: 9999;
+    }
+    #app .sidebar-container {
+      z-index: 1 !important;
     }
 </style>
