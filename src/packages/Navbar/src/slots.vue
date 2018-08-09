@@ -1,5 +1,5 @@
 <template>
-    <draggable class="right-menu" v-model="myList" :options="{animation:100}" >
+    <draggable class="management" v-model="myList" :options="{animation:100}" >
         <slot v-for="(name) in myList" :name="name" ></slot>
     </draggable>
 </template> 
@@ -35,9 +35,31 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped >
-    .right-menu{
+    .management{
         display: flex;
         justify-content: center;
         align-items: center;
     }
+</style>
+<style rel="stylesheet/scss" lang="scss">
+  .management {
+    .el-color-picker__trigger{
+      background: linear-gradient(to bottom right, red , blue) !important;
+      height: 22px !important;
+      width: 22px !important;
+      top:6px;
+    }
+    &>div{
+      padding: 20px 10px;
+      &:hover{
+       background-color: rgba($color: #fff, $alpha: 0.1) ;
+      }
+    }
+  svg{
+    cursor: pointer;
+    vertical-align: middle;
+    fill:#fff;
+    height: 18px;
+  }
+}
 </style>

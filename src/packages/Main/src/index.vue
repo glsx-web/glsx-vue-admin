@@ -2,6 +2,9 @@
   <gl-app-scroll :height="nHeight">
     <gl-keep-alive />
     <app-main :cachedViews="cachedViews" />
+    <!-- <button @click="handleClick">Add from parent</button>
+     <span>aaa:{{$store.getters.app.count}}:{{$store.getters.aside.logo.height}}</span>
+    <iframe id="frameId1" src="http://localhost:8080/" style="width:100%;height:500px" :onload="load"/> -->
   </gl-app-scroll>
 </template>
 
@@ -37,9 +40,19 @@ export default {
       const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
       return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight
     }
-  },
-  beforeMount() {
-    if (!this.$get_token()) { this.$router.push('/login') }
+  }, methods: {
+    handleClick() {
+      this.$store.commit('ADD_COUNT', 2)
+    },
+    load() {
+      console.log(55555)
+    }
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .el-tabs--top{
+    height: auto !important;
+    padding-left: 20px;
+  }
+</style>

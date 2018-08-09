@@ -2,12 +2,12 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:28
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-19 20:41:36
+ * @Last Modified time: 2018-07-20 10:13:03
  */
 import { logout, getInfo } from '@/api/user'
 import { GlConst, GlCommon } from 'glsx-vue-common'
 const { AppConst, HeaderConst } = GlConst
-const { SetSessionConfigByKey } = GlCommon
+const { SetSessionConfigByKey, RemoveToken, RemoveSessionConfig } = GlCommon
 const user = {
   actions: {
     // 获取用户信息
@@ -36,6 +36,8 @@ const user = {
     Logout({ dispatch }, token) {
       return new Promise(resolve => {
         logout.req(token).then(() => {
+          RemoveToken()
+          RemoveSessionConfig()
           resolve()
         }).catch(error => {
           resolve()

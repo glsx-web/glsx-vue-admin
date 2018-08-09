@@ -2,16 +2,20 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-19 21:19:18
+ * @Last Modified time: 2018-08-03 10:17:32
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { mapGetters, mapActions } from 'vuex'
-const whiteList = new Set([])// can be get from config
+import PublicMixin from './public'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
+// const whiteList = new Set([])// can be get from config
 NProgress.configure({ showSpinner: true })// NProgress Configuration
 export default {
   name: 'BeforeRoute',
+  mixins: [PublicMixin],
   computed: {
     ...mapGetters(['app'])
   },
@@ -19,26 +23,6 @@ export default {
     return {
       token: this.$get_token()
     }
-  },
-  mounted() {
-    const router = this.$router
-    router.beforeEach((to, from, next) => {
-      NProgress.start() // start progress bar
-      if (this.token) { // determine if there has token
-        if (to.path === '/login') {
-          this.logout()
-        } else {
-          next()
-        }
-      } else {
-        if (whiteList.has(to.path)) { // 在免登录白名单，直接进入
-          next()
-        } else {
-          this.logout()
-        }
-      }
-    })
-    router.afterEach(() => NProgress.done())
   },
   methods: {
     ...mapActions([
@@ -52,25 +36,26 @@ export default {
     ]),
     routerfilter() {
       return new Promise(resolve => {
-        const router = this.$router
+        // const router = this.$router
         if (!this.app.auth.roles.length) { // 判断当前用户是否已拉取完user_info信息
           this.GetInfo(this.token).then(res => { // 拉取user_info
-            const { roles, routes, resources } = res.data // note: roles must be a array!
-            this.GenerateRoutes({ roles, routes, routers: router.options.routes }).then(() => resolve(resources))
+            // const { roles, routes, resources } = res.data // note: roles must be a array!
+            const { resources } = res.data // note: roles must be a array!
+            this.menu_factory(resources).then((menus) => {
+              resolve(menus)
+            })
           }).catch(err => {
             console.log(err)
             Message.error(err || 'Verification failed, please login again')
-            this.logout()
+            this.Logout()
           })
         }
       })
     },
-    logout() {
-      this.Logout().then(() => {
-        this.$remove_token()
-        this.$remove_session_config()
-        window.top.location.href = 'https://www.baidu.com'
-      // TODO redirect to login page  from config
+    menu_factory(resources) {
+      return new Promise(resolve => {
+        this.SetSession(AppConst.Auth.Resources.Key, resources)
+        resolve()
       })
     }
   }

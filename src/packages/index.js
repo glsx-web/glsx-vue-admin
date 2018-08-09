@@ -1,4 +1,4 @@
-
+import { App, AppEntry } from './App'
 import Aside from './Aside'
 import Breadcrumb from './Breadcrumb'
 import Footer from './Footer'
@@ -21,7 +21,10 @@ import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
 import GlKeepAlive from './KeepAlive'
 import GlControl from './ControlPanel'
+import IFrame from './IFrame'
 export {
+  App,
+  AppEntry,
   Aside,
   Breadcrumb,
   Footer,
@@ -43,5 +46,6 @@ export {
   TagsView,
   ThemePicker,
   GlKeepAlive,
-  GlControl
+  GlControl,
+  IFrame
 }

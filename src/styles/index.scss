@@ -78,23 +78,23 @@ a:hover {
     padding: 20px;
 }
 
-.aside {
-    //transition: width  $transitionTime;
-}
-//面包屑
-.app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 50px;
-    margin-left: 10px;
-    .no-redirect {
-      color: $fontColor;
-      cursor: text;
-    }
-    .el-breadcrumb__inner a, .el-breadcrumb__inner.is-link{
-      color: $fontColor;
-      &:hover{
-        color: $breadLinkHover
-      }
-    }
-  }
+// .aside {
+//     //transition: width  $transitionTime;
+// }
+// //面包屑
+// .app-breadcrumb.el-breadcrumb {
+//     display: inline-block;
+//     font-size: 14px;
+//     line-height: 50px;
+//     margin-left: 10px;
+//     .no-redirect {
+//       color: $fontColor;
+//       cursor: text;
+//     }
+//     .el-breadcrumb__inner a, .el-breadcrumb__inner.is-link{
+//       color: $fontColor;
+//       &:hover{
+//         color: $breadLinkHover
+//       }
+//     }
+//   }

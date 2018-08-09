@@ -9,17 +9,23 @@
         :background-color="oColors.backgroundColor"
         :active-text-color="oColors.activeTextColor"
       >
-      <gl-app-sidebar-item :routes="routers" :generate="generate"></gl-app-sidebar-item>
+      <!-- <gl-app-sidebar-item :routes="routers" :generate="generate"/> -->
+      <nav3_4
+      v-on:@handleNav4="handleNav4" 
+      :oNav3_4="oNav3_4" 
+      :generate="generate"/>
       </el-menu>
     </div>
 </template>
 
 <script>
-import GlAppSidebarItem from '@/packages/SidebarItem'
+// import GlAppSidebarItem from '@/packages/SidebarItem'
+import Nav3_4 from './nav3_4'
 export default {
   name: 'GlAppSidebar',
   components: {
-    GlAppSidebarItem
+    // GlAppSidebarItem
+    Nav3_4
   },
   props: {
     routers: {
@@ -33,7 +39,8 @@ export default {
     },
     colors: {
       type: Object
-    }
+    },
+    oNav3_4: Object
   },
   data() {
     return {
@@ -47,6 +54,11 @@ export default {
   computed: {
     oColors() {
       return Object.assign(this.color, this.colors)
+    }
+  },
+  methods: {
+    handleNav4(nav4Id) {
+      this.$emit('@handleNav4', nav4Id)
     }
   }
 }

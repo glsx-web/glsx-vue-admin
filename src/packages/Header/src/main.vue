@@ -1,13 +1,25 @@
 <template>
-    <div v-if="header.visible"> 
+    <div v-if="header.visible" class="app-header"> 
       <draggable>
-      <gl-app-navbar  v-if="oNavbar.visible"
+      <!-- <gl-app-hamburger 
+        class="hamburger-container" 
+        :toggleClick="handleToggleSideBar" 
+        :isActive="isActive"/> -->
+      <!-- <gl-management-center 
         v-on:@themeHandler="handleTheme" 
         v-on:@logout="handleLogout"
         v-on:@toggleSideBar="handleToggle"
         v-on:@setLanguage="handleSetLanguage"
         v-on:@itemChanged="handleItemChanged"
+        v-on:@setParamsConfig="handleSetParamsConfig"/> -->
+      <gl-app-navbar  v-if="oNavbar.visible"
+        v-on:@themeHandler="handleTheme" 
+        v-on:@logout="handleLogout"
+        v-on:@toggleSideBar="handleToggleSideBar"
+        v-on:@setLanguage="handleSetLanguage"
+        v-on:@itemChanged="handleItemChanged"
         v-on:@setParamsConfig="handleSetParamsConfig"
+        v-on:@handleNav2="handleNav2" 
         :navbarStyle="oNavbarStyle"
         :theme="oNavbar.theme" 
         :avatar="oNavbar.user.avatar" 
@@ -19,7 +31,12 @@
         :generate="oNavbar.generate"
         :itemsArray="oNavbar.itemsArray"
         :isActive="isActive"
-        :settingParams="settingParams"/>
+        :settingParams="settingParams"
+        :oNav2nd="oNavbar.oNav2nd"/>
+      <gl-app-breadcrumb 
+        class="breadcrumb-container" 
+        :generate="GenerateTitle" 
+        v-show="breadcrumb_visible"/>     
       <gl-app-tags-view  v-if="oTagsView.visible"
         v-on:@addViewTag="handleAddViewTag"
         v-on:@closeSeletedTag="handleCloseTag"
@@ -28,6 +45,7 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
+        <nav5th :oNav5th="oNav5th"/> 
         </draggable>
     </div>
 </template>
@@ -38,6 +56,9 @@ import { HeaderMixin, PublicMixin } from '@/lib/mixins'
 import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
 import { GlConst } from 'glsx-vue-common'
+import Nav5th from './nav5th'
+import GlAppBreadcrumb from '@/packages/Breadcrumb'
+import GlAppHamburger from '@/packages/Hamburger'
 const { HeaderConst, AsideConst, AppConst } = GlConst
 export default {
   name: 'GlAppHeader',
@@ -45,13 +66,23 @@ export default {
   components: {
     GlAppNavbar,
     GlAppTagsView,
+    Nav5th,
+    GlAppBreadcrumb,
+    GlAppHamburger,
     draggable
+  },
+  data() {
+    return {
+      breadcrumb_visible: false
+    }
   },
   computed: {
     oNavbarStyle() {
       return {
         backgroundColor: this.app.defaultColor,
-        height: this.header.height + 'px'
+        height: this.header.height + 'px',
+        textColor: this.aside.sidebar.textColor,
+        activeTextColor: this.aside.sidebar.activeTextColor
       }
     },
     Navbar() {
@@ -110,7 +141,8 @@ export default {
           preDefineColors: this.Navbar.theme.preDefineColors,
           value: this.app.defaultColor
         },
-        generate: this.generateTitle
+        generate: this.GenerateTitle,
+        oNav2nd: { src: this.app.auth.resources, pid: this.app.auth.curnav.first }
       }
     },
     oTagsView() {
@@ -118,7 +150,12 @@ export default {
         visible: this.TagsView.visible,
         activeColor: this.TagsView.activeColor || this.app.defaultColor,
         visitedViews: this.visitedViews || [],
-        generate: this.generateTitle
+        generate: this.GenerateTitle
+      }
+    },
+    oNav5th() {
+      return {
+        src: this.app.auth.resources, pid: this.app.auth.curnav.fourth
       }
     }
   },
@@ -131,18 +168,16 @@ export default {
     },
     handleLogout() {
       this.Logout().then(() => {
-        // location.reload() // 为了重新实例化vue-router对象 避免bug
         this.$router.push('/example/table')
       })
     },
-    handleToggle() {
+    handleToggleSideBar() {
       const state = this.isActive ? AppConst.States.CLOSE : AppConst.States.OPEN
       this.Set(AsideConst.State.Key, state)
     },
     handleSetLanguage(lang) {
-      this.Set(HeaderConst.Navbar.Language.Key, lang).then(() => {
-        this.$i18n.locale = lang
-      })
+      this.Set(HeaderConst.Navbar.Language.Key, lang)
+      this.$i18n.locale = lang
     },
     handleAddViewTag(route) {
       this.addVisitedViews(route)
@@ -170,6 +205,9 @@ export default {
     },
     handleSetParamsConfig(params) {
       this.SetMulti(params)
+    },
+    handleNav2(nav2Id) {
+      this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
     }
   },
   mounted() {
@@ -177,3 +215,17 @@ export default {
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .el-breadcrumb {
+    transform:translateX(5px);
+    line-height:5px;
+  }
+ .app-header {
+    position: relative;
+    .hamburger-container {
+      line-height: 60px;
+      float: left;
+      padding: 0 10px;
+    }
+ }
+</style>
