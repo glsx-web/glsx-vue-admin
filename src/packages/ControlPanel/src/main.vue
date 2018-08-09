@@ -3,7 +3,7 @@
       <div class="controlEntrance" @click="showControlPanel"><i :class="flag ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
     <transition name="fade">
       <gl-app-scroll :height=nHeight >
-      <ul class="el-menu controlPanelMenu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="flag">
+      <ul class="el-menu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="flag">
         <app-home v-for="(item,index) in aNav" :key="index" :content="item.title" class="el-menu-item controlPanelList" :isvertical="isvertical"></app-home>
       </ul>
       </gl-app-scroll>

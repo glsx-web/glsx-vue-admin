@@ -45,11 +45,8 @@ export default {
       this.$emit('@handleNav5', nav5Id)
     },
     createIframe(item) {
-      console.log(this.caches.has(item))
       const container = document.getElementById(`container_${item.title}`)
-      console.log(container.firstElementChild)
       if (!item || !item.title || !item.path || container.firstElementChild) return
-      console.log(item.title)
       const connection = this.$Penpal.connectToChild({
         // URL of page to load into iframe.
         url: item.path,
