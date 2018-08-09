@@ -357,8 +357,8 @@ export default {
       imageUrl: '',
       color: '#409EFF',
       flag: true,
-      visible: false
-      // activeNames: ['1']
+      visible: false,
+      activeNames: ['1']
     }
   },
   methods: {

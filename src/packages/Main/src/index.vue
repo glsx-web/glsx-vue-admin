@@ -1,10 +1,8 @@
 <template>
-  <gl-app-scroll :height="nHeight">
+  <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
     <gl-keep-alive />
-    <app-main :cachedViews="cachedViews" />
-    <!-- <button @click="handleClick">Add from parent</button>
-     <span>aaa:{{$store.getters.app.count}}:{{$store.getters.aside.logo.height}}</span>
-    <iframe id="frameId1" src="http://localhost:8080/" style="width:100%;height:500px" :onload="load"/> -->
+    <app-main :cachedViews="cachedViews"/>
+    <nav5th :oNav5th="oNav5th" :height="nHeight-40"/> 
   </gl-app-scroll>
 </template>
 
@@ -14,6 +12,7 @@ import AppMain from './main'
 import { AppMixin } from '@/lib/mixins'
 import GlKeepAlive from '@/packages/KeepAlive'
 import { mapGetters } from 'vuex'
+import Nav5th from './nav5th'
 /**
 /**
  * 默认颜色
@@ -24,7 +23,8 @@ export default {
   components: {
     AppMain,
     GlAppScroll,
-    GlKeepAlive
+    GlKeepAlive,
+    Nav5th
   },
   computed: {
     ...mapGetters([
@@ -39,6 +39,11 @@ export default {
       const nNavbarHeight = this.header.navbar.visible ? this.header.navbar.height || 60 : 0
       const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
       return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight
+    },
+    oNav5th() {
+      return {
+        src: this.app.auth.resources, pid: this.app.auth.curnav.fourth
+      }
     }
   }, methods: {
     handleClick() {

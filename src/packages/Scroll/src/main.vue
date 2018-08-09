@@ -1,9 +1,12 @@
 <template>
-   <EasyScroll :class="className" :barOption="barOption">
-        <div :style="{ 'height': height + 'px'}">
-          <slot></slot>
-        </div>
-    </EasyScroll>
+  <EasyScroll :class="className" :barOption="barOption" v-if="barOption.enableScroll">
+    <div :style="{ 'height': height + 'px'}">
+      <slot></slot>
+    </div>
+  </EasyScroll>
+  <div v-else :style="{ 'height': height + 'px','overflow':'hidden'}">
+    <slot></slot>
+  </div>
 </template>
 <script>
 import EasyScroll from 'easyscroll'
@@ -34,7 +37,8 @@ export default {
         barOpacityMin: 0.1, // 滚动条非激活状态下的透明度
         zIndex: '666', // 滚动条z-Index
         autohidemode: true, // 自动隐藏模式
-        horizrailenabled: false // 是否显示水平滚动条
+        horizrailenabled: false, // 是否显示水平滚动条
+        enableScroll: true // 是否启用滚动条
       }
     }
   },

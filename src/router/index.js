@@ -36,6 +36,7 @@ export const routers = [
   {
     path: '/form',
     component: Layout,
+    redirect: '/form/index',
     children: [
       {
         path: 'index',
@@ -48,14 +49,16 @@ export const routers = [
   {
     path: '/iframe',
     component: Layout,
-    redirect: '/iframe/index', // you can set roles in root nav
+    props: true,
+    redirect: '/iframe/index',
     children: [{
-      path: '/index',
+      path: 'index',
       component: IFrame,
-      name: 'iframe',
+      name: 'GlIframe',
       meta: {
         title: 'iframe',
-        icon: 'table'
+        icon: 'table',
+        keepAlive: true
       }
     }]
   },

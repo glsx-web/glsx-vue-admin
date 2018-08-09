@@ -45,7 +45,7 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
-        <nav5th :oNav5th="oNav5th"/> 
+        <!-- <nav5th :oNav5th="oNav5th"/>  -->
         </draggable>
     </div>
 </template>
