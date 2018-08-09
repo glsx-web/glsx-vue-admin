@@ -1,6 +1,13 @@
 <template>
   <div class="navbar" :style={lineHeight:navbarStyle.height}>
-    <gl-app-hamburger 
+    <div class="logo-container" v-if="!settingParams.aside.visible" style="">
+      <gl-app-logo v-if="Logo.visible"
+      :width="oLogo.width" 
+      :height="oLogo.height" 
+      :backgroundColor="oLogo.backgroundColor" 
+      :backgroundImage="oLogo.backgroundImage" />
+    </div>
+    <gl-app-hamburger v-if="settingParams.aside.visible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
         :isActive="isActive"/>
@@ -31,6 +38,7 @@
 <script>
 
 import GlAppHamburger from '@/packages/Hamburger'
+import GlAppLogo from '@/packages/Logo'
 // import ErrorLog from '@/packages/ErrorLog'
 import GlAppScreenfull from '@/packages/Screenfull'
 import GlAppLangSelect from '@/packages/LangSelect'
@@ -64,6 +72,7 @@ export default {
   },
   components: {
     GlAppHamburger,
+    GlAppLogo,
     // GlAppErrorLog,
     GlAppScreenfull,
     GlAppLangSelect,
@@ -80,6 +89,21 @@ export default {
   data() {
     return {
       toogleActive: true
+    }
+  },
+  computed: {
+    Logo() {
+      console.log(this)
+      return this.settingParams.aside.logo
+    },
+    oLogo() {
+      return {
+        // width: '',
+        visible: this.Logo.visible,
+        height: 60,
+        backgroundColor: this.Logo.backgroundColor,
+        backgroundImage: this.Logo.image
+      }
     }
   },
   methods: {
@@ -126,6 +150,13 @@ export default {
     z-index: 2;
     top: 5px;
     bottom: 0;
+  }
+  .logo-container {
+    float: left;
+    position: relative;
+    width:200px;
+    z-index: 1;
+    height: 60px;
   }
  }
 </style>

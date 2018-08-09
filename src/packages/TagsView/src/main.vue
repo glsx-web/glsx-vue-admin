@@ -54,7 +54,11 @@ export default {
       })
     },
     menuVisible(value) {
-      document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
+      try {
+        document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mounted() {

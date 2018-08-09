@@ -12,6 +12,8 @@ const IFrame = { template: '<gl-iframe></gl-iframe>' }
 export const routers = [
   { path: '/404', component: _import('errorPage/404'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
+  { path: '/login', component: _import('login/index'), hidden: true },
+  // { path: '/home', component: _import('home/index'), hidden: true },
   { path: '/', redirect: 'example' },
   {
     path: '/example',
@@ -43,6 +45,19 @@ export const routers = [
         name: 'GlForm',
         component: _import('form/index'),
         meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: false }
+      }
+    ]
+  },
+  {
+    path: '/home',
+    component: Layout,
+    redirect: '/home/index',
+    children: [
+      {
+        path: 'index',
+        name: 'GlAppHome',
+        component: _import('home/index'),
+        meta: { title: 'home', icon: 'home', permission: '/home/index', keepAlive: false }
       }
     ]
   },

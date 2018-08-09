@@ -1,5 +1,5 @@
 <template>
-    <div v-if="header.visible" class="app-header"> 
+    <div v-if="header.visible" class="app-header">
       <draggable>
       <!-- <gl-app-hamburger 
         class="hamburger-container" 
@@ -73,7 +73,8 @@ export default {
   },
   data() {
     return {
-      breadcrumb_visible: false
+      breadcrumb_visible: false,
+      homeVisible: true
     }
   },
   computed: {

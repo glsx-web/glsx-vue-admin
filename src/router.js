@@ -48,12 +48,25 @@ export const routers = [
     children: [
       {
         path: 'index',
-        name: 'GlForm',
+        name: 'gl-form',
         component: () => import(`@/${views}/form/index`),
         meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: false }
       }
     ]
   },
+  {
+    path: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'GlHome',
+        component: () => import(`@/${views}/home/index`),
+        meta: { title: 'home', icon: 'home', permission: '/home/index', keepAlive: false }
+      }
+    ]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 

@@ -5,6 +5,7 @@ import {
   Main,
   SvgIcon,
   Scroll,
+  GlControl,
   IFrame
 } from './packages'
 const components = [
@@ -14,6 +15,7 @@ const components = [
   Main,
   SvgIcon,
   Scroll,
+  GlControl,
   IFrame
 ]
 import './styles/index.scss'

@@ -6,6 +6,7 @@
         <el-main  > <gl-app-main/></el-main>
         <el-footer ><gl-app-footer/></el-footer>
       </el-container>
+      <el-aside width="auto"><gl-control /></el-aside>
   </el-container>
 </template>
 <script>

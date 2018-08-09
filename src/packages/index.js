@@ -20,6 +20,7 @@ import SvgIcon from './SvgIcon'
 import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
 import GlKeepAlive from './KeepAlive'
+import GlControl from './ControlPanel'
 import IFrame from './IFrame'
 export {
   App,
@@ -45,5 +46,6 @@ export {
   TagsView,
   ThemePicker,
   GlKeepAlive,
+  GlControl,
   IFrame
 }
