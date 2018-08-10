@@ -78,7 +78,7 @@ export default {
         if (valid) {
           this.loading = true
           this.initConfig().then(() => {
-            return this.Login({ params: this.loginForm, vue: this })
+            return this.Login({ params: this.loginForm, v: this })
           }).then(() => {
             return this.GetResources()
           }).then(() => {

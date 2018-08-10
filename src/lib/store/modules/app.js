@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 00:49:15
+ * @Last Modified time: 2018-08-11 01:12:49
  */
 import { GlConst } from 'glsx-vue-common'
 import { login, logout, getInfo } from '@/api/user'
@@ -77,7 +77,7 @@ const app = {
         const { params, v } = args
         login.req(params).then((data) => {
           const { token } = data.data
-          v.set_session_config_by_key(AppConst.Auth.Token.Key, token.name)
+          v.$set_session_config_by_key(AppConst.Auth.Token.Key, token.name)
           resolve()
         }).catch(error => {
           throw error
