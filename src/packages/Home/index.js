@@ -1,7 +1,7 @@
-import Home from './src/index'
+import GlAppHome from './src/index'
 
 /* istanbul ignore next */
-Home.install = function(Vue) {
-  Vue.component(Home.name, Home)
+GlAppHome.install = function(Vue) {
+  Vue.component(GlAppHome.name, GlAppHome)
 }
-export default Home
+export default GlAppHome

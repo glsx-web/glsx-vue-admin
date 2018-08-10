@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-20 14:58:44
+ * @Last Modified time: 2018-08-11 00:48:26
  */
 
 import { mapActions } from 'vuex'
@@ -31,11 +31,13 @@ export default {
     },
     Set(key, value) {
       var module = key.split('_').shift()
-      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value }).then(() => this.$set_config_by_key(key, value))
+      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
+        this.$set_config_by_key(key, value)
+      })
     },
     SetSession(key, value) {
       var module = key.split('_').shift()
-      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value }).then(() => this.$set_session_config_by_key(key, value))
+      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => this.$set_session_config_by_key(key, value))
     },
     GetSession(key) {
       const vuxValue = this.$recursion_get(this, key)
@@ -48,7 +50,8 @@ export default {
        * 1 调用 InitXXX 覆盖 vuex 状态
        */
       for (var key in obj) {
-        this[`Init${this.$fist_uppercase(key)}`](obj[key])
+        const pa = { v: this, config: obj[key] }
+        this[`Init${this.$fist_uppercase(key)}`](pa)
       }
       /**
        * 2 . 调用 set  设置 localstorage

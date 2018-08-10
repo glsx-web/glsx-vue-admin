@@ -6,7 +6,8 @@ import {
   SvgIcon,
   Scroll,
   GlControl,
-  IFrame
+  GlAppLogin,
+  GlAppHome
 } from './packages'
 const components = [
   Aside,
@@ -16,7 +17,8 @@ const components = [
   SvgIcon,
   Scroll,
   GlControl,
-  IFrame
+  GlAppLogin,
+  GlAppHome
 ]
 import './styles/index.scss'
 import { store } from '@/lib'

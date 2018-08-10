@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-25 22:41:17
+ * @Last Modified time: 2018-08-11 00:46:46
  */
 
 import { mapActions } from 'vuex'
@@ -20,9 +20,11 @@ export default {
         const config = this.$config
         this.$set_session_config(config)
         const cfg = this.$set_config(config)
+
         for (var key in cfg) {
           const action = `Init${this.$fist_uppercase(key)}`
-          this[action](cfg[key])
+          const pa = { v: this, config: cfg[key] }
+          this[action](pa)
         }
         resole()
       })

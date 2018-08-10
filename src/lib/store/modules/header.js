@@ -2,16 +2,15 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-19 20:23:24
+ * @Last Modified time: 2018-08-11 00:49:33
  */
-import { GlCommon } from 'glsx-vue-common'
 const header = {
   state: {
     'visible': '',
     'height': 60,
     'navbar': {
       'visible': '',
-      'itemsArray': '',
+      'itemsArray': ['slot-1', 'slot-2', 'slot-4', 'slot-3', 'slot-5', 'slot-6'],
       'height': 60,
       'user': {
         'visible': '',
@@ -62,21 +61,22 @@ const header = {
   },
   mutations: {
     SET_HEADER: (state, args) => {
-      const { arr, value } = args
-      GlCommon.recursionSet(state, arr, value)
+      const { k, value, v } = args
+      v.$recursion_set(state, k, value)
     },
     INIT_HEADER: (state, args) => {
-      state = Object.assign(state, args)
+      const { v, config } = args
+      v.$_.merge(state, config)
     }
   },
   actions: {
     SetHeader: ({ commit }, objArgs) => {
-      const { key, value } = objArgs
+      const { key, value, v } = objArgs
       if (!key || !key.startsWith('header_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.replace('header_', '')
-      commit('SET_HEADER', { arr: arr, value: value })
+      const k = key.replace('header_', '')
+      commit('SET_HEADER', { k: k, value: value, v: v })
     },
     InitHeader: ({ commit }, objHeader) => {
       commit('INIT_HEADER', objHeader)
@@ -86,5 +86,4 @@ const header = {
     header: state => state
   }
 }
-
 export default header

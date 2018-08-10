@@ -168,8 +168,8 @@ export default {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
-      this.Logout().then(() => {
-        this.$router.push('/example/table')
+      this.Logout({ token: '', v: this }).then(() => {
+        this.$router.push('/login')
       })
     },
     handleToggleSideBar() {

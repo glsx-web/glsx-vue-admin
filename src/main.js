@@ -15,7 +15,7 @@ import { i18n } from '@/lib'
 import router from '@/router/index.js'
 import store from './store'
 import './icons'
-new Vue({
+window.vm = new Vue({
   el: '#app',
   router,
   i18n,

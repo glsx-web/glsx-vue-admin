@@ -2,10 +2,8 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-23 02:34:19
+ * @Last Modified time: 2018-08-11 00:49:21
  */
-import { GlCommon } from 'glsx-vue-common'
-
 const aside = {
   state: {
     'visible': '',
@@ -27,11 +25,12 @@ const aside = {
   },
   mutations: {
     SET_ASIDE: (state, args) => {
-      const { arr, value } = args
-      GlCommon.recursionSet(state, arr, value)
+      const { k, value, v } = args
+      v.$recursion_set(state, k, value)
     },
     INIT_ASIDE: (state, args) => {
-      state = Object.assign(state, args)
+      const { v, config } = args
+      v.$_.merge(state, config)
     },
     'SET_COUNT'(state, increasement) {
       state.logo.visible = !state.logo.visible
@@ -39,12 +38,12 @@ const aside = {
   },
   actions: {
     SetAside: ({ commit }, objArgs) => {
-      const { key, value } = objArgs
+      const { key, value, v } = objArgs
       if (!key || !key.startsWith('aside_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.replace('aside_', '')
-      commit('SET_ASIDE', { arr: arr, value: value })
+      const k = key.replace('aside_', '')
+      commit('SET_ASIDE', { k: k, value: value, v: v })
     },
     InitAside: ({ commit }, objAside) => {
       commit('INIT_ASIDE', objAside)

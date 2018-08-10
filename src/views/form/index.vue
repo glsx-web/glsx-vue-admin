@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <button @click="handleClick">Add from parent</button>
+    <button >Add from parent</button>
     <input type="text" name="" id="">
     <iframe id="frameId1" src="http://localhost:8080/" style="width:100%;height:500px"/>
   </div>

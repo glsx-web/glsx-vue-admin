@@ -21,7 +21,8 @@ import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
 import GlKeepAlive from './KeepAlive'
 import GlControl from './ControlPanel'
-import IFrame from './IFrame'
+import GlAppLogin from './Login'
+import GlAppHome from './Home'
 export {
   App,
   AppEntry,
@@ -47,5 +48,6 @@ export {
   ThemePicker,
   GlKeepAlive,
   GlControl,
-  IFrame
+  GlAppLogin,
+  GlAppHome
 }

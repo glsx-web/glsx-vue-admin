@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import { GlAppEntry } from './index'
 const _import = require('./_import_' + process.env.NODE_ENV)
 // import { GlCommon } from 'glsx-vue-common'
 // const { GetToken } = GlCommon
@@ -8,11 +7,12 @@ const _import = require('./_import_' + process.env.NODE_ENV)
 Vue.use(Router)
 /* Layout */
 import Layout from '@/views/layout'
-const IFrame = { template: '<gl-iframe></gl-iframe>' }
+const GlAppLogin = { template: '<gl-app-login />' }
+const GlAppHome = { template: '<gl-app-home />' }
 export const routers = [
   { path: '/404', component: _import('errorPage/404'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
-  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/login', component: GlAppLogin, hidden: true },
   // { path: '/home', component: _import('home/index'), hidden: true },
   { path: '/', redirect: 'example' },
   {
@@ -56,26 +56,10 @@ export const routers = [
       {
         path: 'index',
         name: 'GlAppHome',
-        component: _import('home/index'),
+        component: GlAppHome,
         meta: { title: 'home', icon: 'home', permission: '/home/index', keepAlive: false }
       }
     ]
-  },
-  {
-    path: '/iframe',
-    component: Layout,
-    props: true,
-    redirect: '/iframe/index',
-    children: [{
-      path: 'index',
-      component: IFrame,
-      name: 'GlIframe',
-      meta: {
-        title: 'iframe',
-        icon: 'table',
-        keepAlive: true
-      }
-    }]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
