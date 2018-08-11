@@ -9,7 +9,7 @@ export default{
         visible: true,
         avatar: {
           visible: true,
-          value: 'https://avatars3.githubusercontent.com/u/21699459?s=460&v=4'
+          value: 'http://www.didihu.com.cn/ddhpc/images/footer_logo.png'
         },
         name: {
           visible: true,

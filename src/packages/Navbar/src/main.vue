@@ -109,7 +109,6 @@ export default {
       }
     },
     Logo() {
-      console.log(this)
       return this.settingParams.aside.logo
     },
     oLogo() {

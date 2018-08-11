@@ -2,7 +2,7 @@
   <div>
     <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
-        <app-home :content="item.title" class="homeList" :isvertical='isvertical'></app-home>
+        <app-home :menu="item" class="homeList" :isvertical='isvertical'></app-home>
       </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -35,7 +35,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.app.defaultColor)
     this.asideVisible = this.GetSession(AsideConst.Visible.Key)
     this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
   },

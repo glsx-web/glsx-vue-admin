@@ -1,24 +1,24 @@
 <template>
-  <li class="home-li">
-    <div :class="isvertical? 'vertical': 'horizontal'"></div><span class="text">{{content}}</span>
+  <li class="home-li" @click="handleChange()">
+    <div :class="isvertical? 'vertical': 'horizontal'"></div><span class="text" >{{menu.title}}</span>
   </li>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import 'swiper/dist/css/swiper.css'
+import { PublicMixin } from '@/lib/mixins'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
 export default {
   name: 'AppHome',
-  props: ['content', 'isvertical'],
-  components: {
-    swiper,
-    swiperSlide
-  },
-  computed: {
-    ...mapGetters(['app']),
-    aNav() {
-      return this.$get_menus(this.app.auth.resources, 0)
+  props: ['menu', 'isvertical'],
+  mixins: [PublicMixin],
+  methods: {
+    handleChange() {
+      this.SetSession(AppConst.Auth.CurNav.First.Key, this.menu.id)
+      this.SetSession(AppConst.Auth.CurNav.Second.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Third.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Fourth.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
     }
   }
 }

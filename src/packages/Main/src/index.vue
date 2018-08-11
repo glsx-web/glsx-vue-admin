@@ -2,7 +2,10 @@
   <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
     <gl-keep-alive />
     <!-- <app-main :cachedViews="cachedViews"/> -->
-    <nav5th :oNav5th="oNav5th" :height="nHeight-40"/> 
+    <nav5th 
+      :oNav5th="oNav5th"
+      :height="nHeight-40" 
+      v-on:@handleNav5="handleNav5"/> 
   </gl-app-scroll>
 </template>
 
@@ -10,6 +13,8 @@
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
 import { AppMixin, PublicMixin } from '@/lib/mixins'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
 import GlKeepAlive from '@/packages/KeepAlive'
 import { mapGetters } from 'vuex'
 import Nav5th from './nav5th'
@@ -51,22 +56,14 @@ export default {
     },
     oNav5th() {
       return {
-        src: this.app.auth.resources, pid: this.app.auth.curnav.fourth
+        menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.fourth),
+        active: this.app.auth.curnav.fifth
       }
     }
   },
   methods: {
-    handleClick() {
-      this.$store.commit('ADD_COUNT', 2)
-    },
-    copy(jsons, jsons1) {
-      for (var key in jsons1) {
-        if ((jsons1[key] instanceof Object)) {
-          this.copy(jsons[key], jsons1[key]) // 如果是Object则递归
-        } else {
-          jsons[key] = jsons1[key]
-        }
-      }
+    handleNav5(nav5Id) {
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, nav5Id)
     }
   }
 }

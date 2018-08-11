@@ -2,9 +2,9 @@
   <div>
       <div class="controlEntrance" @click="showControlPanel"><i :class="flag ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
     <transition name="fade">
-      <gl-app-scroll :height=nHeight >
+      <gl-app-scroll :height="nHeight" >
       <ul class="el-menu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="flag">
-        <app-home v-for="(item,index) in aNav" :key="index" :content="item.title" class="el-menu-item controlPanelList" :isvertical="isvertical"></app-home>
+        <app-home v-for="(item,index) in aNav" :key="index"  :menu="item" class="el-menu-item controlPanelList" :isvertical="isvertical"></app-home>
       </ul>
       </gl-app-scroll>
     </transition>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import AppHome from '@/views/home/main'
+import AppHome from '@/packages/Home/src/main'
 import { AppMixin } from '@/lib/mixins'
 export default {
   name: 'GlControl',
@@ -33,11 +33,7 @@ export default {
       return parseInt(nClientHeight)
     },
     aNav() {
-      if (this.app.auth.resources) {
-        return this.$get_menus(this.app.auth.resources, 0)
-      } else {
-        return []
-      }
+      return this.$get_menus(this.app.auth.resources, 0)
     }
   },
   methods: {
