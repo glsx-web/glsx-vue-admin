@@ -1,5 +1,5 @@
 <template>
-    <el-tabs 
+    <el-tabs
       tab-position="top" 
       class="nav5th"
       v-model="activeName" 
@@ -9,14 +9,17 @@
         :key="index" 
         :index="index+''" 
         :label="item.title"
-        :name="item.id+''"  
+        :name="item.id+''"
         >
         <span slot="label">
             <i class="el-icon-date"></i> 
             {{item.title}}
         </span>
         <!-- <gl-app-scroll :height="height"> -->
-        <div :id="createContainerId(item)" :style="{ height:height+'px'}"></div>
+        <div 
+          :id="createContainerId(item)" 
+          :style="{ height:height+'px'}"
+          ></div>
         <!-- </gl-app-scroll> -->
         </el-tab-pane>
     </el-tabs>
@@ -29,12 +32,19 @@ export default {
     return {
       loading: true,
       activeName: '',
-      connection: {}
+      connections: []
     }
   },
   props: {
     oNav5th: Object,
     height: Number
+  },
+  watch: {
+    'oNav5th.color': {
+      handler(newVal, oldVal) {
+        this.connections.map(con => con.promise.then(child => child.setTheme(newVal)))
+      }
+    }
   },
   computed: {
     aNav5th() {
@@ -55,31 +65,43 @@ export default {
       this.$emit('@handleNav5', this.activeName)
     },
     createContainerId(item) {
-      return `container_${item.title}`
+      return `container_${item.id}`
+    },
+    createLoading(item) {
+      return this.$loading({
+        lock: true,
+        text: '拼命加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+        target: `#${this.createContainerId(item)}`
+      })
     },
     createIframe(item) {
       const container = document.getElementById(this.createContainerId(item))
-      if (!item || !item.title || !item.path || container.firstElementChild) return
-      const connection = this.$Penpal.connectToChild({
+      if (!item || !item.title || !item.path || container.getAttribute('hasChild')) return
+      item.loading = this.createLoading(item)
+      container.setAttribute('hasChild', true)
+      const con = this.$Penpal.connectToChild({
         // URL of page to load into iframe.
         url: item.path,
         // Container to which the iframe should be appended.
         appendTo: container,
         // Methods parent is exposing to child
+        source: item,
         methods: {
-          add(num1, num2) {
-            return num1 + num2
+          onload() {
+            // _this.loading = false
           }
         }
       })
-      this.connection[item.path] = connection
-      connection.promise.then(child => {
-        child.height().then(height => {
-          // console.log(item.title, height)
-          // document.getElementById(`container_${item.title}`).style.height = height + 'px'
-          // console.log(document.getElementById(`container_${item.title}`).style.height)
-        })
+      con.promise.then(child => {
+        child.setTheme(this.oNav5th.color)
       })
+      const iframe = con.iframe
+      iframe.onload = () => {
+        con.source.loading.close()
+      }
+      this.connections.push(con)
     }
   }
 }

@@ -31,6 +31,11 @@ export default {
     GlKeepAlive,
     Nav5th
   },
+  data() {
+    return {
+      sessionConfig: this.$get_session_config()
+    }
+  },
   computed: {
     ...mapGetters([
       'footer',
@@ -43,10 +48,10 @@ export default {
     },
     nHeight() {
       if (this.isRefreshed) {
-        const config = this.$get_config()
-        const sessionConfig = this.$get_session_config()
-        const cfg = this.$_.merge(sessionConfig, config)
-        this.SetMulti(cfg)
+        // const config = this.$get_config()
+        // const sessionConfig = this.$get_session_config()
+        // const cfg = this.$_.merge(sessionConfig, config)
+        this.SetMulti(this.sessionConfig)
       }
       const nClientHeight = this.app.clientHeight
       const nFooterHeight = this.footer.visible ? this.footer.height : 0
@@ -57,6 +62,7 @@ export default {
     oNav5th() {
       return {
         menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.fourth),
+        color: this.app.defaultColor,
         active: this.app.auth.curnav.fifth
       }
     }
@@ -65,6 +71,9 @@ export default {
     handleNav5(nav5Id) {
       this.SetSession(AppConst.Auth.CurNav.Fifth.Key, nav5Id)
     }
+  },
+  created() {
+    !this.sessionConfig && this.$router.push('/login')
   }
 }
 </script>

@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 00:48:26
+ * @Last Modified time: 2018-08-12 18:32:43
  */
 
 import { mapActions } from 'vuex'
@@ -33,6 +33,7 @@ export default {
       var module = key.split('_').shift()
       this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
         this.$set_config_by_key(key, value)
+        this.SetSession(key, value)
       })
     },
     SetSession(key, value) {
