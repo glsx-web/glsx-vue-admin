@@ -169,7 +169,7 @@
                       </el-col>
                       <el-col :span="6">
                         <el-form-item>
-                          <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关"></el-switch>
+                          <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关" :disabled="isdisabled"></el-switch>
                         </el-form-item>
                       </el-col>
                       <el-col :span="5">
@@ -322,10 +322,10 @@
 <script>
 import LangSelect from '@/packages/LangSelect'
 import GlAppThemePicker from '@/packages/ThemePicker'
-import { PublicMixin } from '@/lib/mixins'
+import { PublicMixin, AppMixin } from '@/lib/mixins'
 export default {
   name: 'GlAppSettings',
-  mixins: [PublicMixin],
+  mixins: [PublicMixin, AppMixin],
   components: {
     LangSelect,
     GlAppThemePicker
@@ -358,7 +358,8 @@ export default {
       color: '#409EFF',
       flag: true,
       visible: false,
-      activeNames: ['1']
+      activeNames: ['1'],
+      isdisabled: false
     }
   },
   methods: {
@@ -379,6 +380,7 @@ export default {
     },
     // 确定按钮
     handleSetParamsConfig() {
+      console.log(this.params)
       this.dialogFormVisible = !this.dialogFormVisible
       // // 窗口关闭
       if (!this.dialogFormVisible) {
