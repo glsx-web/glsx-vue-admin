@@ -1,6 +1,6 @@
 <template>
 <el-menu 
-  :default-active="activeIndex" 
+  :default-active="defaultActive" 
   mode="horizontal"
   :text-color="oStyle.textColor"
   :active-text-color="oStyle.activeTextColor"
@@ -9,12 +9,11 @@
     @click="handleNav2(item.id)"
     v-if="aNav2nd.length" 
     v-for="(item,index) in aNav2nd" 
-    :key="index" :index="index+''">{{item.title}}</el-menu-item>
+    :key="index" :index="item.id+''">{{item.title}}</el-menu-item>
 </el-menu>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
   name: 'Nav2nd',
   props: {
@@ -22,20 +21,11 @@ export default {
     oNav2nd: Object
   },
   computed: {
-    ...mapGetters([
-      'app'
-    ]),
     aNav2nd() {
-      if (this.oNav2nd.src) {
-        return this.$get_menus(this.oNav2nd.src, this.oNav2nd.pid || 1)
-      } else {
-        return []
-      }
-    }
-  },
-  data() {
-    return {
-      activeIndex: '1'
+      return this.oNav2nd.menus
+    },
+    defaultActive() {
+      return this.oNav2nd.active + ''
     }
   },
   methods: {

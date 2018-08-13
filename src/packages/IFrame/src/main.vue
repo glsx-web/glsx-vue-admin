@@ -1,6 +1,6 @@
 <template>
-  <iframe v-if="$route.query.src" :src='$route.query.src' class="iframe" ref="iframe" v-loading="loading"></iframe>
-  <iframe v-else :src="urlPath" class="iframe" ref="iframe" v-loading="loading"></iframe>
+  <iframe  :src='$route.query.src' class="iframe" ref="iframe" v-loading="loading"></iframe>
+  <!-- <iframe v-else :src="urlPath" class="iframe" ref="iframe" v-loading="loading"></iframe> -->
 </template>
 <script>
 export default {
@@ -12,6 +12,7 @@ export default {
     }
   },
   mounted() {
+    console.log(1111)
     this.iframeInit()
     window.onresize = () => {
       this.iframeInit()

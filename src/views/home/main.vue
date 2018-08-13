@@ -18,12 +18,7 @@ export default {
   },
   computed: {
     aNav() {
-      console.log(this.app.auth)
-      if (this.app.auth.resources) {
-        return this.$get_menus(this.app.auth.resources, this.app.auth.curnav.second || 0)
-      } else {
-        return []
-      }
+      return this.$get_menus(this.app.auth.resources, 0)
     }
   }
 }

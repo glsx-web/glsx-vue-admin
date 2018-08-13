@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-03 10:17:12
+ * @Last Modified time: 2018-08-11 22:32:49
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -100,8 +100,8 @@ export default {
     },
     oNav3_4() {
       return {
-        src: this.app.auth.resources,
-        pid: this.app.auth.curnav.second
+        menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.second),
+        active: this.app.auth.curnav.fourth
       }
     }
   },
@@ -125,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    this.init()
+    // this.init()
   }
 }
 </script>

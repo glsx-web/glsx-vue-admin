@@ -1,30 +1,40 @@
 <template>
-  <gl-app-scroll :height="nHeight">
+  <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
     <gl-keep-alive />
-    <app-main :cachedViews="cachedViews" />
-    <!-- <button @click="handleClick">Add from parent</button>
-     <span>aaa:{{$store.getters.app.count}}:{{$store.getters.aside.logo.height}}</span>
-    <iframe id="frameId1" src="http://localhost:8080/" style="width:100%;height:500px" :onload="load"/> -->
+    <!-- <app-main :cachedViews="cachedViews"/> -->
+    <nav5th 
+      :oNav5th="oNav5th"
+      :height="nHeight-40" 
+      v-on:@handleNav5="handleNav5"/> 
   </gl-app-scroll>
 </template>
 
 <script>
 import GlAppScroll from '@/packages/Scroll'
 import AppMain from './main'
-import { AppMixin } from '@/lib/mixins'
+import { AppMixin, PublicMixin } from '@/lib/mixins'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst } = GlConst
 import GlKeepAlive from '@/packages/KeepAlive'
 import { mapGetters } from 'vuex'
+import Nav5th from './nav5th'
 /**
 /**
  * 默认颜色
  */
 export default {
   name: 'GlAppMain',
-  mixins: [AppMixin],
+  mixins: [AppMixin, PublicMixin],
   components: {
     AppMain,
     GlAppScroll,
-    GlKeepAlive
+    GlKeepAlive,
+    Nav5th
+  },
+  data() {
+    return {
+      sessionConfig: this.$get_session_config()
+    }
   },
   computed: {
     ...mapGetters([
@@ -33,20 +43,37 @@ export default {
       'header',
       'cachedViews'
     ]),
+    isRefreshed() {
+      return this.app.defaultColor === ''
+    },
     nHeight() {
+      if (this.isRefreshed) {
+        // const config = this.$get_config()
+        // const sessionConfig = this.$get_session_config()
+        // const cfg = this.$_.merge(sessionConfig, config)
+        this.SetMulti(this.sessionConfig)
+      }
       const nClientHeight = this.app.clientHeight
       const nFooterHeight = this.footer.visible ? this.footer.height : 0
       const nNavbarHeight = this.header.navbar.visible ? this.header.navbar.height || 60 : 0
       const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
       return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight
-    }
-  }, methods: {
-    handleClick() {
-      this.$store.commit('ADD_COUNT', 2)
     },
-    load() {
-      console.log(55555)
+    oNav5th() {
+      return {
+        menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.fourth),
+        color: this.app.defaultColor,
+        active: this.app.auth.curnav.fifth
+      }
     }
+  },
+  methods: {
+    handleNav5(nav5Id) {
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, nav5Id)
+    }
+  },
+  created() {
+    !this.sessionConfig && this.$router.push('/login')
   }
 }
 </script>

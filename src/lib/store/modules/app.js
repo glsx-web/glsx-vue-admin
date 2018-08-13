@@ -2,11 +2,10 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-25 22:14:37
+ * @Last Modified time: 2018-08-12 01:26:27
  */
-import { GlCommon, GlConst } from 'glsx-vue-common'
-import { logout, getInfo } from '@/api/user'
-const { SetSessionConfigByKey, RemoveToken, recursionSet } = GlCommon
+import { GlConst } from 'glsx-vue-common'
+import { login, logout, getInfo } from '@/api/user'
 const { AppConst, HeaderConst } = GlConst
 const app = {
   state: {
@@ -24,47 +23,45 @@ const app = {
         third: '',
         fourth: '',
         fifth: ''
-      },
-      navs: ''
+      }
     }
   },
   mutations: {
     SET_APP: (state, args) => {
-      const { arr, value } = args
-      recursionSet(state, arr, value)
+      const { k, value, v } = args
+      v.$recursion_set(state, k, value)
     },
     INIT_APP: (state, args) => {
-      state = Object.assign(state, args)
-    },
-    'ADD_COUNT'(state, increasement) {
-      state.count = state.count + increasement
+      const { v, config } = args
+      state = v.$_.merge(state, config)
     }
   },
   actions: {
     SetApp: ({ commit }, objArgs) => {
-      const { key, value } = objArgs
+      const { key, value, v } = objArgs
       if (!key || !key.startsWith('app_')) {
         throw new Error('请正确设置参数格式')
       }
-      const arr = key.replace('app_', '')
-      commit('SET_APP', { arr: arr, value: value })
+      const k = key.replace('app_', '')
+      commit('SET_APP', { k: k, value: value, v: v })
     },
     InitApp: ({ commit }, objApp) => {
       commit('INIT_APP', objApp)
     },
 
     // 获取用户信息
-    GetInfo({ dispatch }, token) {
+    GetInfo({ dispatch }, args) {
       return new Promise((resolve, reject) => {
+        const { token, v } = args
         getInfo.req(token).then(response => {
           const { roles, name, avatar } = response.data
           if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles })
-              .then(() => SetSessionConfigByKey(AppConst.Auth.Roles.Key, roles))
-            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name }, { root: true })
-              .then(() => SetSessionConfigByKey(HeaderConst.Navbar.User.Name.Key, name))
-            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar }, { root: true })
-              .then(() => SetSessionConfigByKey(HeaderConst.Navbar.User.Avatar.Key, avatar))
+            dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v: v })
+              .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
+            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name, v: v }, { root: true })
+              .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, name))
+            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar, v: v }, { root: true })
+              .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Avatar.Key, avatar))
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
@@ -74,27 +71,33 @@ const app = {
         })
       })
     },
-
-    // 登出
-    Logout({ dispatch }, token) {
+    // 登入
+    Login({ dispatch }, args) {
       return new Promise((resolve, reject) => {
-        logout.req(token).then(() => {
-          RemoveToken()
-          // RemoveSessionConfig()
-          toLogin()
+        const { params, v } = args
+        login.req(params).then((data) => {
+          const { token } = data.data
+          v.$set_session_config_by_key(AppConst.Auth.Token.Key, token.name)
           resolve()
         }).catch(error => {
           throw error
         })
       })
-      function toLogin() {
-        window.top.location.href = 'https://www.baidu.com'
-      }
+    },
+    // 登出
+    Logout({ dispatch }, args) {
+      const { token, v } = args
+      return new Promise((resolve, reject) => {
+        logout.req(token).then(() => {
+          v.$remove_session_config()
+          resolve()
+        }).catch(error => {
+          throw error
+        })
+      })
     }
   },
   getters: {
-    device: state => state.device,
-    clientHeight: state => state.clientHeight,
     app: state => state
   }
 }

@@ -385,7 +385,6 @@ export default {
       // // 窗口关闭
       if (!this.dialogFormVisible) {
         this.$emit('@setParamsConfig', this.params)
-        console.log(this.params)
       } else {
         // 窗口打开
         this.params = JSON.parse(JSON.stringify(this.settingParams))

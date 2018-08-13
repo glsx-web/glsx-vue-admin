@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-03 10:17:32
+ * @Last Modified time: 2018-08-11 01:14:24
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      token: this.$get_token()
+      token: '' // this.$get_token()
     }
   },
   methods: {
@@ -34,28 +34,17 @@ export default {
       'InitFooter',
       'InitApp'
     ]),
-    routerfilter() {
+    GetResources() {
       return new Promise(resolve => {
-        // const router = this.$router
-        if (!this.app.auth.roles.length) { // 判断当前用户是否已拉取完user_info信息
-          this.GetInfo(this.token).then(res => { // 拉取user_info
-            // const { roles, routes, resources } = res.data // note: roles must be a array!
-            const { resources } = res.data // note: roles must be a array!
-            this.menu_factory(resources).then((menus) => {
-              resolve(menus)
-            })
-          }).catch(err => {
-            console.log(err)
-            Message.error(err || 'Verification failed, please login again')
-            this.Logout()
-          })
-        }
-      })
-    },
-    menu_factory(resources) {
-      return new Promise(resolve => {
-        this.SetSession(AppConst.Auth.Resources.Key, resources)
-        resolve()
+        this.GetInfo({ token: this.token, v: this }).then(res => { // 拉取user_info
+          const { resources } = res.data // note: roles must be a array!
+          this.SetSession(AppConst.Auth.Resources.Key, resources)
+          resolve()
+        }).catch(err => {
+          console.log(err)
+          Message.error(err || 'Verification failed, please login again')
+          this.Logout()
+        })
       })
     }
   }

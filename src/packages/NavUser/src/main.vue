@@ -30,9 +30,8 @@
       padding: 0 20px;
     }
     &-avatar {
-      height: 30px;
-      border-radius: 20px;
-      vertical-align: middle;
+         height: 20px;
+        transform: translateY(4px);
     }
   }
 </style>

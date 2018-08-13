@@ -45,7 +45,6 @@
         :activeColor="oTagsView.activeColor" 
         :generate="oTagsView.generate" 
         :visitedViews="oTagsView.visitedViews"/>
-        <nav5th :oNav5th="oNav5th"/> 
         </draggable>
     </div>
 </template>
@@ -56,7 +55,6 @@ import { HeaderMixin, PublicMixin } from '@/lib/mixins'
 import GlAppNavbar from '@/packages/Navbar'
 import GlAppTagsView from '@/packages/TagsView'
 import { GlConst } from 'glsx-vue-common'
-import Nav5th from './nav5th'
 import GlAppBreadcrumb from '@/packages/Breadcrumb'
 import GlAppHamburger from '@/packages/Hamburger'
 const { HeaderConst, AsideConst, AppConst } = GlConst
@@ -66,7 +64,6 @@ export default {
   components: {
     GlAppNavbar,
     GlAppTagsView,
-    Nav5th,
     GlAppBreadcrumb,
     GlAppHamburger,
     draggable
@@ -102,6 +99,16 @@ export default {
         footer: this.footer,
         aside: this.aside
       }
+    },
+    aNav2Menus() {
+      const menus = this.$get_menus(this.app.auth.resources, this.app.auth.curnav.first)
+      if (menus && menus.length) {
+        if (this.app.auth.curnav.second === '') {
+          this.SetSession(AppConst.Auth.CurNav.Second.Key, menus[0].id)
+        }
+        return menus
+      }
+      return []
     },
     oNavbar() {
       return {
@@ -143,7 +150,10 @@ export default {
           value: this.app.defaultColor
         },
         generate: this.GenerateTitle,
-        oNav2nd: { src: this.app.auth.resources, pid: this.app.auth.curnav.first }
+        oNav2nd: {
+          menus: this.aNav2Menus,
+          active: this.app.auth.curnav.second
+        }
       }
     },
     oTagsView() {
@@ -152,11 +162,6 @@ export default {
         activeColor: this.TagsView.activeColor || this.app.defaultColor,
         visitedViews: this.visitedViews || [],
         generate: this.GenerateTitle
-      }
-    },
-    oNav5th() {
-      return {
-        src: this.app.auth.resources, pid: this.app.auth.curnav.fourth
       }
     }
   },
@@ -168,8 +173,8 @@ export default {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
-      this.Logout().then(() => {
-        this.$router.push('/example/table')
+      this.Logout({ token: '', v: this }).then(() => {
+        this.$router.push('/login')
       })
     },
     handleToggleSideBar() {
@@ -210,9 +215,6 @@ export default {
     handleNav2(nav2Id) {
       this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
     }
-  },
-  mounted() {
-    // console.log(this.$router)
   }
 }
 </script>

@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:32
  * @Last Modified by: limin
- * @Last Modified time: 2018-07-17 15:34:26
+ * @Last Modified time: 2018-08-11 00:42:47
  */
 import { mapGetters, mapActions } from 'vuex'
 import { GlConst } from 'glsx-vue-common'
@@ -34,13 +34,13 @@ export default {
       return rect.width - RATIO < WIDTH
     },
     setClientHeight() {
-      this.SetApp({ key: AppConst.ClientHeight.Key, value: document.documentElement.clientHeight || document.body.clientHeight })
+      this.SetApp({ key: AppConst.ClientHeight.Key, value: document.documentElement.clientHeight || document.body.clientHeight, v: this })
     },
     toggleDevice() {
       const minSize = this.isMiniSize()
-      this.SetApp({ key: AppConst.Device.Key, value: (minSize ? AppConst.Device.Types.MINSIZE : AppConst.Device.Types.DESKTOP) })
+      this.SetApp({ key: AppConst.Device.Key, value: (minSize ? AppConst.Device.Types.MINSIZE : AppConst.Device.Types.DESKTOP), v: this })
       // this.SetAside({ key: AsideConst.State.Key, value: (minSize ? AppConst.States.CLOSE : AppConst.States.OPEN) })
-      minSize && this.SetAside({ key: AsideConst.State.Key, value: AppConst.States.CLOSE })
+      minSize && this.SetAside({ key: AsideConst.State.Key, value: AppConst.States.CLOSE, v: this })
     },
     resize() {
       this.setClientHeight()

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar" :style={lineHeight:navbarStyle.height}>
+  <div class="navbar" :style="oStyle">
     <div class="logo-container" v-if="!settingParams.aside.visible" style="">
       <gl-app-logo v-if="Logo.visible"
       :width="oLogo.width" 
@@ -12,10 +12,13 @@
         :toggleClick="handleToggleSideBar" 
         :isActive="isActive"/>
     <nav2nd 
-      v-on:@handleNav2="handleNav2" 
+      v-on:@handleNav2="handleNav2"
+      :class="fullScreenShow?'nav2nd-mcFull':'nav2nd-mcChange'" 
       :oStyle="navbarStyle" 
       :oNav2nd="oNav2nd"/>
-    <gl-management-center 
+    <gl-management-center
+        class="management-center"
+        :class="fullScreenShow?'mcFull':'mcChange'" 
         v-on:@themeHandler="handleTheme" 
         v-on:@logout="handleLogout"
         v-on:@setLanguage="handleSetLanguage"
@@ -30,7 +33,9 @@
         :settings="settings"
         :generate="generate"
         :itemsArray="itemsArray"
-        :settingParams="settingParams"/>
+        :settingParams="settingParams"
+        @screenChange="screenChange"
+        :style="oStyle"/>
         <!-- <gl-toggle  v-on:@toggle="handleToggle" class="right-menus-toggle" :isActive="toogleActive"></gl-toggle> -->
   </div>
 </template>
@@ -50,6 +55,7 @@ import GlToggle from '@/packages/Toggle'
 import Slots from './slots'
 import Nav2nd from './nav2nd'
 import GlManagementCenter from './mc'
+import { mapGetters } from 'vuex'
 
 // import glLock from '@/packages/lock'
 
@@ -88,12 +94,21 @@ export default {
   },
   data() {
     return {
-      toogleActive: true
+      toogleActive: true,
+      fullScreenShow: true
     }
   },
   computed: {
+    ...mapGetters([
+      'app'
+    ]),
+    oStyle() {
+      return {
+        lineHeight: this.navbarStyle.height,
+        backgroundColor: this.app.defaultColor
+      }
+    },
     Logo() {
-      console.log(this)
       return this.settingParams.aside.logo
     },
     oLogo() {
@@ -130,6 +145,9 @@ export default {
     },
     handleNav2(nav2Id) {
       this.$emit('@handleNav2', nav2Id)
+    },
+    screenChange(show) {
+      this.fullScreenShow = show
     }
     // handleLockScreen() { // 锁屏
     //   // this.$store.commit('LOCK')
@@ -143,13 +161,28 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
   position: relative;
+  display: flex;
   .hamburger-container {
-    float: left;
+    width: 60px;
     padding: 0 20px;
     position: relative;
     z-index: 2;
     top: 5px;
     bottom: 0;
+  }
+  .nav2nd-mcFull{
+    margin: 0 358px 0 0;
+  }
+  .nav2nd-mcChange{
+    margin:0 60px 0 0;
+  }
+  .management-center{
+    .mcFull{
+      width: 358px;
+    }
+    .mcChange{
+      width: 60px;
+    }
   }
   .logo-container {
     float: left;

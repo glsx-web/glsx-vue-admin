@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     changeKeepAlive() {
-      console.log(this.color)
       this.getRoute = this.$route.meta.keepAlive = !this.$route.meta.keepAlive
       console.log(this.color)
     }

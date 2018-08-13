@@ -3,7 +3,7 @@
       <el-menu
         mode="vertical"
         :show-timeout="200"
-        :default-active="$route.path"
+        :default-active="defaultActive"
         :collapse="isCollapse"
         :text-color="oColors.textColor"
         :background-color="oColors.backgroundColor"
@@ -54,6 +54,9 @@ export default {
   computed: {
     oColors() {
       return Object.assign(this.color, this.colors)
+    },
+    defaultActive() {
+      return this.oNav3_4.active + ''
     }
   },
   methods: {
