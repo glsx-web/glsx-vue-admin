@@ -39,4 +39,7 @@ export default {
  .el-menu--horizonta{
    background-color: transparent;
  }
+ .el-tabs__nav {
+   z-index: 1 !important;
+ }
 </style>

@@ -352,11 +352,10 @@ export default {
     return {
       tabPosition: 'left',
       dialogFormVisible: false,
-      params: JSON.parse(JSON.stringify(this.settingParams)),
+      params: this.$_.defaultsDeep({}, this.settingParams),
       formLabelWidth: '120px',
       imageUrl: '',
       color: '#409EFF',
-      flag: true,
       visible: false,
       activeNames: ['1'],
       isdisabled: false
@@ -380,14 +379,14 @@ export default {
     },
     // 确定按钮
     handleSetParamsConfig() {
-      console.log(this.params)
       this.dialogFormVisible = !this.dialogFormVisible
       // // 窗口关闭
       if (!this.dialogFormVisible) {
         this.$emit('@setParamsConfig', this.params)
       } else {
         // 窗口打开
-        this.params = JSON.parse(JSON.stringify(this.settingParams))
+        this.params = this.$_.defaultsDeep({}, this.settingParams)
+        console.log(this.params)
       }
     },
     // 取消

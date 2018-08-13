@@ -166,7 +166,7 @@ export default {
     width: 60px;
     padding: 0 20px;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     top: 5px;
     bottom: 0;
   }

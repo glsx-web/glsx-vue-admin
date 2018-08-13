@@ -138,7 +138,7 @@ export default {
 .management-center{
   position: absolute;  
   top: 0px;
-  z-index: 2;
+  // z-index: 2;
   display: flex;
   align-items: center;
    &:focus {
