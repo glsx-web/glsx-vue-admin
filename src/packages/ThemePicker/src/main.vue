@@ -2,7 +2,7 @@
 <div><el-color-picker
     class="theme-picker"
     popper-class="theme-picker-dropdown"
-    :predefine="predefineColors"
+    :predefine="predefine"
     v-model="themeColor" size="mini"></el-color-picker>
     </div>
 </template>
@@ -17,11 +17,13 @@ export default {
        default: ORIGINAL_THEME
      },
      predefineColors: {
-       type: Array,
-       default: [
-         '#409EFF',
-         '#FF0000'
-       ]
+       type: String,
+       default: '#409EFF,#FF0000'
+     }
+   },
+   computed: {
+     predefine() {
+       return this.predefineColors.split(',')
      }
    },
    data() {

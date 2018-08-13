@@ -132,7 +132,7 @@
                         <el-col :span="17">
                           <el-form-item >
                             <div>
-                              <div class="preColor" v-for="(item , index) in this.params.header.navbar.theme.preDefineColors" :key="index" :style="{background: item}" @click="close(index)"></div>
+                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(index)"></div>
                             </div>
                           </el-form-item>
                         </el-col>
@@ -341,18 +341,22 @@ export default {
       },
       set: function(value) {
         this.color = value
-        const set = new Set(this.params.header.navbar.theme.preDefineColors)
-        if (!set.has(this.color)) {
-          this.params.header.navbar.theme.preDefineColors.push(this.color)
-        }
+        this.params.header.navbar.theme.preDefineColors += `,${value}`
+        // const set = new Set(this.params.header.navbar.theme.preDefineColors)
+        // if (!set.has(this.color)) {
+        //   this.params.header.navbar.theme.preDefineColors.push(this.color)
+        // }
       }
+    },
+    preColors() {
+      return this.params.header.navbar.theme.preDefineColors.split(',')
     }
   },
   data() {
     return {
       tabPosition: 'left',
       dialogFormVisible: false,
-      params: JSON.parse(JSON.stringify(this.settingParams)),
+      params: this.$get_session_config(),
       formLabelWidth: '120px',
       imageUrl: '',
       color: '#409EFF',
@@ -379,13 +383,17 @@ export default {
     },
     // 确定按钮
     handleSetParamsConfig() {
-      this.dialogFormVisible = !this.dialogFormVisible
-      // // 窗口关闭
-      if (!this.dialogFormVisible) {
-        this.$emit('@setParamsConfig', this.params)
-      } else {
+      try {
+        this.dialogFormVisible = !this.dialogFormVisible
+        // // 窗口关闭
+        if (!this.dialogFormVisible) {
+          this.$emit('@setParamsConfig', this.params)
+        } else {
         // 窗口打开
-        this.params = JSON.parse(JSON.stringify(this.settingParams))
+          this.params = this.$get_session_config()
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
     // 取消

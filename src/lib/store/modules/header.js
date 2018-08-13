@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 00:49:33
+ * @Last Modified time: 2018-08-13 20:33:44
  */
 const header = {
   state: {
@@ -47,10 +47,7 @@ const header = {
         'visible': '',
         'i18n': 'navbar.theme',
         'value': '',
-        'preDefineColors': [
-          '#409EFF',
-          '#FF0000'
-        ]
+        'preDefineColors': '#409EFF,#FF0000'
       }
     },
     'tagsView': {

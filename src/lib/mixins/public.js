@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-12 18:32:43
+ * @Last Modified time: 2018-08-13 20:44:03
  */
 
 import { mapActions } from 'vuex'
@@ -46,18 +46,25 @@ export default {
       const sessionValue = this.$get_session_config_by_key(key)
       return (sessionValue)
     },
-    SetMulti(obj) {
-      /**
-       * 1 调用 InitXXX 覆盖 vuex 状态
-       */
-      for (var key in obj) {
-        const pa = { v: this, config: obj[key] }
+    HandleRestore() {
+      if (this.app.defaultColor === '') {
+        this.Restore()
+      }
+    },
+    Restore(cfg = this.$get_session_config()) {
+      console.log(cfg)
+      for (var key in cfg) {
+        const pa = { v: this, config: cfg[key] }
         this[`Init${this.$fist_uppercase(key)}`](pa)
       }
-      /**
-       * 2 . 调用 set  设置 localstorage
-       */
-      this.$set_config(obj)
+    },
+    SetMulti(obj) {
+      this.Restore(obj)
+      var scfg = this.$_.cloneDeep(obj)
+      this.$set_session_config(scfg)
+      var cfg = this.$_.cloneDeep(obj)
+      cfg = this.$_.omit(cfg, ['app.auth'])
+      this.$cover_config(cfg)
     },
     GenerateTitle
   }
