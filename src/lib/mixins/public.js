@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-13 20:44:03
+ * @Last Modified time: 2018-08-13 20:45:14
  */
 
 import { mapActions } from 'vuex'
@@ -52,7 +52,6 @@ export default {
       }
     },
     Restore(cfg = this.$get_session_config()) {
-      console.log(cfg)
       for (var key in cfg) {
         const pa = { v: this, config: cfg[key] }
         this[`Init${this.$fist_uppercase(key)}`](pa)
