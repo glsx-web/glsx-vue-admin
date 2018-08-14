@@ -84,11 +84,11 @@
                     </el-collapse-item>
                     <el-collapse-item name="4">
                       <template slot="title"  @click="handeleTitleClick">
-                          tagsView 
+                          标签窗口
                       </template>
                       <el-form :model="params.header">
                         <el-col :span="5">
-                          <div class="grid-content">tagsView</div>
+                          <div class="grid-content">标签窗口</div>
                         </el-col>
                         <el-col :span="6">
                           <el-form-item>
@@ -379,7 +379,8 @@ export default {
     },
     // 删除预选颜色
     close(index) {
-      this.params.header.navbar.theme.preDefineColors.splice(index, 1)
+      this.params.header.navbar.theme.preDefineColors.split(',').splice(index, 1)
+      console.log(this.params.header.navbar.theme.preDefineColors.split(',').splice(index, 1))
     },
     // 确定按钮
     handleSetParamsConfig() {
@@ -482,6 +483,6 @@ export default {
     z-index: 111111 !important;
 }
 .v-modal {
-  z-index: 1 !important;
+  z-index: 2 !important;
 }
 </style>

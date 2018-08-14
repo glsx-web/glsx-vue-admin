@@ -157,6 +157,7 @@ export default {
   background-color: transparent;
 }
 .mcChange{
+  z-index: 2;
   width: 80px;
   right: 0px;
   flex-direction: column;
