@@ -93,12 +93,12 @@ export default {
       return this.aside.state === AppConst.States.OPEN
     },
     settingParams() {
-      return {
-        header: this.header,
-        app: this.app,
-        footer: this.footer,
-        aside: this.aside
-      }
+      return this.$get_session_config()// {
+      // header: this.header,
+      // app: this.app,
+      // footer: this.footer,
+      // aside: this.aside
+      // }
     },
     aNav2Menus() {
       const menus = this.$get_menus(this.app.auth.resources, this.app.auth.curnav.first)

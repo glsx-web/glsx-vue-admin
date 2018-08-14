@@ -43,16 +43,8 @@ export default {
       'header',
       'cachedViews'
     ]),
-    isRefreshed() {
-      return this.app.defaultColor === ''
-    },
     nHeight() {
-      if (this.isRefreshed) {
-        // const config = this.$get_config()
-        // const sessionConfig = this.$get_session_config()
-        // const cfg = this.$_.merge(sessionConfig, config)
-        this.SetMulti(this.sessionConfig)
-      }
+      this.HandleRestore()
       const nClientHeight = this.app.clientHeight
       const nFooterHeight = this.footer.visible ? this.footer.height : 0
       const nNavbarHeight = this.header.navbar.visible ? this.header.navbar.height || 60 : 0
