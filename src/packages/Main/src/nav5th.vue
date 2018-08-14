@@ -15,12 +15,10 @@
             <i class="el-icon-date"></i> 
             {{item.title}}
         </span>
-        <!-- <gl-app-scroll :height="height"> -->
         <div 
           :id="createContainerId(item)" 
           :style="{ height:height+'px'}"
           ></div>
-        <!-- </gl-app-scroll> -->
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -51,9 +49,7 @@ export default {
       const menus = this.oNav5th.menus
       if (menus) {
         setTimeout(() => {
-          for (const item of menus) {
-            this.createIframe(item)
-          }
+          menus.map(menu => this.createIframe(menu))
           this.activeName = this.oNav5th.active + ''
         }, 100)
         return menus
@@ -72,7 +68,7 @@ export default {
         lock: true,
         text: '拼命加载中',
         spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
+        background: 'rgba(0, 0, 0, 0.8)',
         target: `#${this.createContainerId(item)}`
       })
     },
@@ -91,13 +87,8 @@ export default {
           }
         }
       })
-      con.promise.then(child => {
-        child.setTheme(this.oNav5th.color)
-      })
-      const iframe = con.iframe
-      iframe.onload = () => {
-        con.source.loading.close()
-      }
+      con.promise.then(child => child.setTheme(this.oNav5th.color))
+      con.iframe.onload = _ => con.source.loading.close()
       this.connections.push(con)
     }
   }

@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <h3 class="title">GLSX-VUE-ADMIN</h3>
-       <gl-app-theme-picker v-on:@themeHandler="handleTheme" class="login-form-color-picker" :theme="theme.value" :predefineColors="theme.preDefineColors"/>
+      <gl-app-theme-picker v-on:@themeHandler="handleTheme" class="login-form-color-picker" :theme="theme.value" :predefineColors="theme.preDefineColors" />
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <gl-svg-icon icon-class="user" />
@@ -11,15 +11,16 @@
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <gl-svg-icon icon-class="password"></gl-svg-icon>
+          <gl-svg-icon icon-class="password" />
         </span>
-        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="password"></el-input>
-          <span class="show-pwd" @click="showPwd"><gl-svg-icon icon-class="eye" /></span>
+        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password" />
+        <span class="show-pwd" @click="pwdType= !pwdType ? 'password' : ''">
+          <gl-svg-icon icon-class="eye" />
+        </span>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          Sign in
+          登 录
         </el-button>
       </el-form-item>
       <div class="tips">
@@ -64,11 +65,16 @@ export default {
         password: 'admin'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [
+          { required: true, trigger: 'blur', validator: validateUsername }
+        ],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       theme: {
-        preDefineColors: this.$get_config_by_key(HeaderConst.Navbar.Theme.PreDefineColors.Key) || '',
+        preDefineColors:
+          this.$get_config_by_key(
+            HeaderConst.Navbar.Theme.PreDefineColors.Key
+          ) || '',
         value: this.$get_config_by_key(AppConst.DefaultColor.Key)
       },
       loading: false,
@@ -80,13 +86,6 @@ export default {
   },
   methods: {
     ...mapActions(['Login']),
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
-      } else {
-        this.pwdType = 'password'
-      }
-    },
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
@@ -94,16 +93,13 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.initConfig().then(() => {
-            return this.Login({ params: this.loginForm, v: this })
-          }).then(() => {
-            return this.GetResources()
-          }).then(() => {
-            this.loading = false
-            this.$router.push({ path: '/home' })
-          }).catch(err => {
-            throw err
-          })
+          this.initConfig()
+            .then(() => this.Login({ params: this.loginForm, v: this }))
+            .then(() => this.GetResources())
+            .then(() => {
+              this.loading = false
+              this.$router.push({ path: '/home' })
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -115,8 +111,8 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-$bg:#2d3a4b;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$light_gray: #eee;
 /* reset element-ui css */
 .login-container {
   .el-input {
@@ -147,9 +143,9 @@ $light_gray:#eee;
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 .login-container {
   position: fixed;
   height: 100%;
@@ -162,10 +158,10 @@ $light_gray:#eee;
     width: 520px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
-    &-color-picker{
+    &-color-picker {
       position: absolute;
       right: 38px;
-      top: 40px;
+      top: 36px;
     }
   }
   .tips {

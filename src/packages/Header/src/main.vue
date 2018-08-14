@@ -94,12 +94,7 @@ export default {
       return this.aside.state === AppConst.States.OPEN
     },
     settingParams() {
-      return this.$get_session_config()// {
-      // header: this.header,
-      // app: this.app,
-      // footer: this.footer,
-      // aside: this.aside
-      // }
+      return this.$get_session_config()
     },
     oAside() {
       return this.aside
@@ -177,9 +172,7 @@ export default {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
-      this.Logout({ token: '', v: this }).then(() => {
-        this.$router.push('/login')
-      })
+      this.Logout({ token: '', v: this }).then(() => this.$router.push('/login'))
     },
     handleToggleSideBar() {
       const state = this.isActive ? AppConst.States.CLOSE : AppConst.States.OPEN
@@ -201,14 +194,10 @@ export default {
       })
     },
     handleCloseOthersTags(selectedTag) {
-      this.delOthersViews(selectedTag).then(() => {
-        this.$router.push(selectedTag.fullPath)
-      })
+      this.delOthersViews(selectedTag).then(() => this.$router.push(selectedTag.fullPath))
     },
     handleCloseAllTags() {
-      this.delAllViews().then(() => {
-        this.$router.push('/')
-      })
+      this.delAllViews().then(() => this.$router.push('/'))
     },
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)

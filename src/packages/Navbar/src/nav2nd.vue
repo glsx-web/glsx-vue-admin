@@ -36,7 +36,7 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss">
- .el-menu--horizonta{
-   background-color: transparent;
+ .el-menu--horizontal{
+   height: 60px
  }
 </style>
