@@ -132,7 +132,7 @@
                         <el-col :span="17">
                           <el-form-item >
                             <div>
-                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(index)"></div>
+                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(item)" style="pointer-events: none;cursor: pointer"></div>
                             </div>
                           </el-form-item>
                         </el-col>
@@ -378,9 +378,13 @@ export default {
       this.$emit('@themeHandler', theme)
     },
     // 删除预选颜色
-    close(index) {
-      this.params.header.navbar.theme.preDefineColors.split(',').splice(index, 1)
-      console.log(this.params.header.navbar.theme.preDefineColors.split(',').splice(index, 1))
+    close(item) {
+      var arr = this.params.header.navbar.theme.preDefineColors.split(',')
+      if (arr.length === 1) {
+        return
+      }
+      arr = arr.filter(obj => obj !== item)
+      this.params.header.navbar.theme.preDefineColors = arr.join(',')
     },
     // 确定按钮
     handleSetParamsConfig() {
