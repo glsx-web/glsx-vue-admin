@@ -5,6 +5,7 @@ import FooterMixin from './footer'
 import PublicMixin from './public'
 import BeforeRoute from './beforeRoute'
 import ConfigMixin from './config'
+import SessionMixin from './session'
 export {
   AppMixin,
   AsideMixin,
@@ -12,5 +13,6 @@ export {
   FooterMixin,
   PublicMixin,
   ConfigMixin,
-  BeforeRoute
+  BeforeRoute,
+  SessionMixin
 }

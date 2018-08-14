@@ -1,11 +1,11 @@
 <template>
   <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
     <gl-keep-alive />
-    <!-- <app-main :cachedViews="cachedViews"/> -->
+    <app-main :cachedViews="cachedViews" v-show="showMain"/>
     <nav5th 
       :oNav5th="oNav5th"
       :height="nHeight-40" 
-      v-on:@handleNav5="handleNav5"/> 
+      v-on:@handleNav5="handleNav5" v-show="!showMain"/> 
   </gl-app-scroll>
 </template>
 
@@ -31,11 +31,6 @@ export default {
     GlKeepAlive,
     Nav5th
   },
-  data() {
-    return {
-      sessionConfig: this.$get_session_config()
-    }
-  },
   computed: {
     ...mapGetters([
       'footer',
@@ -43,6 +38,9 @@ export default {
       'header',
       'cachedViews'
     ]),
+    showMain() {
+      return this.app.mainVisible === AppConst.Visibility.VISIBLE
+    },
     nHeight() {
       this.HandleRestore()
       const nClientHeight = this.app.clientHeight
@@ -63,9 +61,6 @@ export default {
     handleNav5(nav5Id) {
       this.SetSession(AppConst.Auth.CurNav.Fifth.Key, nav5Id)
     }
-  },
-  created() {
-    !this.sessionConfig && this.$router.push('/login')
   }
 }
 </script>

@@ -5,20 +5,12 @@
 </template>
 
 <script>
-import { PublicMixin } from '@/lib/mixins'
-import { GlConst } from 'glsx-vue-common'
-const { AppConst } = GlConst
 export default {
   name: 'AppHome',
   props: ['menu', 'isvertical'],
-  mixins: [PublicMixin],
   methods: {
     handleChange() {
-      this.SetSession(AppConst.Auth.CurNav.First.Key, this.menu.id)
-      this.SetSession(AppConst.Auth.CurNav.Second.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Third.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Fourth.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
+      this.$emit('@checked', this.menu)
     }
   }
 }
