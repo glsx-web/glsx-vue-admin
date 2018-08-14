@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">vue-element-admin</h3>
+      <h3 class="title">GLSX-VUE-ADMIN</h3>
+       <gl-app-theme-picker v-on:@themeHandler="handleTheme" class="login-form-color-picker" :theme="theme.value" :predefineColors="theme.preDefineColors"/>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <gl-svg-icon icon-class="user" />
@@ -33,9 +34,15 @@
 import { isvalidUsername } from '@/utils/validate'
 import { mapActions } from 'vuex'
 import { ConfigMixin, BeforeRoute } from '@/lib/mixins'
+import GlAppThemePicker from '@/packages/ThemePicker'
+import { GlConst } from 'glsx-vue-common'
+const { AppConst, HeaderConst } = GlConst
 export default {
   name: 'GlAppLogin',
   mixins: [ConfigMixin, BeforeRoute],
+  components: {
+    GlAppThemePicker
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -60,9 +67,16 @@ export default {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
+      theme: {
+        preDefineColors: this.$get_config_by_key(HeaderConst.Navbar.Theme.PreDefineColors.Key) || '',
+        value: this.$get_config_by_key(AppConst.DefaultColor.Key)
+      },
       loading: false,
       pwdType: 'password'
     }
+  },
+  created() {
+    this.$remove_session_config()
   },
   methods: {
     ...mapActions(['Login']),
@@ -72,6 +86,9 @@ export default {
       } else {
         this.pwdType = 'password'
       }
+    },
+    handleTheme(theme) {
+      this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -145,6 +162,11 @@ $light_gray:#eee;
     width: 520px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
+    &-color-picker{
+      position: absolute;
+      right: 38px;
+      top: 40px;
+    }
   }
   .tips {
     font-size: 14px;

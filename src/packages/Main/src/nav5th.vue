@@ -78,15 +78,12 @@ export default {
     },
     createIframe(item) {
       const container = document.getElementById(this.createContainerId(item))
-      if (!item || !item.title || !item.path || container.getAttribute('hasChild')) return
+      if (!item || !item.title || !item.path || !container || container.getAttribute('hasChild')) return
       item.loading = this.createLoading(item)
       container.setAttribute('hasChild', true)
       const con = this.$Penpal.connectToChild({
-        // URL of page to load into iframe.
         url: item.path,
-        // Container to which the iframe should be appended.
         appendTo: container,
-        // Methods parent is exposing to child
         source: item,
         methods: {
           onload() {

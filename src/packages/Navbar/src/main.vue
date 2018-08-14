@@ -1,13 +1,13 @@
 <template>
   <div class="navbar" :style="oStyle">
-    <div class="logo-container" v-if="!settingParams.aside.visible" style="">
-      <gl-app-logo v-if="Logo.visible"
+    <div class="logo-container" v-if="!oAside.visible">
+      <gl-app-logo v-if="oLogo.visible"
       :width="oLogo.width" 
       :height="oLogo.height" 
       :backgroundColor="oLogo.backgroundColor" 
       :backgroundImage="oLogo.backgroundImage" />
     </div>
-    <gl-app-hamburger v-if="settingParams.aside.visible"
+    <gl-app-hamburger v-if="oAside.visible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
         :isActive="isActive"/>
@@ -74,7 +74,8 @@ export default {
     generate: Function,
     settingParams: Object,
     navbarStyle: Object,
-    oNav2nd: Object
+    oNav2nd: Object,
+    oAside: Object
   },
   components: {
     GlAppHamburger,
@@ -108,16 +109,13 @@ export default {
         backgroundColor: this.app.defaultColor
       }
     },
-    Logo() {
-      return this.settingParams.aside.logo
-    },
     oLogo() {
       return {
         // width: '',
-        visible: this.Logo.visible,
+        visible: this.oAside.logo.visible,
         height: 60,
-        backgroundColor: this.Logo.backgroundColor,
-        backgroundImage: this.Logo.image
+        backgroundColor: this.oAside.logo.backgroundColor,
+        backgroundImage: this.oAside.logo.image
       }
     }
   },

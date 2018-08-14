@@ -9,12 +9,13 @@ Vue.use(Router)
 import Layout from '@/views/layout'
 const GlAppLogin = { template: '<gl-app-login />' }
 const GlAppHome = { template: '<gl-app-home />' }
+const GlAppDashboard = { template: '<gl-app-dashboard />' }
 export const routers = [
   { path: '/404', component: _import('errorPage/404'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
   { path: '/login', component: GlAppLogin, hidden: true },
   // { path: '/home', component: _import('home/index'), hidden: true },
-  { path: '/', redirect: 'example' },
+  { path: '/', redirect: 'login' },
   {
     path: '/example',
     component: Layout,
@@ -58,6 +59,19 @@ export const routers = [
         name: 'GlAppHome',
         component: GlAppHome,
         meta: { title: 'home', icon: 'home', permission: '/home/index', keepAlive: false }
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    redirect: '/dashboard/index',
+    children: [
+      {
+        path: 'index',
+        name: 'GlAppDashboard',
+        component: GlAppDashboard,
+        meta: { title: 'dashboard', icon: 'home', permission: '/dashboard /index', keepAlive: false }
       }
     ]
   },

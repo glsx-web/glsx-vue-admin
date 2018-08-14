@@ -32,6 +32,7 @@
         :itemsArray="oNavbar.itemsArray"
         :isActive="isActive"
         :settingParams="settingParams"
+        :oAside="oAside"
         :oNav2nd="oNavbar.oNav2nd"/>
       <gl-app-breadcrumb 
         class="breadcrumb-container" 
@@ -99,6 +100,9 @@ export default {
       // footer: this.footer,
       // aside: this.aside
       // }
+    },
+    oAside() {
+      return this.aside
     },
     aNav2Menus() {
       const menus = this.$get_menus(this.app.auth.resources, this.app.auth.curnav.first)

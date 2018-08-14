@@ -2,7 +2,7 @@
   <div>
     <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
-        <app-home :menu="item" class="homeList" :isvertical='isvertical'></app-home>
+        <app-home :menu="item" class="homeList" :isvertical='isvertical' v-on:@checked="sys_checked"></app-home>
       </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -17,7 +17,7 @@ import AppHome from './main'
 import { GlConst } from 'glsx-vue-common'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-const { AppConst, AsideConst } = GlConst
+const { AppConst, AsideConst, HeaderConst } = GlConst
 import { PublicMixin } from '@/lib/mixins'
 import { mapGetters } from 'vuex'
 export default {
@@ -29,20 +29,53 @@ export default {
   },
   mixins: [PublicMixin],
   computed: {
-    ...mapGetters(['app']),
-    aNav() {
-      return this.$get_menus(null, 0)
+    ...mapGetters(['app'])
+    // aNav() {
+    //   return this.$get_menus(this.app.auth.resources, 0)
+    // }
+  },
+  methods: {
+    sys_checked(sys) {
+      this.reset_nav()
+      this.SetSession(AppConst.Auth.CurNav.First.Key, sys.id)
+      this.$router.push({ path: '/dashboard' })
+    },
+    reset_nav() {
+      this.SetSession(AppConst.Auth.CurNav.First.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Second.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Third.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Fourth.Key, '')
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
+    },
+    cache_states() {
+      this.caches.clear()
+      this.cache_keys.map(key => {
+        this.caches.set(key, this.GetSession(key))
+        this.SetSession(key, AppConst.Visibility.HIDDEN)
+      })
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
+      this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
+    },
+    reset_states() {
+      for (const [key, value] of this.caches) {
+        this.SetSession(key, value)
+      }
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
     }
   },
   mounted() {
-    this.asideVisible = this.GetSession(AsideConst.Visible.Key)
-    this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
+    this.reset_nav()
+    this.cache_states()
+    this.aNav = this.$get_menus(this.app.auth.resources, 0)
   },
   beforeDestroy() {
-    this.SetSession(AsideConst.Visible.Key, this.asideVisible)
+    this.reset_states()
   },
   data() {
     return {
+      aNav: [],
+      caches: new Map(),
+      cache_keys: [AsideConst.Visible.Key, HeaderConst.TagsView.Visible.Key],
       list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21],
       isvertical: true,
       swiperOption: {
@@ -66,10 +99,10 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
-        },
-        scrollbar: {
-          el: '.swiper-scrollbar'
         }
+        // scrollbar: {
+        //   el: '.swiper-scrollbar'
+        // }
       }
     }
   }

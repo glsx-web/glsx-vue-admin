@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 01:14:24
+ * @Last Modified time: 2018-08-14 11:18:14
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
