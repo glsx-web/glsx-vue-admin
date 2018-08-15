@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
+  <div :class="nHeight>900? 'lgView':'smView'">
+    <swiper style="height: 100%" :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
         <app-home :menu="item" class="homeList" :isvertical='isvertical' v-on:@checked="sys_checked"></app-home>
       </swiper-slide>
@@ -29,12 +29,19 @@ export default {
   },
   mixins: [PublicMixin],
   computed: {
-    ...mapGetters(['app'])
+    ...mapGetters(['app']),
+    nHeight() {
+      const nClientHeight = this.app.clientHeight
+      return parseInt(nClientHeight)
+    }
     // aNav() {
     //   return this.$get_menus(this.app.auth.resources, 0)
     // }
   },
   methods: {
+    aaa() {
+      console.log(this.app.clientHeight)
+    },
     sys_checked(sys) {
       this.reset_nav()
       this.SetSession(AppConst.Auth.CurNav.First.Key, sys.id)
@@ -122,7 +129,7 @@ export default {
   height: auto !important;
 }
 .swiper-container {
-    padding: 40px 20px;
+    padding: 90px 20px;
     .swiper-scrollbar {
       top: 0;
       height: 2px;
@@ -134,6 +141,12 @@ export default {
 }
 .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
     bottom: 4px;
+  }
+  .lgView{
+    height: 800px;
+  }
+  .smView{
+    height: 600px;
   }
 </style>
 <style>

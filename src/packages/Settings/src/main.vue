@@ -131,8 +131,8 @@
                         </el-col>
                         <el-col :span="17">
                           <el-form-item >
-                            <div>
-                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(item)" style="pointer-events: none;cursor: pointer"></div>
+                            <div class="preselectedColor">
+                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(item)" style=""></div>
                             </div>
                           </el-form-item>
                         </el-col>
@@ -167,17 +167,9 @@
                       <el-col :span="5">
                         <div class="grid-content">菜单</div>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="17">
                         <el-form-item>
                           <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关" :disabled="isdisabled"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">状态</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input-number v-model="params.aside.state" :min="1" :max="2"></el-input-number>
                         </el-form-item>
                       </el-col>
                       <el-col :span="5">
@@ -436,13 +428,17 @@ export default {
     line-height: 36px;
     font-weight: bold;
     text-indent:30px;
-  }
+  } 
   .preColor {
     display: inline-block;
     height: 30px;
     width: 30px;
     margin-right: 10px;
-    position: relative
+    position: relative;
+    cursor: pointer;
+  }
+  .preselectedColor div:first-child {
+    pointer-events: none;
   }
 </style>
 <style  rel="stylesheet/scss" lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="controlEntrance" @click="showControlPanel"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
+      <div class="controlEntrance" v-if="isShow" @click="showControlPanel"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
       <gl-app-scroll :height="nHeight" >
         <transition name="fade">
           <ul class="el-menu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="appear" @click="showControlPanel">
@@ -34,10 +34,18 @@ export default {
     },
     aNav() {
       return this.$get_menus(this.app.auth.resources, 0)
+    },
+    isShow() {
+      if (this.$route.name === 'GlAppHome') {
+        return false
+      } else {
+        return true
+      }
     }
   },
   methods: {
     showControlPanel() {
+      console.log(this.$route)
       this.appear = !this.appear
     }
   }
