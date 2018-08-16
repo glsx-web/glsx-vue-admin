@@ -50,7 +50,7 @@ export default {
       if (menus) {
         setTimeout(() => {
           menus.map(menu => this.createIframe(menu))
-          this.activeName = this.oNav5th.active + ''
+          this.activeName = this.creatActiveName(menus)
         }, 100)
         return menus
       }
@@ -63,6 +63,17 @@ export default {
     createContainerId(item) {
       return `container_${item.id}`
     },
+    creatActiveName(menus) {
+      var active = this.oNav5th.active + ''
+      if (active && menus.some(menu => menu.id + '' === active)) {
+        return active
+      } else {
+        if (menus.length) {
+          return menus[0].id + ''
+        }
+      }
+      return ''
+    },
     createLoading(item) {
       return this.$loading({
         lock: true,
@@ -74,9 +85,10 @@ export default {
     },
     createIframe(item) {
       const container = document.getElementById(this.createContainerId(item))
-      if (!item || !item.title || !item.path || !container || container.getAttribute('hasChild')) return
+      if (!item || !item.title || !item.path || !container || container.getAttribute('hasChild') + '' === item.id + '') return
+      container.innerHTML = ''
       item.loading = this.createLoading(item)
-      container.setAttribute('hasChild', true)
+      container.setAttribute('hasChild', item.id)
       const con = this.$Penpal.connectToChild({
         url: item.path,
         appendTo: container,

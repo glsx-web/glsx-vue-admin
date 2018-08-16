@@ -1,14 +1,32 @@
 <template>
   <div class="login-container">
+     <canvas id="star"></canvas>
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">GLSX-VUE-ADMIN</h3>
+      <transition
+        appear
+        appear-class="title-appear"
+        appear-to-class="appear-to"
+        appear-active-class="appear-active">
+        <h3 class="title">GLSX-VUE-ADMIN</h3>
+       </transition>
       <gl-app-theme-picker v-on:@themeHandler="handleTheme" class="login-form-color-picker" :theme="theme.value" :predefineColors="theme.preDefineColors" />
+      <transition
+          appear
+          appear-class="username-appear"
+          appear-to-class="appear-to"
+          appear-active-class="appear-active">
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <gl-svg-icon icon-class="user" />
         </span>
         <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
       </el-form-item>
+      </transition>
+      <transition
+          appear
+          appear-class="password-appear"
+          appear-to-class="appear-to"
+          appear-active-class="appear-active">
       <el-form-item prop="password">
         <span class="svg-container">
           <gl-svg-icon icon-class="password" />
@@ -18,11 +36,19 @@
           <gl-svg-icon icon-class="eye" />
         </span>
       </el-form-item>
+      </transition>
+      <transition
+          appear
+          appear-class="login-appear"
+          appear-to-class="appear-to"
+          appear-active-class="appear-active">
       <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          登 录
-        </el-button>
+          <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
+            登 录
+          </el-button>
+        
       </el-form-item>
+      </transition>
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: admin</span>
@@ -38,6 +64,7 @@ import { ConfigMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppThemePicker from '@/packages/ThemePicker'
 import { GlConst } from 'glsx-vue-common'
 const { AppConst, HeaderConst } = GlConst
+import Star from './stars'
 export default {
   name: 'GlAppLogin',
   mixins: [ConfigMixin, BeforeRoute],
@@ -78,16 +105,33 @@ export default {
         value: this.$get_config_by_key(AppConst.DefaultColor.Key)
       },
       loading: false,
-      pwdType: 'password'
+      pwdType: 'password',
+      star: {
+        obj: null,
+        count: 120,
+        id: 'star',
+        lineColor: this.$get_config_by_key(AppConst.DefaultColor.Key) || 'red',
+        mouseLineColor: 'red'
+      }
     }
   },
   created() {
     this.$remove_session_config()
   },
+  mounted() {
+    this.star.obj = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
+    this.star.obj.run()
+  },
+  beforeDestroy() {
+    this.star.obj.clear()
+  },
   methods: {
     ...mapActions(['Login']),
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
+      this.star.obj.clear()
+      this.star.obj = new Star(this.star.id, this.star.count, theme, this.star.mouseLineColor)
+      this.star.obj.run()
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -155,6 +199,8 @@ $light_gray: #eee;
     position: absolute;
     left: 0;
     right: 0;
+    top:0;
+    bottom: 0;
     width: 520px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
@@ -191,6 +237,7 @@ $light_gray: #eee;
     margin: 0px auto 40px auto;
     text-align: center;
     font-weight: bold;
+    // transform: translateY(-20px);
   }
   .show-pwd {
     position: absolute;
@@ -200,6 +247,25 @@ $light_gray: #eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .title-appear{
+    transform: translateY(-50px);
+  }
+  .login-appear{
+    transform: translateY(50px);
+  }
+  .username-appear{
+    transform: translateX(50px);
+  }
+  .password-appear{
+    transform: translateX(-50px);
+  }
+  .appear-active{
+    transition: all .5s ease;
+  }
+  .appear-to{
+    transform: translateY(0px);
+    transform: translateX(0px);
   }
 }
 </style>
