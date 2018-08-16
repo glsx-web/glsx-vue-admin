@@ -12,14 +12,17 @@
         :name="item.id+''"
         >
         <span slot="label">
-            <i class="el-icon-date"></i> 
-            {{item.title}}
+          <i class="el-icon-date"></i> 
+          {{item.title}}
         </span>
-        <div 
-          :id="createContainerId(item)" 
-          :style="{ height:height+'px'}"
-          ></div>
         </el-tab-pane>
+        <div
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)" 
+        id="container" 
+        :style="{ height:height+'px',position:'relative'}" ></div>
     </el-tabs>
 </template>
 
@@ -28,7 +31,7 @@ export default {
   name: 'Nav5th',
   data() {
     return {
-      loading: true,
+      loading: false,
       activeName: '',
       connections: []
     }
@@ -42,6 +45,14 @@ export default {
       handler(newVal, oldVal) {
         this.connections.map(con => con.promise.then(child => child.setTheme(newVal)))
       }
+    },
+    activeName(val) {
+      let iframe = null
+      this.connections.map(con => {
+        (con.source.id + '') === val && (iframe = con.iframe)
+        con.iframe.style.zIndex = 0
+      })
+      iframe && (iframe.style.zIndex = 1)
     }
   },
   computed: {
@@ -56,51 +67,48 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.connections = []
+    this.activeName = ''
+  },
   methods: {
     handleNav5(tab, event) {
       this.$emit('@handleNav5', this.activeName)
-    },
-    createContainerId(item) {
-      return `container_${item.id}`
     },
     creatActiveName(menus) {
       var active = this.oNav5th.active + ''
       if (active && menus.some(menu => menu.id + '' === active)) {
         return active
-      } else {
-        if (menus.length) {
-          return menus[0].id + ''
-        }
+      } else if (menus.length) {
+        return menus[0].id + ''
       }
       return ''
     },
-    createLoading(item) {
-      return this.$loading({
-        lock: true,
-        text: '拼命加载中',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)',
-        target: `#${this.createContainerId(item)}`
-      })
+    frameLoadedCallback(frame) {
+      if (!this.activeName || frame.id + '' === this.activeName) {
+        this.loading = false
+      }
     },
     createIframe(item) {
-      const container = document.getElementById(this.createContainerId(item))
-      if (!item || !item.title || !item.path || !container || container.getAttribute('hasChild') + '' === item.id + '') return
-      container.innerHTML = ''
-      item.loading = this.createLoading(item)
-      container.setAttribute('hasChild', item.id)
+      const isHas = this.connections.some(con => con.source.id === item.id)
+      if (!item || !item.title || !item.path || isHas) return
+      this.loading = true
       const con = this.$Penpal.connectToChild({
         url: item.path,
-        appendTo: container,
+        appendTo: '#container',
         source: item,
+        style: 'position:absolute;background-color: #fff;z-index:0',
         methods: {
           onload() {
             // _this.loading = false
           }
         }
       })
-      con.promise.then(child => child.setTheme(this.oNav5th.color))
-      con.iframe.onload = _ => con.source.loading.close()
+      con.promise.then(child => {
+        child.setTheme(this.oNav5th.color)
+        // console.log(child.height())
+      })
+      con.iframe.onload = _ => this.frameLoadedCallback(con.source)
       this.connections.push(con)
     }
   }

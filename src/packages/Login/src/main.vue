@@ -58,11 +58,12 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+
 import { mapActions } from 'vuex'
 import { ConfigMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppThemePicker from '@/packages/ThemePicker'
-import { GlConst } from 'glsx-vue-common'
+import { GlConst, GlValidate } from 'glsx-vue-common'
+const { isvalidUsername } = GlValidate
 const { AppConst, HeaderConst } = GlConst
 import Star from './stars'
 export default {
@@ -107,7 +108,7 @@ export default {
       loading: false,
       pwdType: 'password',
       star: {
-        obj: null,
+        instance: null,
         count: 120,
         id: 'star',
         lineColor: this.$get_config_by_key(AppConst.DefaultColor.Key) || 'red',
@@ -119,19 +120,19 @@ export default {
     this.$remove_session_config()
   },
   mounted() {
-    this.star.obj = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
-    this.star.obj.run()
+    this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
+    this.star.instance.run()
   },
   beforeDestroy() {
-    this.star.obj.clear()
+    this.star.instance.clear()
   },
   methods: {
     ...mapActions(['Login']),
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
-      this.star.obj.clear()
-      this.star.obj = new Star(this.star.id, this.star.count, theme, this.star.mouseLineColor)
-      this.star.obj.run()
+      this.star.instance.clear()
+      this.star.instance = new Star(this.star.id, this.star.count, theme, this.star.mouseLineColor)
+      this.star.instance.run()
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -143,8 +144,12 @@ export default {
             .then(() => {
               this.loading = false
               this.$router.push({ path: '/home' })
+            }).catch(err => {
+              console.log(err)
+              this.loading = false
             })
         } else {
+          this.loading = false
           console.log('error submit!!')
           return false
         }

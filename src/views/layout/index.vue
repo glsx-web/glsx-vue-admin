@@ -3,7 +3,7 @@
     <el-aside width="auto"><gl-app-aside /></el-aside>
       <el-container>
         <el-header ><gl-app-header/></el-header>
-        <el-main  > <gl-app-main/></el-main>
+        <el-main> <gl-app-main/></el-main>
         <el-footer ><gl-app-footer/></el-footer>
       </el-container>
       <el-aside width="auto"><gl-control /></el-aside>

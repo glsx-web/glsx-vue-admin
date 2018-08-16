@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { DASHBOARD } from '@/utils/const'
+// import { DASHBOARD } from '@/utils/const'
 export default {
   name: 'GlAppBreadcrumb',
   props: {
@@ -34,10 +34,10 @@ export default {
   methods: {
     getBreadcrumb() {
       var matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
-      if (first && first.name.toLowerCase() !== DASHBOARD.name.toLowerCase()) {
-        matched = [DASHBOARD].concat(matched)
-      }
+      // const first = matched[0]
+      // if (first && first.name.toLowerCase() !== DASHBOARD.name.toLowerCase()) {
+      //   matched = [DASHBOARD].concat(matched)
+      // }
       this.levelList = matched
     }
   }

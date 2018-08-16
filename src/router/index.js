@@ -14,28 +14,7 @@ export const routers = [
   { path: '/404', component: _import('errorPage/404'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
   { path: '/login', component: GlAppLogin, hidden: true },
-  // { path: '/home', component: _import('home/index'), hidden: true },
   { path: '/', redirect: 'login' },
-  {
-    path: '/example',
-    component: Layout,
-    name: 'example',
-    meta: { title: 'example', icon: 'example', permission: '/example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: _import('table/index'),
-        meta: { title: 'table', icon: 'table', permission: '/example/table', keepAlive: false }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: _import('tree/index'),
-        meta: { title: 'tree', icon: 'tree', permission: '/example/tree', keepAlive: false }
-      }
-    ]
-  },
   {
     path: '/form',
     component: Layout,
@@ -83,13 +62,7 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: routers
 })
-// router.beforeEach((to, from, next) => {
-//   console.log(GetToken())
-//   // 如果已经登录，并且要去登录页，就不让TA去登录页，重定向到首页
-//   //   if (to.path === '/signin' && localStorage.token) {
-//   //     next('/project-info')
-//   //   } else {
-//   next()
-// //   }
-// })
+router.beforeEach((to, from, next) => {
+  next()
+})
 export default router
