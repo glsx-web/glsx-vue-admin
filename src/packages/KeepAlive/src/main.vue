@@ -25,7 +25,7 @@ export default {
       },
       set(value) {
         this.$route.meta.keepAlive = value
-        this.saveKeepStatus(this.$route)
+        this.SaveKeepStatus(this.$route)
       }
     }
   },

@@ -1,12 +1,23 @@
 <template>
   <div class="tags-view-container">
     <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
-      <draggable v-model="visitedViews" >
-        <router-link ref='tag' class="tags-view-item" :class="isActive(tag)?'active':''" :style="isActive(tag)?objStyle:''" v-for="tag in Array.from(visitedViews)"
-          :to="tag.fullPath" :key="tag.fullPath" @contextmenu.prevent.native="openMenu(tag,$event)">
-          {{generate(tag.title)}}
-          <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
-        </router-link>
+      <draggable v-model="visitedRoutes" >
+        <div ref='tag' 
+             @click="hanldTagChange(tag)"  
+             :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 
+             :style="isActive(tag) ? objStyle: '' " 
+             v-for="tag in Array.from(visitedRoutes)" 
+             :key="tag.id || tag.fullPath" 
+             @contextmenu.prevent="openMenu(tag,$event)">
+          <router-link  :to="tag.fullPath" v-if="!tag.fromSub" >
+            {{generate(tag.title)}}
+            <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
+          </router-link>
+          <template v-else >
+            {{generate(tag.title)}}
+            <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
+          </template>
+        </div>
       </draggable>
     </gl-app-scroll-pane>
     <ul class='contextmenu' v-show="menuVisible" :style="{left:left+'px',top:top+'px'}">
@@ -30,7 +41,8 @@ export default {
       default: ORIGINAL_THEME
     },
     generate: Function,
-    visitedViews: Array
+    visitedRoutes: Array,
+    activeId: String
   },
   data() {
     return {
@@ -54,22 +66,21 @@ export default {
       })
     },
     menuVisible(value) {
-      try {
-        document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
-      } catch (error) {
-        console.log(error)
-      }
+      document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
     }
   },
   mounted() {
     this.addViewTags()
   },
   methods: {
+    hanldTagChange(tag) {
+      this.$emit('@hanldTagChange', this.$_.cloneDeep(tag))
+    },
     generateRoute() {
       return this.$route.name ? this.$route : false
     },
-    isActive(route) {
-      return route.fullPath === this.$route.fullPath
+    isActive(tag) {
+      return this.activeId + '' === tag.id + ''
     },
     addViewTags() {
       return new Promise((resole, reject) => {
@@ -105,8 +116,8 @@ export default {
     openMenu(tag, e) {
       this.menuVisible = true
       this.selectedTag = tag
-      this.left = e.clientX
-      this.top = e.clientY
+      this.left = e.target.offsetLeft
+      this.top = e.clientY + 15
     },
     closeMenu() {
       this.menuVisible = false
@@ -136,6 +147,7 @@ export default {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+      cursor: pointer;
       &:first-of-type {
         margin-left: 15px;
       }

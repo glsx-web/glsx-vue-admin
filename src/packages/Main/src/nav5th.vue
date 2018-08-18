@@ -3,7 +3,7 @@
       tab-position="top" 
       class="nav5th"
       v-model="activeName" 
-      @tab-click="handleNav5">
+     >
         <el-tab-pane 
         v-for="(item,index) in aNav5th" 
         :key="index" 
@@ -47,12 +47,15 @@ export default {
       }
     },
     activeName(val) {
-      let iframe = null
+      let connection = null
       this.connections.map(con => {
-        (con.source.id + '') === val && (iframe = con.iframe)
+        (con.source.id + '') === val && (connection = con)
         con.iframe.style.zIndex = 0
       })
-      iframe && (iframe.style.zIndex = 1)
+      if (connection) {
+        connection.iframe.style.zIndex = 1
+        this.$emit('@handleNav5', connection.source)
+      }
     }
   },
   computed: {
@@ -72,11 +75,12 @@ export default {
     this.activeName = ''
   },
   methods: {
-    handleNav5(tab, event) {
-      this.$emit('@handleNav5', this.activeName)
-    },
+    // handleNav5(tab, event) {
+    //   this.$emit('@handleNav5', this.activeName)
+    // },
     creatActiveName(menus) {
       var active = this.oNav5th.active + ''
+      // return (active || menus[0].id) + ''
       if (active && menus.some(menu => menu.id + '' === active)) {
         return active
       } else if (menus.length) {

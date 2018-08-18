@@ -39,13 +39,15 @@
         :generate="GenerateTitle" 
         v-show="breadcrumb_visible"/>     
       <gl-app-tags-view  v-if="oTagsView.visible"
+        v-on:@hanldTagChange="hanldTagChange"
         v-on:@addViewTag="handleAddViewTag"
         v-on:@closeSeletedTag="handleCloseTag"
         v-on:@closeOthersTags="handleCloseOthersTags"
         v-on:@closeAllTags="handleCloseAllTags"
         :activeColor="oTagsView.activeColor" 
-        :generate="oTagsView.generate" 
-        :visitedViews="oTagsView.visitedViews"/>
+        :generate="oTagsView.generate"
+        :activeId="oTagsView.activeId"
+        :visitedRoutes="oTagsView.visitedRoutes"/>
         </draggable>
     </div>
 </template>
@@ -159,12 +161,16 @@ export default {
       return {
         visible: this.TagsView.visible,
         activeColor: this.TagsView.activeColor || this.app.defaultColor,
-        visitedViews: this.visitedViews || [],
-        generate: this.GenerateTitle
+        visitedRoutes: this.$_.dropWhile(this.visitedRoutes, ['title', 'dashboard']) || [],
+        generate: this.GenerateTitle,
+        activeId: this.app.auth.curnav.fifth
       }
     }
   },
   methods: {
+    hanldTagChange(tag) {
+      this.Set(AppConst.Auth.CurNav.Key, tag.target)
+    },
     handleClickOutside() {
       this.Set(AsideConst.State.Key, AsideConst.States.CLOSE)
     },
@@ -183,21 +189,24 @@ export default {
       this.$i18n.locale = lang
     },
     handleAddViewTag(route) {
-      this.addVisitedViews(route)
+      this.AddView(route)
     },
     handleCloseTag(view, isActive) {
-      this.delVisitedViews(view).then((views) => {
+      this.RemoveView(view).then((views) => {
         if (isActive) {
           const latestView = views.slice(-1)[0]
-          this.$router.push(latestView ? latestView.fullPath : '/')
+          if (!latestView.id) { // TODO 优化逻辑
+            return
+          }
+          this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(latestView.target))
         }
       })
     },
     handleCloseOthersTags(selectedTag) {
-      this.delOthersViews(selectedTag).then(() => this.$router.push(selectedTag.fullPath))
+      this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(selectedTag.target)))
     },
     handleCloseAllTags() {
-      this.delAllViews().then(() => this.$router.push('/'))
+      this.RemoveAllViews().then(() => this.$router.push('/home'))
     },
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)

@@ -2,26 +2,28 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-07 09:51:08
+ * @Last Modified time: 2018-08-18 21:55:39
  */
 const tagsView = {
   state: {
-    visitedViews: [],
+    visitedRoutes: [],
+    visitedFrames: [],
     cachedViews: []
   },
   mutations: {
-    ADD_VISITED_VIEWS: (state, view) => {
-      if (state.visitedViews.some(v => v.fullPath === view.fullPath)) return
-      state.visitedViews.push(Object.assign({}, view, {
+    ADD_VIEW: (state, view) => {
+      if (state.visitedRoutes.some(v => v.id + '' === view.id + '')) return
+      state.visitedRoutes.push(Object.assign({}, view, {
         name: view.name,
         path: view.fullPath,
-        title: view.meta.title || 'no-name'
+        title: (view.meta && view.meta.title) || view.title || 'no-name',
+        id: view.id
       }))
-      if (view.meta.keepAlive) {
+      if (view.meta && view.meta.keepAlive) {
         state.cachedViews.push(view.name)
       }
     },
-    VISITED_VIEWS: (state, view) => {
+    SAVE_KEEP_STATUS: (state, view) => {
       if (view.meta.keepAlive) {
         state.cachedViews.push(view.name)
       } else {
@@ -34,10 +36,10 @@ const tagsView = {
         }
       }
     },
-    DEL_VISITED_VIEWS: (state, view) => {
-      for (const [i, v] of state.visitedViews.entries()) {
-        if (v.fullPath === view.fullPath) {
-          state.visitedViews.splice(i, 1)
+    REMOVE_VIEW: (state, view) => {
+      for (const [i, v] of state.visitedRoutes.entries()) {
+        if (v.id + '' === view.id + '') {
+          state.visitedRoutes.splice(i, 1)
           break
         }
       }
@@ -49,10 +51,10 @@ const tagsView = {
         }
       }
     },
-    DEL_OTHERS_VIEWS: (state, view) => {
-      for (const [i, v] of state.visitedViews.entries()) {
-        if (v.fullPath === view.fullPath) {
-          state.visitedViews = state.visitedViews.slice(i, i + 1)
+    REMOVE_OTHER_VIEW: (state, view) => {
+      for (const [i, v] of state.visitedRoutes.entries()) {
+        if (v.id + '' === view.id + '') {
+          state.visitedRoutes = state.visitedRoutes.slice(i, i + 1)
           break
         }
       }
@@ -64,39 +66,40 @@ const tagsView = {
         }
       }
     },
-    DEL_ALL_VIEWS: (state) => {
-      state.visitedViews = []
+    REMOVE_ALL_VIEWS: (state) => {
+      state.visitedRoutes = []
       state.cachedViews = []
+      state.visitedFrames = []
     }
   },
   actions: {
-    addVisitedViews({ commit }, view) {
-      commit('ADD_VISITED_VIEWS', view)
+    AddView({ commit }, view) {
+      commit('ADD_VIEW', view)
     },
-    delVisitedViews({ commit, state }, view) {
+    RemoveView({ commit, state }, view) {
       return new Promise((resolve) => {
-        commit('DEL_VISITED_VIEWS', view)
-        resolve([...state.visitedViews])
+        commit('REMOVE_VIEW', view)
+        resolve([...state.visitedRoutes])
       })
     },
-    delOthersViews({ commit, state }, view) {
+    RemoveOtherView({ commit, state }, view) {
       return new Promise((resolve) => {
-        commit('DEL_OTHERS_VIEWS', view)
-        resolve([...state.visitedViews])
+        commit('REMOVE_OTHER_VIEW', view)
+        resolve([...state.visitedRoutes])
       })
     },
-    delAllViews({ commit, state }) {
+    RemoveAllViews({ commit, state }) {
       return new Promise((resolve) => {
-        commit('DEL_ALL_VIEWS')
-        resolve([...state.visitedViews])
+        commit('REMOVE_ALL_VIEWS')
+        resolve([...state.visitedRoutes])
       })
     },
-    saveKeepStatus({ commit, state }, view) {
-      commit('VISITED_VIEWS', view)
+    SaveKeepStatus({ commit, state }, view) {
+      commit('SAVE_KEEP_STATUS', view)
     }
   },
   getters: {
-    visitedViews: state => state.visitedViews,
+    visitedRoutes: state => state.visitedRoutes,
     cachedViews: state => state.cachedViews
   }
 }

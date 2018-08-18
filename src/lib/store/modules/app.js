@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-14 10:29:03
+ * @Last Modified time: 2018-08-17 23:35:19
  */
 import { GlConst } from 'glsx-vue-common'
 import { login, logout, getInfo } from '@/api/user'
