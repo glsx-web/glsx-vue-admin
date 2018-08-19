@@ -77,9 +77,3 @@ export default {
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .el-tabs--top{
-    height: auto !important;
-    padding-left: 20px;
-  }
-</style>

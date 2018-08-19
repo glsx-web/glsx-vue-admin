@@ -1,25 +1,39 @@
 <template>
   <div class="tags-view-container">
-    <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
-      <draggable v-model="visitedRoutes" >
-        <div ref='tag' 
-             @click="hanldTagChange(tag)"  
-             :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 
-             :style="isActive(tag) ? objStyle: '' " 
-             v-for="tag in Array.from(visitedRoutes)" 
-             :key="tag.id || tag.fullPath" 
-             @contextmenu.prevent="openMenu(tag,$event)">
-          <router-link  :to="tag.fullPath" v-if="!tag.fromSub" >
-            {{generate(tag.title)}}
-            <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
-          </router-link>
-          <template v-else >
-            {{generate(tag.title)}}
-            <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
-          </template>
-        </div>
-      </draggable>
-    </gl-app-scroll-pane>
+    <el-row>
+      <el-col :span="8">
+       <gl-app-breadcrumb 
+        class="tags-view-wrapper breadcrumb" 
+        :breadcrumb="breadcrumb" 
+        v-show="true"/> 
+      </el-col>
+      <el-col :span="16">
+         <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
+          <draggable v-model="visitedRoutes" >
+            <el-tag ref='tag' 
+                @click.native="hanldTagChange(tag)"  
+                :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 
+                :style="isActive(tag) ? objStyle: '' " 
+                v-for="tag in Array.from(visitedRoutes)" 
+                :key="tag.id || tag.fullPath" 
+                closable
+                size='small'
+                  :disable-transitions="false"
+                  @close="closeSelectedTag(tag)"
+                @contextmenu.native.prevent="openMenu(tag,$event)">
+              <!-- <router-link  :to="tag.fullPath" v-if="!tag.fromSub" >
+                {{generate(tag.title)}}
+                <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
+              </router-link> -->
+              <template>
+                {{tag.title}}
+                <!-- <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span> -->
+              </template>
+            </el-tag>
+          </draggable>
+        </gl-app-scroll-pane>
+      </el-col>
+    </el-row>
     <ul class='contextmenu' v-show="menuVisible" :style="{left:left+'px',top:top+'px'}">
       <li @click="closeSelectedTag(selectedTag)">{{$t('tagsView.close')}}</li>
       <li @click="closeOthersTags">{{$t('tagsView.closeOthers')}}</li>
@@ -31,18 +45,17 @@
 <script>
 import GlAppScrollPane from '@/packages/ScrollPane'
 import draggable from 'vuedraggable'
-const ORIGINAL_THEME = '#409EFF' // default color
+import GlAppBreadcrumb from '@/packages/Breadcrumb'
+// const ORIGINAL_THEME = '#409EFF' // default color
 export default {
   name: 'GlAppTagsView',
-  components: { GlAppScrollPane, draggable },
+  components: { GlAppScrollPane, draggable, GlAppBreadcrumb },
   props: {
-    activeColor: {
-      type: String,
-      default: ORIGINAL_THEME
-    },
+    oStyle: Object,
     generate: Function,
     visitedRoutes: Array,
-    activeId: String
+    activeId: String,
+    breadcrumb: Array
   },
   data() {
     return {
@@ -55,23 +68,24 @@ export default {
   computed: {
     objStyle() {
       return {
-        backgroundColor: this.activeColor
+        backgroundColor: this.oStyle.backgroundColor,
+        color: this.oStyle.activeTextColor
       }
     }
   },
   watch: {
-    $route() {
-      this.addViewTags().then(() => {
-        this.moveToCurrentTag()
-      })
-    },
+    // $route() {
+    //   this.addViewTags().then(() => {
+    //     this.moveToCurrentTag()
+    //   })
+    // },
     menuVisible(value) {
       document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
     }
   },
-  mounted() {
-    this.addViewTags()
-  },
+  // mounted() {
+  //   // this.addViewTags()
+  // },
   methods: {
     hanldTagChange(tag) {
       this.$emit('@hanldTagChange', this.$_.cloneDeep(tag))
@@ -129,48 +143,37 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .tags-view-container {
   .tags-view-wrapper {
-    width: calc(100% + 1px);
-    margin-left: -1px;
-    background: #fff;
+    line-height: 34px;
     height: 34px;
     border-bottom: 1px solid #d8dce5;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, .12), 0 0 1px 0 rgba(0, 0, 0, .04);
+    &.breadcrumb{
+      padding-left: 20px;
+    }
     .tags-view-item {
-      display: inline-block;
       position: relative;
-      height: 26px;
-      line-height: 26px;
-      border: 1px solid #d8dce5;
-      color: #495060;
-      background: #fff;
-      padding: 0 8px;
-      font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
       cursor: pointer;
-      &:first-of-type {
-        margin-left: 15px;
-      }
-      &.active {
-        //background-color: $bg;
-        color: #fff;
-       // border-color:$bg;
-        &::before {
+      transition: all .28s linear;
+      // &:first-of-type {
+      //   margin-left: 15px;
+      // }
+      &.active::before {
           content: '';
-          background: #fff;
+          background-color:yellowgreen;
           display: inline-block;
           width: 8px;
           height: 8px;
           border-radius: 50%;
           position: relative;
           margin-right: 2px;
-        }
       }
     }
   }
   .contextmenu {
     margin: 0;
-    background: #fff;
+    background-color: #fff;
     z-index: 100;
     position: absolute;
     list-style-type: none;
@@ -186,32 +189,6 @@ export default {
       cursor: pointer;
       &:hover {
         background: #eee;
-      }
-    }
-  }
-}
-</style>
-
-<style rel="stylesheet/scss" lang="scss">
-//reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: 2px;
-      border-radius: 50%;
-      text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      transform-origin: 100% 50%;
-      &:before {
-        transform: scale(.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-      &:hover {
-        background-color: #b4bccc;
-        color: #fff;
       }
     }
   }

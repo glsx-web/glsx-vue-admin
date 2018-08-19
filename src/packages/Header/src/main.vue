@@ -44,9 +44,10 @@
         v-on:@closeSeletedTag="handleCloseTag"
         v-on:@closeOthersTags="handleCloseOthersTags"
         v-on:@closeAllTags="handleCloseAllTags"
-        :activeColor="oTagsView.activeColor" 
+        :oStyle="oTagsView.oStyle" 
         :generate="oTagsView.generate"
         :activeId="oTagsView.activeId"
+        :breadcrumb="oBreadcrumb"
         :visitedRoutes="oTagsView.visitedRoutes"/>
         </draggable>
     </div>
@@ -160,11 +161,30 @@ export default {
     oTagsView() {
       return {
         visible: this.TagsView.visible,
-        activeColor: this.TagsView.activeColor || this.app.defaultColor,
+        oStyle: this.oNavbarStyle,
         visitedRoutes: this.$_.dropWhile(this.visitedRoutes, ['title', 'dashboard']) || [],
         generate: this.GenerateTitle,
         activeId: this.app.auth.curnav.fifth
       }
+    },
+    oBreadcrumb() {
+      const cur = this.app.auth.curnav
+      const res = this.app.auth.resources
+      // const objFirst = getMenu(res, cur.first)
+      // const objSecond = getMenu(res, cur.second)
+      // const objFourth = getMenu(res, cur.fourth)
+      // const objFifth = getMenu(res, cur.fifth)
+      // const third = cur.third || objFourth.pid
+      // console.log(cur.third)
+      // const objThird = getMenu(res, third)
+      // console.log([objFirst, objSecond, objThird, objFourth, objFifth])
+      // return [res[cur.first], res[cur.second], res[cur.third], res[cur.fourth], res[cur.fifth]]
+      const menus = []
+      if (!cur) return []
+      for (const key in cur) {
+        menus.push(getMenu(res, cur[key]))
+      }
+      return menus
     }
   },
   methods: {
@@ -218,6 +238,10 @@ export default {
       this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
     }
   }
+}
+function getMenu(res, id) {
+  const menu = res.filter(menu => menu.id + '' === id + '')
+  return (menu.length) ? menu[0] : {}
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
