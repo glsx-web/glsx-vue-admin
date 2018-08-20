@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 22:32:49
+ * @Last Modified time: 2018-08-19 21:23:07
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -121,6 +121,9 @@ export default {
       })
     },
     handleNav4(nav4Id) {
+      const res = this.app.auth.resources
+      const nav3Id = res.filter(menu => menu.id + '' === nav4Id + '')[0].pid
+      this.SetSession(AppConst.Auth.CurNav.Third.Key, nav3Id)
       this.SetSession(AppConst.Auth.CurNav.Fourth.Key, nav4Id)
     }
   },

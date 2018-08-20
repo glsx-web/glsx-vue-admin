@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-14 15:10:27
+ * @Last Modified time: 2018-08-18 18:29:14
  */
 
 import { mapActions } from 'vuex'
@@ -33,12 +33,17 @@ export default {
       var module = key.split('_').shift()
       this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
         this.$set_config_by_key(key, value)
-        this.SetSession(key, value)
+        this.$set_session_config_by_key(key, value)
       })
     },
     SetSession(key, value) {
       var module = key.split('_').shift()
-      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => this.$set_session_config_by_key(key, value))
+      return new Promise(resolve => {
+        this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
+          const cfg = this.$set_session_config_by_key(key, value)
+          resolve(cfg)
+        })
+      })
     },
     GetSession(key) {
       const vuxValue = this.$recursion_get(this, key)

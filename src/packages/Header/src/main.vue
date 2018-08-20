@@ -39,13 +39,16 @@
         :generate="GenerateTitle" 
         v-show="breadcrumb_visible"/>     
       <gl-app-tags-view  v-if="oTagsView.visible"
+        v-on:@hanldTagChange="hanldTagChange"
         v-on:@addViewTag="handleAddViewTag"
         v-on:@closeSeletedTag="handleCloseTag"
         v-on:@closeOthersTags="handleCloseOthersTags"
         v-on:@closeAllTags="handleCloseAllTags"
-        :activeColor="oTagsView.activeColor" 
-        :generate="oTagsView.generate" 
-        :visitedViews="oTagsView.visitedViews"/>
+        :oStyle="oTagsView.oStyle" 
+        :generate="oTagsView.generate"
+        :activeId="oTagsView.activeId"
+        :breadcrumb="oBreadcrumb"
+        :visitedRoutes="oTagsView.visitedRoutes"/>
         </draggable>
     </div>
 </template>
@@ -94,12 +97,7 @@ export default {
       return this.aside.state === AppConst.States.OPEN
     },
     settingParams() {
-      return this.$get_session_config()// {
-      // header: this.header,
-      // app: this.app,
-      // footer: this.footer,
-      // aside: this.aside
-      // }
+      return this.$get_session_config()
     },
     oAside() {
       return this.aside
@@ -163,13 +161,36 @@ export default {
     oTagsView() {
       return {
         visible: this.TagsView.visible,
-        activeColor: this.TagsView.activeColor || this.app.defaultColor,
-        visitedViews: this.visitedViews || [],
-        generate: this.GenerateTitle
+        oStyle: this.oNavbarStyle,
+        visitedRoutes: this.$_.dropWhile(this.visitedRoutes, ['title', 'dashboard']) || [],
+        generate: this.GenerateTitle,
+        activeId: this.app.auth.curnav.fifth
       }
+    },
+    oBreadcrumb() {
+      const cur = this.app.auth.curnav
+      const res = this.app.auth.resources
+      // const objFirst = getMenu(res, cur.first)
+      // const objSecond = getMenu(res, cur.second)
+      // const objFourth = getMenu(res, cur.fourth)
+      // const objFifth = getMenu(res, cur.fifth)
+      // const third = cur.third || objFourth.pid
+      // console.log(cur.third)
+      // const objThird = getMenu(res, third)
+      // console.log([objFirst, objSecond, objThird, objFourth, objFifth])
+      // return [res[cur.first], res[cur.second], res[cur.third], res[cur.fourth], res[cur.fifth]]
+      const menus = []
+      if (!cur) return []
+      for (const key in cur) {
+        menus.push(getMenu(res, cur[key]))
+      }
+      return menus
     }
   },
   methods: {
+    hanldTagChange(tag) {
+      this.Set(AppConst.Auth.CurNav.Key, tag.target)
+    },
     handleClickOutside() {
       this.Set(AsideConst.State.Key, AsideConst.States.CLOSE)
     },
@@ -177,9 +198,7 @@ export default {
       this.Set(AppConst.DefaultColor.Key, theme)
     },
     handleLogout() {
-      this.Logout({ token: '', v: this }).then(() => {
-        this.$router.push('/login')
-      })
+      this.Logout({ token: '', v: this }).then(() => this.$router.push('/login'))
     },
     handleToggleSideBar() {
       const state = this.isActive ? AppConst.States.CLOSE : AppConst.States.OPEN
@@ -190,25 +209,24 @@ export default {
       this.$i18n.locale = lang
     },
     handleAddViewTag(route) {
-      this.addVisitedViews(route)
+      this.AddView(route)
     },
     handleCloseTag(view, isActive) {
-      this.delVisitedViews(view).then((views) => {
+      this.RemoveView(view).then((views) => {
         if (isActive) {
           const latestView = views.slice(-1)[0]
-          this.$router.push(latestView ? latestView.fullPath : '/')
+          if (!latestView.id) { // TODO 优化逻辑
+            return
+          }
+          this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(latestView.target))
         }
       })
     },
     handleCloseOthersTags(selectedTag) {
-      this.delOthersViews(selectedTag).then(() => {
-        this.$router.push(selectedTag.fullPath)
-      })
+      this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(selectedTag.target)))
     },
     handleCloseAllTags() {
-      this.delAllViews().then(() => {
-        this.$router.push('/')
-      })
+      this.RemoveAllViews().then(() => this.$router.push('/home'))
     },
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
@@ -220,6 +238,10 @@ export default {
       this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
     }
   }
+}
+function getMenu(res, id) {
+  const menu = res.filter(menu => menu.id + '' === id + '')
+  return (menu.length) ? menu[0] : {}
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

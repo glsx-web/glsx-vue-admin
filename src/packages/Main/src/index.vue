@@ -16,7 +16,7 @@ import { AppMixin, PublicMixin } from '@/lib/mixins'
 import { GlConst } from 'glsx-vue-common'
 const { AppConst } = GlConst
 import GlKeepAlive from '@/packages/KeepAlive'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Nav5th from './nav5th'
 /**
 /**
@@ -36,8 +36,10 @@ export default {
       'footer',
       'app',
       'header',
-      'cachedViews'
+      'cachedViews',
+      'visitedRoutes'
     ]),
+    ...mapActions(['AddView']),
     showMain() {
       return this.app.mainVisible === AppConst.Visibility.VISIBLE
     },
@@ -58,15 +60,20 @@ export default {
     }
   },
   methods: {
-    handleNav5(nav5Id) {
-      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, nav5Id)
+    handleNav5(menu) {
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menu.id + '').then(cfg => {
+        if (this.visitedRoutes.some(v => v.id + '' === menu.id + '')) return
+        const view = {
+          name: menu.title,
+          fullPath: menu.path,
+          title: menu.title,
+          fromSub: true,
+          id: menu.id,
+          target: cfg.app.auth.curnav
+        }
+        this.$store.dispatch('AddView', view)
+      })
     }
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .el-tabs--top{
-    height: auto !important;
-    padding-left: 20px;
-  }
-</style>

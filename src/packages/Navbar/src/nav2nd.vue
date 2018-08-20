@@ -36,8 +36,8 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss">
- .el-menu--horizonta{
-   background-color: transparent;
+ .el-menu--horizontal{
+   height: 60px
  }
  .el-tabs__nav {
    z-index: 1 !important;

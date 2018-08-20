@@ -3,7 +3,7 @@
       tab-position="top" 
       class="nav5th"
       v-model="activeName" 
-      @tab-click="handleNav5">
+     >
         <el-tab-pane 
         v-for="(item,index) in aNav5th" 
         :key="index" 
@@ -12,16 +12,17 @@
         :name="item.id+''"
         >
         <span slot="label">
-            <i class="el-icon-date"></i> 
-            {{item.title}}
+          <i class="el-icon-date"></i> 
+          {{item.title}}
         </span>
-        <!-- <gl-app-scroll :height="height"> -->
-        <div 
-          :id="createContainerId(item)" 
-          :style="{ height:height+'px'}"
-          ></div>
-        <!-- </gl-app-scroll> -->
         </el-tab-pane>
+        <div
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)" 
+        id="container" 
+        :style="{ height:height+'px',position:'relative'}" ></div>
     </el-tabs>
 </template>
 
@@ -30,7 +31,7 @@ export default {
   name: 'Nav5th',
   data() {
     return {
-      loading: true,
+      loading: false,
       activeName: '',
       connections: []
     }
@@ -44,6 +45,17 @@ export default {
       handler(newVal, oldVal) {
         this.connections.map(con => con.promise.then(child => child.setTheme(newVal)))
       }
+    },
+    activeName(val) {
+      let connection = null
+      this.connections.map(con => {
+        (con.source.id + '') === val && (connection = con)
+        con.iframe.style.zIndex = 0
+      })
+      if (connection) {
+        connection.iframe.style.zIndex = 1
+        this.$emit('@handleNav5', connection.source)
+      }
     }
   },
   computed: {
@@ -51,40 +63,45 @@ export default {
       const menus = this.oNav5th.menus
       if (menus) {
         setTimeout(() => {
-          for (const item of menus) {
-            this.createIframe(item)
-          }
-          this.activeName = this.oNav5th.active + ''
+          menus.map(menu => this.createIframe(menu))
+          this.activeName = this.creatActiveName(menus)
         }, 100)
         return menus
       }
     }
   },
+  beforeDestroy() {
+    this.connections = []
+    this.activeName = ''
+  },
   methods: {
-    handleNav5(tab, event) {
-      this.$emit('@handleNav5', this.activeName)
+    // handleNav5(tab, event) {
+    //   this.$emit('@handleNav5', this.activeName)
+    // },
+    creatActiveName(menus) {
+      var active = this.oNav5th.active + ''
+      // return (active || menus[0].id) + ''
+      if (active && menus.some(menu => menu.id + '' === active)) {
+        return active
+      } else if (menus.length) {
+        return menus[0].id + ''
+      }
+      return ''
     },
-    createContainerId(item) {
-      return `container_${item.id}`
-    },
-    createLoading(item) {
-      return this.$loading({
-        lock: true,
-        text: '拼命加载中',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-        target: `#${this.createContainerId(item)}`
-      })
+    frameLoadedCallback(frame) {
+      if (!this.activeName || frame.id + '' === this.activeName) {
+        this.loading = false
+      }
     },
     createIframe(item) {
-      const container = document.getElementById(this.createContainerId(item))
-      if (!item || !item.title || !item.path || !container || container.getAttribute('hasChild')) return
-      item.loading = this.createLoading(item)
-      container.setAttribute('hasChild', true)
+      const isHas = this.connections.some(con => con.source.id === item.id)
+      if (!item || !item.title || !item.path || isHas) return
+      this.loading = true
       const con = this.$Penpal.connectToChild({
         url: item.path,
-        appendTo: container,
+        appendTo: '#container',
         source: item,
+        style: 'position:absolute;background-color: #fff;z-index:0',
         methods: {
           onload() {
             // _this.loading = false
@@ -93,11 +110,9 @@ export default {
       })
       con.promise.then(child => {
         child.setTheme(this.oNav5th.color)
+        // console.log(child.height())
       })
-      const iframe = con.iframe
-      iframe.onload = () => {
-        con.source.loading.close()
-      }
+      con.iframe.onload = _ => this.frameLoadedCallback(con.source)
       this.connections.push(con)
     }
   }
@@ -106,7 +121,16 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
   .nav5th {
     .el-tabs__header{
+      background-color: rgba(0,0,0,.1);
       margin: 0;
+      .el-tabs__nav-wrap{
+        border-bottom: 1px solid #b2b7c1;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+      }
+      .el-tabs__item{
+        height: 35px;
+        line-height: 35px;
+      }
       .el-tabs__nav{
         transform: translateX(15px) !important
       }

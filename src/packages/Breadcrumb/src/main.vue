@@ -1,49 +1,47 @@
 <template>
-  <el-breadcrumb class="app-breadcrumb" separator="/">
-    <transition-group name="breadcrumb">
-      <el-breadcrumb-item v-for="(item,index)  in levelList" :key="index" v-if="item.meta.title">
-        <span v-if="item.redirect==='noredirect'||index==levelList.length-1" class="no-redirect">{{generate(item.meta.title)}}</span>
-        <router-link v-else :to="item.redirect||item.path">{{generate(item.meta.title)}}</router-link>
+  <el-breadcrumb separator-class="el-icon-arrow-right breadcrumb__separator" :style="style">
+    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <transition-group name="el-zoom-in-center">
+      <el-breadcrumb-item v-for="(item,index)  in aBreadcrumb" :key="index">
+        {{item.title}}
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
 </template>
 
 <script>
-import { DASHBOARD } from '@/utils/const'
+// import { DASHBOARD } from '@/utils/const'
 export default {
   name: 'GlAppBreadcrumb',
   props: {
-    generate: {
-      type: Function
+    breadcrumb: {
+      type: Array
     }
   },
-  mounted() {
-    this.getBreadcrumb()
-  },
-  data() {
-    return {
-      levelList: null
-    }
-  },
-  watch: {
-    $route() {
-      this.getBreadcrumb()
-    }
-  },
-  methods: {
-    getBreadcrumb() {
-      var matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
-      if (first && first.name.toLowerCase() !== DASHBOARD.name.toLowerCase()) {
-        matched = [DASHBOARD].concat(matched)
+  computed: {
+    aBreadcrumb() {
+      return this.breadcrumb && this.breadcrumb.filter(menu => menu && menu.id)
+    },
+    style() {
+      return {
+        margin: 0,
+        backgroundColor: `rgba(0,0,0,.1)`
       }
-      this.levelList = matched
     }
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  
+.el-breadcrumb{
+  font-size: 12px;
+  .el-breadcrumb__inner{
+    color: #999
+  }
+}
+</style>
+<style rel="stylesheet/scss" lang="scss">
+.breadcrumb__separator{
+  margin: 1px !important;
+}
 </style>

@@ -13,18 +13,18 @@ export default {
       'header',
       'app',
       'aside',
-      'visitedViews',
+      'visitedRoutes',
       'footer'
     ])
   },
   methods: {
     ...mapActions([
       'Logout',
-      'addVisitedViews',
-      'delVisitedViews',
-      'delOthersViews',
-      'delAllViews',
-      'saveKeepStatus'
+      'AddView',
+      'RemoveView',
+      'RemoveOtherView',
+      'RemoveAllViews',
+      'SaveKeepStatus'
     ])
   }
 }

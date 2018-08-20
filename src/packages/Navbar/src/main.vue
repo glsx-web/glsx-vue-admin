@@ -36,7 +36,6 @@
         :settingParams="settingParams"
         @screenChange="screenChange"
         :style="oStyle"/>
-        <!-- <gl-toggle  v-on:@toggle="handleToggle" class="right-menus-toggle" :isActive="toogleActive"></gl-toggle> -->
   </div>
 </template>
 
@@ -56,9 +55,6 @@ import Slots from './slots'
 import Nav2nd from './nav2nd'
 import GlManagementCenter from './mc'
 import { mapGetters } from 'vuex'
-
-// import glLock from '@/packages/lock'
-
 export default {
   name: 'GlAppNavbar',
   props: {
@@ -147,11 +143,6 @@ export default {
     screenChange(show) {
       this.fullScreenShow = show
     }
-    // handleLockScreen() { // 锁屏
-    //   // this.$store.commit('LOCK')
-    //   console.log(111)
-    //   this.$router.replace('/lockscreen')
-    // }
   }
 }
 </script>
