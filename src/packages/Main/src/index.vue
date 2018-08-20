@@ -4,7 +4,7 @@
     <app-main :cachedViews="cachedViews" v-show="showMain"/>
     <nav5th 
       :oNav5th="oNav5th"
-      :height="nHeight-40" 
+      :height="nHeight-30" 
       v-on:@handleNav5="handleNav5" v-show="!showMain"/> 
   </gl-app-scroll>
 </template>
@@ -59,6 +59,29 @@ export default {
       }
     }
   },
+  watch: {
+    'app.auth.curnav.second': {
+      handler(newVal, oldVal) {
+        const res = this.app.auth.resources
+        const curnav = this.app.auth.curnav
+        const third = getId(res, newVal, curnav.third)
+        const fourth = getId(res, third, curnav.fourth)
+        const fifth = getId(res, fourth, curnav.fifth)
+        const values = [third, fourth, fifth];
+        ['Third', 'Fourth', 'Fifth'].forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+      },
+      deep: true
+    },
+    'app.auth.curnav.fourth': {
+      handler(newVal, oldVal) {
+        const res = this.app.auth.resources
+        const curnav = this.app.auth.curnav
+        const fifth = getId(res, newVal, curnav.fifth)
+        this.SetSession(AppConst.Auth.CurNav.Fifth.Key, fifth)
+      },
+      deep: true
+    }
+  },
   methods: {
     handleNav5(menu) {
       this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menu.id + '').then(cfg => {
@@ -75,5 +98,12 @@ export default {
       })
     }
   }
+}
+function getId(res, pid, index) {
+  const menu = res.filter(menu => menu.id + '' === pid + '')
+  if (!menu || !menu.length) return ''
+  const children = menu[0].children
+  if (!children) return ''
+  return children.some(child => child.id + '' === index + '') ? index : children[0].id
 }
 </script>

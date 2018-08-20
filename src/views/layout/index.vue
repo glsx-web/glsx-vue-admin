@@ -27,5 +27,8 @@ export default {
       padding: 0 !important;
       height: auto !important;
     }
+    .el-container{
+      transition: all 1s linear
+    }
 </style>
 

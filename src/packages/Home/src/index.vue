@@ -19,7 +19,8 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 const { AppConst, AsideConst, HeaderConst } = GlConst
 import { PublicMixin } from '@/lib/mixins'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+const KEYS = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
 export default {
   name: 'GlAppHome',
   components: {
@@ -35,17 +36,26 @@ export default {
     // }
   },
   methods: {
+    ...mapActions(['RemoveAllViews']),
     sys_checked(sys) {
-      this.reset_nav()
-      this.SetSession(AppConst.Auth.CurNav.First.Key, sys.id)
-      this.$router.push({ path: '/dashboard' })
+      this.init_nav(sys.id).then(() => this.$router.push({ path: '/dashboard' }))
+    },
+    init_nav(first) {
+      return new Promise(resolve => {
+        const res = this.app.auth.resources
+        const second = getId(res, first)
+        const third = getId(res, second)
+        const fourth = getId(res, third)
+        const fifth = getId(res, fourth)
+        this.set_nav_value([first, second, third, fourth, fifth])
+        resolve()
+      })
     },
     reset_nav() {
-      this.SetSession(AppConst.Auth.CurNav.First.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Second.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Third.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Fourth.Key, '')
-      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
+      this.set_nav_value(['', '', '', '', ''])
+    },
+    clear_auth() {
+      this.$set_config_by_key(AppConst.Auth.CurNav.Key, {})
     },
     cache_states() {
       this.caches.clear()
@@ -61,11 +71,16 @@ export default {
         this.SetSession(key, value)
       }
       this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
+    },
+    set_nav_value(values) {
+      KEYS.forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
     }
   },
   mounted() {
     this.reset_nav()
+    this.clear_auth()
     this.cache_states()
+    this.RemoveAllViews()
     this.aNav = this.$get_menus(this.app.auth.resources, 0)
   },
   beforeDestroy() {
@@ -106,6 +121,10 @@ export default {
       }
     }
   }
+}
+function getId(res, pid) {
+  const id = res.filter(menu => menu.id + '' === pid + '')[0].children[0].id
+  return id
 }
 </script>
 

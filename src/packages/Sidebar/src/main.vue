@@ -9,7 +9,6 @@
         :background-color="oColors.backgroundColor"
         :active-text-color="oColors.activeTextColor"
       >
-      <!-- <gl-app-sidebar-item :routes="routers" :generate="generate"/> -->
       <nav3_4
       v-on:@handleNav4="handleNav4" 
       :oNav3_4="oNav3_4" 
@@ -19,18 +18,13 @@
 </template>
 
 <script>
-// import GlAppSidebarItem from '@/packages/SidebarItem'
 import Nav3_4 from './nav3_4'
 export default {
   name: 'GlAppSidebar',
   components: {
-    // GlAppSidebarItem
     Nav3_4
   },
   props: {
-    routers: {
-      type: Array
-    },
     isCollapse: {
       type: Boolean
     },
@@ -56,7 +50,12 @@ export default {
       return Object.assign(this.color, this.colors)
     },
     defaultActive() {
-      return this.oNav3_4.active + ''
+      const activeid = this.oNav3_4.active + ''
+      // if (!activeid) {
+      //   activeid = this.oNav3_4.menus[0].children[0].id + ''
+      //   this.handleNav4(activeid)
+      // }
+      return activeid
     }
   },
   methods: {

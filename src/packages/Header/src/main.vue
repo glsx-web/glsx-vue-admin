@@ -170,15 +170,6 @@ export default {
     oBreadcrumb() {
       const cur = this.app.auth.curnav
       const res = this.app.auth.resources
-      // const objFirst = getMenu(res, cur.first)
-      // const objSecond = getMenu(res, cur.second)
-      // const objFourth = getMenu(res, cur.fourth)
-      // const objFifth = getMenu(res, cur.fifth)
-      // const third = cur.third || objFourth.pid
-      // console.log(cur.third)
-      // const objThird = getMenu(res, third)
-      // console.log([objFirst, objSecond, objThird, objFourth, objFifth])
-      // return [res[cur.first], res[cur.second], res[cur.third], res[cur.fourth], res[cur.fifth]]
       const menus = []
       if (!cur) return []
       for (const key in cur) {

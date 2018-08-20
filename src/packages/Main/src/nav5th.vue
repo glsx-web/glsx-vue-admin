@@ -33,7 +33,8 @@ export default {
     return {
       loading: false,
       activeName: '',
-      connections: []
+      connections: [],
+      timer: 0
     }
   },
   props: {
@@ -80,22 +81,27 @@ export default {
     // },
     creatActiveName(menus) {
       var active = this.oNav5th.active + ''
-      // return (active || menus[0].id) + ''
-      if (active && menus.some(menu => menu.id + '' === active)) {
-        return active
-      } else if (menus.length) {
-        return menus[0].id + ''
-      }
-      return ''
+      // // return (active || menus[0].id) + ''
+      // if (active && menus.some(menu => menu.id + '' === active)) {
+      //   return active
+      // } else if (menus.length) {
+      //   return menus[0].id + ''
+      // }
+      return active
     },
     frameLoadedCallback(frame) {
       if (!this.activeName || frame.id + '' === this.activeName) {
         this.loading = false
       }
+      if (this.loading && !this.timer) { // 防止异常情况无法关闭遮罩层
+        this.timer = setTimeout(() => {
+          this.loading = false
+          this.timer = 0
+        }, 1000)
+      }
     },
     createIframe(item) {
-      const isHas = this.connections.some(con => con.source.id === item.id)
-      if (!item || !item.title || !item.path || isHas) return
+      if (!item || !item.title || !item.path || this.connections.some(con => con.source.id === item.id)) return
       this.loading = true
       const con = this.$Penpal.connectToChild({
         url: item.path,
@@ -124,12 +130,13 @@ export default {
       background-color: rgba(0,0,0,.1);
       margin: 0;
       .el-tabs__nav-wrap{
-        border-bottom: 1px solid #b2b7c1;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+        // border-bottom: 1px solid #b2b7c1;
+        // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
       }
       .el-tabs__item{
-        height: 35px;
-        line-height: 35px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
       }
       .el-tabs__nav{
         transform: translateX(15px) !important

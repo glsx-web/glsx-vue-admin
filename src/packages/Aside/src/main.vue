@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-19 21:23:07
+ * @Last Modified time: 2018-08-20 13:45:23
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -16,7 +16,6 @@
         <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
           <gl-app-sidebar 
             :isCollapse="oSidebar.isCollapse" 
-            :routers="oSidebar.routers" 
             :generate="oSidebar.generate"
             :colors="oSidebar.colors"
             :oNav3_4="oNav3_4"
@@ -61,7 +60,6 @@ export default {
     oSidebar() {
       return {
         isCollapse: this.Aside.isClosed,
-        routers: this.routers,
         generate: GlCommon.GenerateTitle,
         colors: {
           textColor: this.Sidebar.textColor,

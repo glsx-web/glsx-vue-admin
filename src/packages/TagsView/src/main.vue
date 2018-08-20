@@ -14,21 +14,21 @@
                 @click.native="hanldTagChange(tag)"  
                 :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 
                 :style="isActive(tag) ? objStyle: '' " 
-                v-for="tag in Array.from(visitedRoutes)" 
-                :key="tag.id || tag.fullPath" 
+                v-for="tag in visitedRoutes" 
+                :key="tag.id" 
                 closable
                 size='small'
-                  :disable-transitions="false"
-                  @close="closeSelectedTag(tag)"
+                :disable-transitions="false"
+                @close="closeSelectedTag(tag)"
                 @contextmenu.native.prevent="openMenu(tag,$event)">
               <!-- <router-link  :to="tag.fullPath" v-if="!tag.fromSub" >
                 {{generate(tag.title)}}
                 <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
               </router-link> -->
-              <template>
+              <!-- <template> -->
                 {{tag.title}}
                 <!-- <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span> -->
-              </template>
+              <!-- </template> -->
             </el-tag>
           </draggable>
         </gl-app-scroll-pane>
@@ -54,7 +54,7 @@ export default {
     oStyle: Object,
     generate: Function,
     visitedRoutes: Array,
-    activeId: String,
+    activeId: [String, Number],
     breadcrumb: Array
   },
   data() {
@@ -146,7 +146,9 @@ export default {
     line-height: 34px;
     height: 34px;
     border-bottom: 1px solid #d8dce5;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, .12), 0 0 1px 0 rgba(0, 0, 0, .04);
+    -moz-box-shadow:0px 1px 1px #B0B0B0; 
+    -webkit-box-shadow:0px 1px 1px #B0B0B0; 
+    box-shadow:0px 1px 1px #B0B0B0;
     &.breadcrumb{
       padding-left: 20px;
     }

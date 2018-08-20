@@ -1,8 +1,6 @@
 <template>
-  <div class="footer" v-if="footer.visible" :style="{height:this.footer.height+'px'}">
-    <p>
+  <div class="footer" v-if="footer.visible" :style="{lineHeight:this.footer.height+'px'}">
 			Copyright © 2012-2022 深圳广联赛讯有限公司 版权所有
-		</p>
   </div>
 </template>
 
@@ -17,6 +15,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .footer {
     text-align: center;
+    font-size: 12px;
 }
 </style>
 

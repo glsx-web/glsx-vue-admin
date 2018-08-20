@@ -71,7 +71,7 @@ export default{
     visible: true,
     color: '',
     backgroundColor: 'transparent',
-    height: 60
+    height: 30
   },
   app: {
     defaultColor: '#409EFF',
