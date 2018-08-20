@@ -95,6 +95,8 @@
 
 /* Aside */
 
+/* logo */
+
 .logo-transition-enter-active {
   transition: all .8s;
 }
@@ -103,6 +105,25 @@
   transform: translateX(30px);
   opacity: 0;
 }
+
+/* logo */
+
+/* navbar */
+.mcSlots-enter-active{
+  transition: all 0.7s ease-in-out;
+}
+.mcFull .mcSlots-enter{
+  transform: translateX(100px);
+  opacity: 0;
+}
+.mcChange .mcSlots-enter{
+  // transform: translateY(10px);
+  opacity: 0;
+}
+.mcSlots-leave{
+  opacity: 0;
+}
+/* navbar */
 
 /* animate */
 

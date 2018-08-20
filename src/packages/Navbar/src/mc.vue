@@ -183,20 +183,7 @@ export default {
     color: #fff;
     cursor: pointer;
 }
-.mcSlots-enter-active{
-    transition: all 0.7s ease-in-out;
-}
-.mcFull .mcSlots-enter{
-    transform: translateX(100px);
-    opacity: 0;
-}
-.mcChange .mcSlots-enter{
-    // transform: translateY(10px);
-    opacity: 0;
-}
-.mcSlots-leave{
-    opacity: 0;
-}
+
 .setting{
     position: absolute;
     top: -500px;
