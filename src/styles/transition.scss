@@ -1,6 +1,6 @@
 //globl transition css
-
 /*fade*/
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.28s;
@@ -12,6 +12,7 @@
 }
 
 /*fade*/
+
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
   transition: all .5s;
@@ -30,3 +31,79 @@
 .breadcrumb-leave-active {
   position: absolute;
 }
+
+/* login-container */
+
+.title-appear {
+  transform: translateY(-50px);
+}
+
+.login-appear {
+  transform: translateY(50px);
+}
+
+.username-appear {
+  transform: translateX(50px);
+}
+
+.password-appear {
+  transform: translateX(-50px);
+}
+
+.appear-active {
+  transition: all .5s ease;
+}
+
+.appear-to {
+  transform: translateY(0px);
+  transform: translateX(0px);
+}
+
+/* login-container */
+
+.page-transition-enter-active,
+.page-transition-leave-active {
+  transition: all 0.3s;
+}
+
+.page-transition-enter {
+  transform: translateX(70px);
+  opacity: 0;
+}
+
+.page-transition-leave-to {
+  transform: translateX(70px);
+  opacity: 0;
+}
+
+/* Aside */
+
+.Aside-transition-enter-active,
+.Aside-transition-leave-active {
+  transition: all 0.3s;
+}
+
+.Aside-transition-enter {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.Aside-transition-leave-to {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+
+/* Aside */
+
+.logo-transition-enter-active {
+  transition: all .8s;
+}
+
+.logo-transition-enter {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+/* animate */
+
+/* animate */

@@ -5,25 +5,27 @@
  * @Last Modified time: 2018-08-19 21:23:07
  */
 <template>
-  <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
-    <transition name="fade-transform" mode="out-in">
-      <gl-app-logo v-if="Logo.visible"
+  <transition name="Aside-transition">
+    <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
+      <transition name="fade-transform" mode="out-in">
+        <gl-app-logo v-if="Logo.visible" 
         :width="oLogo.width" 
         :height="oLogo.height" 
         :backgroundColor="oLogo.backgroundColor" 
         :backgroundImage="oLogo.backgroundImage" />
       </transition>
-        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
-          <gl-app-sidebar 
-            :isCollapse="oSidebar.isCollapse" 
-            :routers="oSidebar.routers" 
-            :generate="oSidebar.generate"
-            :colors="oSidebar.colors"
-            :oNav3_4="oNav3_4"
-            v-on:@handleNav4="handleNav4"  />
-        </gl-app-scroll>
-        <!-- <i class="dragger" v-drag="greet"></i> -->
-  </div>
+      <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
+        <gl-app-sidebar 
+        :isCollapse="oSidebar.isCollapse" 
+        :routers="oSidebar.routers" 
+        :generate="oSidebar.generate" 
+        :colors="oSidebar.colors" 
+        :oNav3_4="oNav3_4" 
+        v-on:@handleNav4="handleNav4"  />
+      </gl-app-scroll>
+      <!-- <i class="dragger" v-drag="greet"></i> -->
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -133,19 +135,19 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .aside{
-      position:relative;
-      overflow:hidden;
-    }
-    .dragger{
-      height: 100%;
-      width: 10px;
-      position: absolute;
-      right: 0;
-      cursor: w-resize;
-      z-index: 9999;
-    }
-    #app .sidebar-container {
-      z-index: 1 !important;
-    }
+.aside{
+    position:relative;
+    overflow:hidden;
+}
+.dragger{
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    right: 0;
+    cursor: w-resize;
+    z-index: 9999;
+}
+#app .sidebar-container {
+    z-index: 1 !important;
+}
 </style>

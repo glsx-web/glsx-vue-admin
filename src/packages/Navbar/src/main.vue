@@ -1,5 +1,6 @@
 <template>
   <div class="navbar" :style="oStyle">
+    <transition name="logo-transition">
     <div class="logo-container" v-if="!oAside.visible">
       <gl-app-logo v-if="oLogo.visible"
       :width="oLogo.width" 
@@ -7,6 +8,7 @@
       :backgroundColor="oLogo.backgroundColor" 
       :backgroundImage="oLogo.backgroundImage" />
     </div>
+    </transition>
     <gl-app-hamburger v-if="oAside.visible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
