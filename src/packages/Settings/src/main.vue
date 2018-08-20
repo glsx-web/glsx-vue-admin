@@ -9,289 +9,18 @@
       </span>
       <el-dialog title="系统设置" :visible.sync="dialogFormVisible">
           <el-tabs :tab-position="tabPosition"   >
-              <el-tab-pane label="头部导航">
-                <gl-app-scroll :height=300 style="min-height:200px;">
-                <el-collapse v-model="activeNames" >
-                  <el-collapse-item name="1">
-                      <template slot="title"  @click="handeleTitleClick">
-                          用户信息 
-                      </template>
-                      <el-form :model="params.header.navbar.user">
-                        <el-col :span="5">
-                          <div class="grid-content">用户头像</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.user.avatar.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">头像上传</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-upload class="avatar-uploader"  action="GLSX-VUE-ADMIN/static" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                            </el-upload>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">用户名称</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.user.name.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-input v-model="params.header.navbar.user.name.value" :disabled="true"></el-input>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                    <el-collapse-item name="2">
-                      <template slot="title"  @click="handeleTitleClick">
-                          选择语言 
-                      </template>
-                      <el-form :model="params.header.navbar.language">
-                        <el-col :span="5">
-                          <div class="grid-content">语言</div>
-                          <!-- <lang-select class="international" v-on:@setLanguage="handleSetLanguage" :language="params.header.navbar.language.value"></lang-select> -->
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.language.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                    <el-collapse-item name="3">
-                      <template slot="title"  @click="handeleTitleClick">
-                          窗口设置 
-                      </template>
-                      <el-form :model="params.header.navbar.screenfull">
-                        <el-col :span="5">
-                          <div class="grid-content">全屏</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.screenfull.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                    <el-collapse-item name="4">
-                      <template slot="title"  @click="handeleTitleClick">
-                          标签窗口
-                      </template>
-                      <el-form :model="params.header">
-                        <el-col :span="5">
-                          <div class="grid-content">标签窗口</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                             <el-switch v-model="params.header.tagsView.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">activeColor</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <el-color-picker v-model="params.header.tagsView.activeColor" size="mini"></el-color-picker>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                    <el-collapse-item name="5">
-                      <template slot="title"  @click="handeleTitleClick">
-                          主题设置 
-                      </template>
-                      <el-form :model="params.header.navbar.theme">
-                        <el-col :span="5">
-                          <div class="grid-content">皮肤</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <el-switch v-model="params.header.navbar.theme.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">添加预选色</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <el-color-picker v-model="pickColor" size="mini"></el-color-picker>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">已有的预选色</div>
-                        </el-col>
-                        <el-col :span="17">
-                          <el-form-item >
-                            <div class="preselectedColor">
-                              <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(item)" style=""></div>
-                            </div>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                    <el-collapse-item name="6">
-                      <template slot="title"  @click="handeleTitleClick">
-                          注销入口 
-                      </template>
-                      <el-form :model="params.header.navbar.logout">
-                        <el-col :span="5">
-                          <div class="grid-content">注销</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item>
-                            <el-switch v-model="params.header.navbar.logout.visible" active-text="开" inactive-text="关"></el-switch>
-                          </el-form-item>
-                        </el-col>
-                      </el-form>
-                    </el-collapse-item>
-                </el-collapse>
-                </gl-app-scroll>
-              </el-tab-pane>
+            <el-tab-pane label="头部导航">
+              <head-nav 
+               v-on:@setParamsConfig="handler" />
+            </el-tab-pane>
               <el-tab-pane label="左侧菜单">
-                <gl-app-scroll :height=300>
-                <el-collapse v-model="activeNames">
-                  <el-collapse-item name="1">
-                    <template slot="title"  @click="handeleTitleClick">
-                        左侧菜单 
-                    </template>
-                    <el-form :model="params.aside">
-                      <el-col :span="5">
-                        <div class="grid-content">菜单</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
-                          <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关" :disabled="isdisabled"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">maxWidth</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input-number v-model="params.aside.maxWidth"></el-input-number>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">minWidth</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input-number v-model="params.aside.minWidth"></el-input-number>
-                        </el-form-item>
-                      </el-col>
-                    </el-form>
-                  </el-collapse-item>
-                  <el-collapse-item name="2">
-                    <template slot="title"  @click="handeleTitleClick">
-                        logo 
-                    </template>
-                    <el-form :model="params.aside.logo">
-                      <el-col :span="5">
-                        <div class="grid-content">logo</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-switch v-model="params.aside.logo.visible" active-text="开" inactive-text="关"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">高度设置</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input-number v-model="params.aside.logo.height"></el-input-number>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">上传logo</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-upload class="avatar-uploader"  action="GLSX-VUE-ADMIN/static" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                            </el-upload>
-                        </el-form-item>
-                      </el-col>
-                    </el-form>
-                  </el-collapse-item>
-                  <el-collapse-item name="3">
-                    <template slot="title"  @click="handeleTitleClick">
-                        sidebar 
-                    </template>
-                    <el-form :model="params.aside.sidebar">
-                      <el-col :span="5">
-                        <div class="grid-content">sidebar</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
-                          <el-switch v-model="params.aside.sidebar.visible" active-text="开" inactive-text="关"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                    </el-form>
-                    <el-form :model="params.aside.sidebar">
-                      <el-col :span="5">
-                          <div class="grid-content">选中的标签</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <div>
-                               <el-color-picker v-model="params.aside.sidebar.activeTextColor" size="mini"></el-color-picker>
-                            </div>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">字体颜色</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <div>
-                               <el-color-picker v-model="params.aside.sidebar.textColor" size="mini"></el-color-picker>
-                            </div>
-                          </el-form-item>
-                        </el-col>
-                    </el-form>
-                  </el-collapse-item>
-                </el-collapse>
-                </gl-app-scroll>
+                <left-nav 
+                v-on:@setParamsConfig="handler"
+                :isdisabled="isdisabled"/>
               </el-tab-pane>
               <el-tab-pane label="版权信息">
-                <gl-app-scroll :height=200 style="min-height:200px;">
-                <el-collapse v-model="activeNames">
-                  <el-collapse-item>
-                    <template slot="title"  @click="handeleTitleClick">
-                        版权信息 
-                    </template>
-                    <el-form :model="params.footer">
-                      <el-col :span="5">
-                        <div class="grid-content">footer</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
-                          <el-switch v-model="params.footer.visible" active-text="开" inactive-text="关"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
-                        <div class="grid-content">底部高度</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                           <el-input-number v-model="params.footer.height"></el-input-number>
-                        </el-form-item>
-                      </el-col>
-                    </el-form>
-                  </el-collapse-item>
-                </el-collapse>
-                </gl-app-scroll>
+                <foot-nav 
+                v-on:@setParamsConfig="handler" />
               </el-tab-pane>
           </el-tabs>
         <div slot="footer" class="dialog-footer">
@@ -303,7 +32,6 @@
             </div>
             <el-button slot="reference">恢复默认设置</el-button>
           </el-popover>
-          <!-- <el-button type="info" @click="restoreDefault">回复默认设置</el-button> -->
           <el-button @click="cancel">取 消</el-button>
           <el-button type="primary" @click="handleSetParamsConfig">确 定</el-button>
         </div>
@@ -315,18 +43,32 @@
 import LangSelect from '@/packages/LangSelect'
 import GlAppThemePicker from '@/packages/ThemePicker'
 import { PublicMixin, AppMixin } from '@/lib/mixins'
+import HeadNav from './headNav'
+import LeftNav from './leftNav'
+import FootNav from './footNav'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'GlAppSettings',
   mixins: [PublicMixin, AppMixin],
   components: {
     LangSelect,
-    GlAppThemePicker
+    GlAppThemePicker,
+    HeadNav,
+    LeftNav,
+    FootNav
   },
   props: {
     settingParams: Object,
     theme: Object
   },
   computed: {
+    ...mapGetters([
+      'app',
+      'other'
+    ]),
+    ...mapActions([
+      'changeZindex'
+    ]),
     pickColor: {
       get: function() {
         return this.color
@@ -358,25 +100,17 @@ export default {
     }
   },
   methods: {
-    handleSettings() {
-      console.log(11)
-    },
-    handeleTitleClick(e) {
-    },
-    handleSetLanguage(lang) {
-      this.$emit('@setLanguage', lang)
-    },
-    handleTheme(theme) {
-      this.$emit('@themeHandler', theme)
-    },
-    // 删除预选颜色
-    close(item) {
-      var arr = this.params.header.navbar.theme.preDefineColors.split(',')
-      if (arr.length === 1) {
-        return
-      }
-      arr = arr.filter(obj => obj !== item)
-      this.params.header.navbar.theme.preDefineColors = arr.join(',')
+    // handleSettings() {
+    //   console.log(11)
+    // },
+    // handleSetLanguage(lang) {
+    //   this.$emit('@setLanguage', lang)
+    // },
+    // handleTheme(theme) {
+    //   this.$emit('@themeHandler', theme)
+    // },
+    handler(newVal) {
+      this.params = newVal
     },
     // 确定按钮
     handleSetParamsConfig() {
@@ -387,6 +121,11 @@ export default {
           this.$emit('@setParamsConfig', this.params)
         } else {
         // 窗口打开
+          if (this.$route.name === 'GlAppHome') {
+            this.isdisabled = true
+          } else {
+            this.isdisabled = false
+          }
           this.params = this.$get_session_config()
         }
       } catch (error) {
@@ -403,21 +142,6 @@ export default {
       this.$emit('@setParamsConfig', this.params)
       this.dialogFormVisible = false
       this.visible = false
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
     }
   }
 }
@@ -445,32 +169,6 @@ export default {
 .sys-settings{
  .el-tabs--left .el-tabs__header.is-left{
     margin-right: 40px !important;
-  }
-  .avatar-uploader {
-    display: inline;
-  }
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 14px;
-    color: #8c939d;
-    width: 36px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-  }
-  .avatar {
-    width: 36px;
-    height: 36px;
-    display: block;
   }
   .el-form-item__content {
     line-height: 36px;

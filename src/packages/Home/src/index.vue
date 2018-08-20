@@ -38,6 +38,41 @@ export default {
     //   return this.$get_menus(this.app.auth.resources, 0)
     // }
   },
+  data() {
+    return {
+      aNav: [],
+      caches: new Map(),
+      cache_keys: [AsideConst.Visible.Key, HeaderConst.TagsView.Visible.Key],
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21],
+      isvertical: true,
+      swiperOption: {
+        slidesPerView: 4,
+        slidesPerColumn: 2,
+        slidesPerGroup: 4,
+        spaceBetween: 40,
+        loopFillGroupWithBlank: true,
+        // slidesPerColumnFill: 'row',
+        // effect: 'coverflow',
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          // type: 'progressbar',
+          renderBullet: (index, className) => {
+            return `<span class="${className}">${index + 1}</span>`
+          }
+        },
+        keyboard: true,
+        mousewheel: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+        // scrollbar: {
+        //   el: '.swiper-scrollbar'
+        // }
+      }
+    }
+  },
   methods: {
     aaa() {
       console.log(this.app.clientHeight)
@@ -77,41 +112,6 @@ export default {
   },
   beforeDestroy() {
     this.reset_states()
-  },
-  data() {
-    return {
-      aNav: [],
-      caches: new Map(),
-      cache_keys: [AsideConst.Visible.Key, HeaderConst.TagsView.Visible.Key],
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21],
-      isvertical: true,
-      swiperOption: {
-        slidesPerView: 4,
-        slidesPerColumn: 2,
-        slidesPerGroup: 4,
-        spaceBetween: 40,
-        loopFillGroupWithBlank: true,
-        // slidesPerColumnFill: 'row',
-        // effect: 'coverflow',
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-          // type: 'progressbar',
-          renderBullet: (index, className) => {
-            return `<span class="${className}">${index + 1}</span>`
-          }
-        },
-        keyboard: true,
-        mousewheel: true,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        }
-        // scrollbar: {
-        //   el: '.swiper-scrollbar'
-        // }
-      }
-    }
   }
 }
 </script>
