@@ -104,10 +104,12 @@ export default {
       if (this.changeScreenShow === true && SettingVisible === false) {
         setTimeout(() => {
           this.clickSetting = false
-        }, 500)
+        }, 400)
         this.mcIsShow = false
       } else if (this.changeScreenShow === true && SettingVisible === true) {
         this.clickSetting = true
+      } else if (this.fullScreenShow === true) {
+        this.clickSetting = false
       }
     },
     handleMcClose() {
@@ -165,7 +167,7 @@ export default {
 .mcChange{
     width: 80px;
     right: 0px;
-    z-index: 2;
+    z-index: 5;
     flex-direction: column;
     border-radius: 20px;
     background-color: transparent;
