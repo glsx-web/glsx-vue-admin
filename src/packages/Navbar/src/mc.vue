@@ -25,7 +25,7 @@
             <gl-app-theme-picker v-on:@themeHandler="handleTheme" :theme="theme.value" :predefineColors="theme.preDefineColors"/>
           </div>
           <div slot='slot-5' v-if="settings.visible" @click="handleClickSetting">
-            <gl-app-settings :settingParams="settingParams" v-on:@setParamsConfig="handleSetParamsConfig" ref="getSettingVisible" />
+            <gl-app-settings :settingParams="settingParams" v-on:@setParamsConfig="handleSetParamsConfig" v-on:@cancelSetting="handleCancelSetting" ref="getSettingVisible" />
           </div>
           <div slot='slot-6' v-if="logout.visible">
             <gl-app-logout @click.native="handleLogout" />
@@ -94,7 +94,11 @@ export default {
       this.$emit('@itemChanged', value)
     },
     handleSetParamsConfig(params) {
+      this.handleClickSetting()
       this.$emit('@setParamsConfig', params)
+    },
+    handleCancelSetting() {
+      this.handleClickSetting()
     },
     handleToggle() {
       this.toogleActive = !this.toogleActive
@@ -104,9 +108,11 @@ export default {
       if (this.changeScreenShow === true && SettingVisible === false) {
         setTimeout(() => {
           this.clickSetting = false
+          this.$refs.mcSlots.$el.addEventListener('mouseleave', this.handleMcClose, false)
         }, 400)
         this.mcIsShow = false
       } else if (this.changeScreenShow === true && SettingVisible === true) {
+        this.$refs.mcSlots.$el.removeEventListener('mouseleave', this.handleMcClose, false)
         this.clickSetting = true
       } else if (this.fullScreenShow === true) {
         this.clickSetting = false
