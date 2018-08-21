@@ -116,9 +116,6 @@ export default {
       }
     }
   },
-  created() {
-    this.$remove_session_config()
-  },
   mounted() {
     this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
     this.star.instance.run()

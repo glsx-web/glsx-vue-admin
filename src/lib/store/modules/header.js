@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-13 20:33:44
+ * @Last Modified time: 2018-08-21 09:58:58
  */
 const header = {
   state: {
@@ -63,7 +63,7 @@ const header = {
     },
     INIT_HEADER: (state, args) => {
       const { v, config } = args
-      v.$_.merge(state, config)
+      v.$merge(state, config)
     }
   },
   actions: {

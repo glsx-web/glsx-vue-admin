@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-20 13:45:23
+ * @Last Modified time: 2018-08-21 10:31:06
  */
 <template>
   <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
@@ -104,29 +104,12 @@ export default {
     }
   },
   methods: {
-    init() {
-      this.initConfig().then(() => {
-        return this.routerfilter()
-      }).then((navs) => {
-        // this.SetSession(AppConst.Auth.Navs.Key, navs)
-        // this.SetSession(AppConst.Auth.Resources.Key, navs.resources)
-        // this.SetSession(AppConst.Auth.CurNav.First.Key, navs.First)
-        // this.SetSession(AppConst.Auth.CurNav.Second.Key, Object.keys(navs.second)[0])
-        // this.SetSession(AppConst.Auth.CurNav.Third.Key, Object.keys(navs.third)[0])
-        // this.SetSession(AppConst.Auth.CurNav.Fourth.Key, Object.keys(navs.fourth)[0])
-        // this.SetSession(AppConst.Auth.CurNav.Fifth.Key, Object.keys(navs.fifth)[0])
-        this.$config = null
-      })
-    },
     handleNav4(nav4Id) {
       const res = this.app.auth.resources
       const nav3Id = res.filter(menu => menu.id + '' === nav4Id + '')[0].pid
       this.SetSession(AppConst.Auth.CurNav.Third.Key, nav3Id)
       this.SetSession(AppConst.Auth.CurNav.Fourth.Key, nav4Id)
     }
-  },
-  mounted() {
-    // this.init()
   }
 }
 </script>

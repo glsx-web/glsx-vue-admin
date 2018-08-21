@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-14 15:34:40
+ * @Last Modified time: 2018-08-21 10:47:59
  */
 
 import { mapActions } from 'vuex'
@@ -18,11 +18,12 @@ export default {
     initConfig() {
       return new Promise(resole => {
         const config = this.$config
-        const cfg = this.$set_config(config)
-        const merge = this.$_.merge(config, cfg)
-        this.$set_session_config(merge)
+        const local_cfg = JSON.parse(JSON.stringify(config))
+        delete local_cfg.app.axios
+        const cfg = this.$set_config(local_cfg)
+        this.$set_session_config(this.$merge(config, cfg))
         for (var key in cfg) {
-          const action = `Init${this.$fist_uppercase(key)}`
+          const action = `Init${this.$first_uppercase(key)}`
           const pa = { v: this, config: cfg[key] }
           this[action](pa)
         }

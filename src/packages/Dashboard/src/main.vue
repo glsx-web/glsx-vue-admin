@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     viewSettings() {
-      this.SetSession(AppConst.mainVisible, AppConst.Visibility.HIDDEN)
+      this.Set(AppConst.mainVisible, AppConst.Visibility.HIDDEN)
     }
   }
 }

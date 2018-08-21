@@ -159,10 +159,11 @@ export default {
       }
     },
     oTagsView() {
+      console.log(this.$drop_while(this.visitedRoutes, ['title', 'dashboard']))
       return {
         visible: this.TagsView.visible,
         oStyle: this.oNavbarStyle,
-        visitedRoutes: this.$_.dropWhile(this.visitedRoutes, ['title', 'dashboard']) || [],
+        visitedRoutes: this.$drop_while(this.visitedRoutes, ['title', 'dashboard']) || [],
         generate: this.GenerateTitle,
         activeId: this.app.auth.curnav.fifth
       }
@@ -209,12 +210,12 @@ export default {
           if (!latestView.id) { // TODO 优化逻辑
             return
           }
-          this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(latestView.target))
+          this.SetSession(AppConst.Auth.CurNav.Key, this.$deep_clone(latestView.target))
         }
       })
     },
     handleCloseOthersTags(selectedTag) {
-      this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$_.cloneDeep(selectedTag.target)))
+      this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$deep_clone(selectedTag.target)))
     },
     handleCloseAllTags() {
       this.RemoveAllViews().then(() => this.$router.push('/home'))

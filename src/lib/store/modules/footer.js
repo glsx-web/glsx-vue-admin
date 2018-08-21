@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 00:49:26
+ * @Last Modified time: 2018-08-21 09:58:53
  */
 const footer = {
   state: {
@@ -18,7 +18,7 @@ const footer = {
     },
     INIT_FOOTER: (state, args) => {
       const { v, config } = args
-      v.$_.merge(state, config)
+      v.$merge(state, config)
     }
   },
   actions: {

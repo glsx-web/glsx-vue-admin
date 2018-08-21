@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-11 00:49:21
+ * @Last Modified time: 2018-08-21 09:58:42
  */
 const aside = {
   state: {
@@ -30,7 +30,7 @@ const aside = {
     },
     INIT_ASIDE: (state, args) => {
       const { v, config } = args
-      v.$_.merge(state, config)
+      v.$merge(state, config)
     },
     'SET_COUNT'(state, increasement) {
       state.logo.visible = !state.logo.visible
