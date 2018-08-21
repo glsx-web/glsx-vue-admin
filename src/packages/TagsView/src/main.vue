@@ -88,7 +88,7 @@ export default {
   // },
   methods: {
     hanldTagChange(tag) {
-      this.$emit('@hanldTagChange', this.$_.cloneDeep(tag))
+      this.$emit('@hanldTagChange', this.$deep_clone(tag))
     },
     generateRoute() {
       return this.$route.name ? this.$route : false

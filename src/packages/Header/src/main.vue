@@ -159,11 +159,10 @@ export default {
       }
     },
     oTagsView() {
-      console.log(this.$drop_while(this.visitedRoutes, ['title', 'dashboard']))
       return {
         visible: this.TagsView.visible,
         oStyle: this.oNavbarStyle,
-        visitedRoutes: this.$drop_while(this.visitedRoutes, ['title', 'dashboard']) || [],
+        visitedRoutes: this.visitedRoutes || [],
         generate: this.GenerateTitle,
         activeId: this.app.auth.curnav.fifth
       }
@@ -181,7 +180,7 @@ export default {
   },
   methods: {
     hanldTagChange(tag) {
-      this.Set(AppConst.Auth.CurNav.Key, tag.target)
+      this.SetSession(AppConst.Auth.CurNav.Key, tag.target)
     },
     handleClickOutside() {
       this.Set(AsideConst.State.Key, AsideConst.States.CLOSE)

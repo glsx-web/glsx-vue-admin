@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-18 18:29:14
+ * @Last Modified time: 2018-08-21 10:58:16
  */
 
 import { mapActions } from 'vuex'
@@ -31,7 +31,7 @@ export default {
     },
     Set(key, value) {
       var module = key.split('_').shift()
-      this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
+      this[`Set${this.$first_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
         this.$set_config_by_key(key, value)
         this.$set_session_config_by_key(key, value)
       })
@@ -39,7 +39,7 @@ export default {
     SetSession(key, value) {
       var module = key.split('_').shift()
       return new Promise(resolve => {
-        this[`Set${this.$fist_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
+        this[`Set${this.$first_uppercase(module)}`]({ key: key, value: value, v: this }).then(() => {
           const cfg = this.$set_session_config_by_key(key, value)
           resolve(cfg)
         })
@@ -59,16 +59,15 @@ export default {
     Restore(cfg = this.$get_session_config()) {
       for (var key in cfg) {
         const pa = { v: this, config: cfg[key] }
-        this[`Init${this.$fist_uppercase(key)}`](pa)
+        this[`Init${this.$first_uppercase(key)}`](pa)
       }
     },
     SetMulti(obj) {
       this.Restore(obj)
-      var scfg = this.$_.cloneDeep(obj)
+      var scfg = this.$deep_clone(obj)
       this.$set_session_config(scfg)
-      var cfg = this.$_.cloneDeep(obj)
-      cfg = this.$_.omit(cfg, ['app.auth'])
-      this.$cover_config(cfg)
+      delete scfg.app.auth
+      this.$cover_config(scfg)
     },
     GenerateTitle
   }
