@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'glsx-vue-admin/dist/glsx-vue-admin.css'
-// import './styles/index.scss'
+// import 'glsx-vue-admin/dist/glsx-vue-admin.css'
+import './styles/index.scss'
 import ElementUI from 'element-ui'
 // import { GlApp } from './index'
 import 'normalize.css/normalize.css'
-import GlsxVueAdmin from 'glsx-vue-admin'
+import GlsxVueAdmin from './index'
 import config from './config'
 Vue.use(ElementUI)
 Vue.use(GlsxVueAdmin, config)

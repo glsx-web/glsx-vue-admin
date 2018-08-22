@@ -147,6 +147,10 @@ export default {
   .hideIframe {
     display: none;
   }
+  .el-tabs__nav-wrap::after{
+    z-index: 0;
+    box-shadow:0px 1px 1px #B0B0B0;
+  }
   .el-tabs__header {
     background-color: rgba(0, 0, 0, 0.1);
     margin: 0;

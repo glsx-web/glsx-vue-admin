@@ -153,6 +153,7 @@ export default {
 .navbar {
   position: relative;
   display: flex;
+  transition:  background-color .5s linear;
   .hamburger-container {
     width: 60px;
     padding: 0 20px;

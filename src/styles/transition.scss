@@ -63,16 +63,16 @@
 
 .page-transition-enter-active,
 .page-transition-leave-active {
-  transition: all 0.3s;
+  transition: all 0.1s;
 }
 
 .page-transition-enter {
-  transform: translateX(70px);
+  transform: translateX(20px);
   opacity: 0;
 }
 
 .page-transition-leave-to {
-  transform: translateX(70px);
+  transform: translateX(20px);
   opacity: 0;
 }
 
@@ -80,11 +80,11 @@
 
 .Aside-transition-enter-active,
 .Aside-transition-leave-active {
-  transition: all 0.3s;
+  transition: all 0.28s;
 }
 
 .Aside-transition-enter {
-  transform: translateX(-50px);
+  transform: translateX(-20px);
   opacity: 0;
 }
 
@@ -98,11 +98,11 @@
 /* logo */
 
 .logo-transition-enter-active {
-  transition: all .8s;
+  transition: all .28s;
 }
 
 .logo-transition-enter {
-  transform: translateX(30px);
+  transform: translateX(20px);
   opacity: 0;
 }
 
@@ -110,7 +110,7 @@
 
 /* navbar */
 .mcSlots-enter-active{
-  transition: all 0.7s ease-in-out;
+  transition: all 0.28s ease-in-out;
 }
 .mcFull .mcSlots-enter{
   transform: translateX(100px);

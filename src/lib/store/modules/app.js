@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-21 10:27:41
+ * @Last Modified time: 2018-08-22 20:55:26
  */
 import { GlConst } from 'glsx-vue-common'
 import { login, logout, getInfo } from '@/api/user'
@@ -90,7 +90,7 @@ const app = {
       const { token, v } = args
       return new Promise((resolve, reject) => {
         logout.req(token).then(() => {
-          v.$remove_session_config()
+          v.$remove_auth()
           resolve()
         }).catch(error => {
           throw error

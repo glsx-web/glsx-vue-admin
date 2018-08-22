@@ -34,10 +34,6 @@
         :settingParams="settingParams"
         :oAside="oAside"
         :oNav2nd="oNavbar.oNav2nd"/>
-      <gl-app-breadcrumb 
-        class="breadcrumb-container" 
-        :generate="GenerateTitle" 
-        v-show="breadcrumb_visible"/>     
       <gl-app-tags-view  v-if="oTagsView.visible"
         v-on:@hanldTagChange="hanldTagChange"
         v-on:@addViewTag="handleAddViewTag"
@@ -74,7 +70,6 @@ export default {
   },
   data() {
     return {
-      breadcrumb_visible: false,
       homeVisible: true
     }
   },
@@ -236,10 +231,6 @@ function getMenu(res, id) {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .el-breadcrumb {
-    transform:translateX(5px);
-    line-height:5px;
-  }
  .app-header {
     position: relative;
     .hamburger-container {
