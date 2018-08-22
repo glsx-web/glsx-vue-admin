@@ -1,12 +1,14 @@
 <template>
   <div class="navbar" :style="oStyle">
-    <div :class="app.mainVisible? 'logo-container logo-container-lg': 'logo-container logo-container-md'" v-if="!oAside.visible">
-      <gl-app-logo v-if="oLogo.visible"
-      :width="oLogo.width" 
-      :height="app.mainVisible? 60 : 40" 
-      :backgroundColor="oLogo.backgroundColor" 
-      :backgroundImage="oLogo.backgroundImage" />
-    </div>
+    <transition name="logo-transition">
+      <div :class="app.mainVisible? 'logo-container logo-container-lg': 'logo-container logo-container-md'" v-if="!oAside.visible">
+        <gl-app-logo v-if="oLogo.visible"
+        :width="oLogo.width" 
+        :height="app.mainVisible? 60 : 40" 
+        :backgroundColor="oLogo.backgroundColor" 
+        :backgroundImage="oLogo.backgroundImage" />
+      </div>
+    </transition>
     <gl-app-hamburger v-if="oAside.visible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
@@ -138,7 +140,7 @@ export default {
       this.$emit('@handleNav2', nav2Id)
     },
     screenChange(show) {
-      this.fullScreenShow = show
+      this.fullScreenShow = !show
     }
   }
 }

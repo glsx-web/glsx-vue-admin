@@ -2,11 +2,9 @@
   <div>
       <div class="controlEntrance" v-if="isShow" @click="showControlPanel"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
       <gl-app-scroll :height="nHeight" >
-        <transition name="fade">
-          <ul class="el-menu" id="ul"  :style="{ 'background-color' : app.defaultColor,'height': '100%','width': '150px'}" v-show="appear" @click="showControlPanel">
+          <ul class="el-menu" id="ul"  :style="oStyle"  @click="showControlPanel">
             <app-home v-for="(item,index) in aNav" :key="index"  :menu="item" class="el-menu-item controlPanelList" :isvertical="isvertical" ></app-home>
           </ul>
-      </transition>
       </gl-app-scroll>
   </div>
 </template>
@@ -40,6 +38,15 @@ export default {
         return false
       } else {
         return true
+      }
+    },
+    oStyle() {
+      return {
+        backgroundColor: this.app.defaultColor,
+        height: '100%',
+        width: '150px',
+        marginRight: this.appear ? 0 : '-150px',
+        transition: 'all .3s'
       }
     }
   },
