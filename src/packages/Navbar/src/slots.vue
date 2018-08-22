@@ -50,7 +50,7 @@ export default {
       top:6px;
     }
     &>div{
-      padding: 20px 10px;
+      padding: 0 10px;
       &:hover{
        background-color: rgba($color: #fff, $alpha: 0.1) ;
       }

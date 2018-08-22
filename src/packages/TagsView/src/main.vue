@@ -2,14 +2,16 @@
   <div class="tags-view-container">
     <el-row>
       <el-col :span="8">
-       <gl-app-breadcrumb 
-        class="tags-view-wrapper breadcrumb" 
-        :breadcrumb="breadcrumb" 
-        v-show="true"/> 
+         <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane' style="background-color: rgba(0, 0, 0, 0.1);border-right: 1px solid #d8dce5">
+          <gl-app-breadcrumb 
+            class="tags-view-wrapper breadcrumb" 
+            :breadcrumb="breadcrumb" 
+            v-show="true"/> 
+         </gl-app-scroll-pane>
       </el-col>
       <el-col :span="16">
          <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
-          <draggable v-model="visitedRoutes" >
+          <draggable style="padding: 0 12px;" v-model="visitedRoutes" >
             <el-tag ref='tag' 
                 @click.native="hanldTagChange(tag)"  
                 :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 

@@ -11,21 +11,24 @@
           <el-tabs :tab-position="tabPosition"   >
             <el-tab-pane label="头部导航">
               <head-nav 
-               v-on:@setParamsConfig="handler" />
+               v-on:@setParamsConfig="handler"
+               :params="params" />
             </el-tab-pane>
               <el-tab-pane label="左侧菜单">
                 <left-nav 
                 v-on:@setParamsConfig="handler"
-                :isdisabled="isdisabled"/>
+                :isdisabled="isdisabled"
+                :params="params" />
               </el-tab-pane>
               <el-tab-pane label="版权信息">
                 <foot-nav 
-                v-on:@setParamsConfig="handler" />
+                v-on:@setParamsConfig="handler"
+                :params="params" />
               </el-tab-pane>
           </el-tabs>
         <div slot="footer" class="dialog-footer">
           <el-popover placement="top" width="160" v-model="visible">
-            <p>即将清空所有修改的设置，是否确定？</p>
+            <p>清空所有修改的设置将会重启系统，是否确定？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="visible = false">取消</el-button>
               <el-button type="primary" size="mini" @click="restoreDefault">确定</el-button>
@@ -46,7 +49,7 @@ import { PublicMixin, AppMixin } from '@/lib/mixins'
 import HeadNav from './headNav'
 import LeftNav from './leftNav'
 import FootNav from './footNav'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'GlAppSettings',
   mixins: [PublicMixin, AppMixin],
@@ -58,16 +61,11 @@ export default {
     FootNav
   },
   props: {
-    settingParams: Object,
     theme: Object
   },
   computed: {
     ...mapGetters([
-      'app',
-      'other'
-    ]),
-    ...mapActions([
-      'changeZindex'
+      'app'
     ]),
     pickColor: {
       get: function() {
@@ -100,18 +98,6 @@ export default {
     }
   },
   methods: {
-    // handleSettings() {
-    //   console.log(11)
-    // },
-    // handleSetLanguage(lang) {
-    //   this.$emit('@setLanguage', lang)
-    // },
-    // handleTheme(theme) {
-    //   this.$emit('@themeHandler', theme)
-    // },
-    handler(newVal) {
-      this.params = newVal
-    },
     // 确定按钮
     handleSetParamsConfig() {
       try {
@@ -138,10 +124,11 @@ export default {
     },
     // 恢复默认设置
     restoreDefault() {
-      this.params = this.$get_session_config()
-      this.$emit('@setParamsConfig', this.params)
-      this.dialogFormVisible = false
-      this.visible = false
+      this.$remove_config()
+      this.$router.push('/')
+      // this.$emit('@setParamsConfig', this.params)
+      // this.dialogFormVisible = false
+      // this.visible = false
     }
   }
 }

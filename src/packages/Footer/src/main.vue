@@ -17,6 +17,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .footer {
     text-align: center;
+    font-size: 12px;
 }
 </style>
 

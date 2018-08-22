@@ -24,8 +24,8 @@ export default {
     },
     style() {
       return {
-        margin: 0,
-        backgroundColor: `rgba(0,0,0,.1)`
+        margin: 0
+        // backgroundColor: `rgba(0,0,0,.1)`
       }
     }
   }
@@ -38,6 +38,9 @@ export default {
   .el-breadcrumb__inner{
     color: #999
   }
+}
+.tags-view-container .tags-view-wrapper {
+  box-shadow: 0 0 0px 0 rgba(0, 0, 0, 0.12), 0 0 1px 0 rgba(0, 0, 0, 0.04) !important;
 }
 </style>
 <style rel="stylesheet/scss" lang="scss">

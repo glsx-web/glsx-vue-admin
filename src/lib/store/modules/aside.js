@@ -8,7 +8,7 @@ const aside = {
   state: {
     'visible': '',
     'state': '', // 状态   1:开启  2. 关闭
-    'maxWidth': 200,
+    'maxWidth': 180,
     'minWidth': 36,
     'sidebar': {
       'visible': '',
@@ -18,7 +18,7 @@ const aside = {
     },
     'logo': {
       'visible': '',
-      'height': 200,
+      'height': 75,
       'image': '',
       'backgroundColor': 'transparent'
     }
