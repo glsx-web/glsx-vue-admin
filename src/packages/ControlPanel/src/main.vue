@@ -1,13 +1,13 @@
 <template>
   <div>
-      <div class="controlEntrance" @click="showControlPanel"><i :class="flag ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
-    <transition name="fade">
+      <div class="controlEntrance" v-if="isShow" @click="showControlPanel"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
       <gl-app-scroll :height="nHeight" >
-      <ul class="el-menu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="flag">
-        <app-home v-for="(item,index) in aNav" :key="index"  :menu="item" class="el-menu-item controlPanelList" :isvertical="isvertical"></app-home>
-      </ul>
+        <transition name="fade">
+          <ul class="el-menu" id="ul"  style="background: rgba(245, 245, 220 ,.5);height: 100%;width: 150px;" v-show="appear" @click="showControlPanel">
+            <app-home v-for="(item,index) in aNav" :key="index"  :menu="item" class="el-menu-item controlPanelList" :isvertical="isvertical" ></app-home>
+          </ul>
+      </transition>
       </gl-app-scroll>
-    </transition>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      flag: false,
+      appear: false,
       list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 74, 89, 655, 422, 688, 77],
       isvertical: false
     }
@@ -34,11 +34,19 @@ export default {
     },
     aNav() {
       return this.$get_menus(this.app.auth.resources, 0)
+    },
+    isShow() {
+      if (this.$route.name === 'GlAppHome') {
+        return false
+      } else {
+        return true
+      }
     }
   },
   methods: {
     showControlPanel() {
-      this.flag = !this.flag
+      console.log(this.$route)
+      this.appear = !this.appear
     }
   }
 }
@@ -46,36 +54,35 @@ export default {
 
 
 <style rel="stylesheet/scss" lang="scss">
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active {
+  transition: all .3s ease;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+.fade-leave-active {
+  transition: all .3s ease-in-out;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateX(100px);
 }
 .controlEntrance {
   position: fixed;
   bottom: 5px;
   right: 5px;
-  background-color: #000;
-  color: #fff;
+  background-color: transparent;
+  color: #000;
   z-index: 11111;
   opacity: 0;
   font-size: 44px;
 }
-.controlEntrance:hover, .controlEntrance:focus {
+.controlEntrance {
   opacity: 1;
 }
-.controlPanelMenu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding-left: 0;
-  .controlPanelList {
-    list-style: none;
-    width: 60px;
-    height: 30px;
-    padding-bottom: 25px;
-    box-sizing: content-box;
-  }
-}
+// .controlPanelMenu {
+//   .controlPanelList {
+//     list-style: none;
+//     width: 60px;
+//     height: 30px;
+//     padding-bottom: 25px;
+//     box-sizing: content-box;
+//   }
+// }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <swiper :options="swiperOption" ref="mySwiper" class="my-swiper" >
+  <div :class="nHeight>900? 'lgView':'smView'">
+    <swiper style="height: 100%" :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
         <app-home :menu="item" class="homeList" :isvertical='isvertical' v-on:@checked="sys_checked"></app-home>
       </swiper-slide>
@@ -17,7 +17,7 @@ import AppHome from './main'
 import { GlConst } from 'glsx-vue-common'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-const { AppConst, AsideConst, HeaderConst } = GlConst
+const { AppConst, AsideConst } = GlConst
 import { PublicMixin } from '@/lib/mixins'
 import { mapGetters, mapActions } from 'vuex'
 const KEYS = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
@@ -30,67 +30,16 @@ export default {
   },
   mixins: [PublicMixin],
   computed: {
-    ...mapGetters(['app'])
-    // aNav() {
-    //   return this.$get_menus(this.app.auth.resources, 0)
-    // }
-  },
-  methods: {
-    ...mapActions(['RemoveAllViews']),
-    sys_checked(sys) {
-      this.init_nav(sys.id).then(() => this.$router.push({ path: '/dashboard' }))
-    },
-    init_nav(first) {
-      return new Promise(resolve => {
-        const res = this.app.auth.resources
-        const second = getId(res, first)
-        const third = getId(res, second)
-        const fourth = getId(res, third)
-        const fifth = getId(res, fourth)
-        this.set_nav_value([first, second, third, fourth, fifth])
-        resolve()
-      })
-    },
-    reset_nav() {
-      this.set_nav_value(['', '', '', '', ''])
-    },
-    clear_auth() {
-      this.$remove_auth(this.$get_session_config())
-    },
-    cache_states() {
-      this.caches.clear()
-      this.cache_keys.map(key => {
-        this.caches.set(key, this.GetSession(key))
-        this.SetSession(key, AppConst.Visibility.HIDDEN)
-      })
-      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
-      this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
-    },
-    reset_states() {
-      for (const [key, value] of this.caches) {
-        this.SetSession(key, value)
-      }
-      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
-    },
-    set_nav_value(values) {
-      KEYS.forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+    ...mapGetters(['app']),
+    nHeight() {
+      const nClientHeight = this.app.clientHeight
+      return parseInt(nClientHeight)
     }
-  },
-  mounted() {
-    this.reset_nav()
-    this.clear_auth()
-    this.cache_states()
-    this.RemoveAllViews()
-    this.aNav = this.$get_menus(this.app.auth.resources, 0)
-  },
-  beforeDestroy() {
-    this.reset_states()
   },
   data() {
     return {
       aNav: [],
       caches: new Map(),
-      cache_keys: [AsideConst.Visible.Key, HeaderConst.TagsView.Visible.Key],
       list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21],
       isvertical: true,
       swiperOption: {
@@ -120,6 +69,51 @@ export default {
         // }
       }
     }
+  },
+  methods: {
+    ...mapActions(['RemoveAllViews', 'SetAside']),
+    sys_checked(sys) {
+      this.init_nav(sys.id).then(() => this.$router.push({ path: '/dashboard' }))
+    },
+    init_nav(first) {
+      return new Promise(resolve => {
+        const res = this.app.auth.resources
+        const second = getId(res, first)
+        const third = getId(res, second)
+        const fourth = getId(res, third)
+        const fifth = getId(res, fourth)
+        this.set_nav_value([first, second, third, fourth, fifth])
+        resolve()
+      })
+    },
+    reset_nav() {
+      this.set_nav_value(['', '', '', '', ''])
+    },
+    clear_auth() {
+      this.$remove_auth(this.$get_session_config())
+    },
+    cache_states() {
+      this.caches.clear()
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
+      this.SetAside({ key: AsideConst.Visible.Key, value: AppConst.Visibility.HIDDEN, v: this })// 注意 : 没有特殊情况  请勿用此方法设置状态 (用 SetSession )
+    },
+    reset_states() {
+      this.SetAside({ key: AsideConst.Visible.Key, value: this.GetSession(AsideConst.Visible.Key), v: this })// 注意 : 没有特殊情况  请勿用此方法设置状态 (用 SetSession )
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
+    },
+    set_nav_value(values) {
+      KEYS.forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+    }
+  },
+  mounted() {
+    this.reset_nav()
+    this.clear_auth()
+    this.cache_states()
+    this.RemoveAllViews()
+    this.aNav = this.$get_menus(this.app.auth.resources, 0)
+  },
+  beforeDestroy() {
+    this.reset_states()
   }
 }
 function getId(res, pid) {
@@ -141,7 +135,7 @@ function getId(res, pid) {
   height: auto !important;
 }
 .swiper-container {
-    padding: 40px 20px;
+    padding: 90px 20px;
     .swiper-scrollbar {
       top: 0;
       height: 2px;
@@ -153,6 +147,12 @@ function getId(res, pid) {
 }
 .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
     bottom: 4px;
+  }
+  .lgView{
+    height: 800px;
+  }
+  .smView{
+    height: 600px;
   }
 </style>
 <style>

@@ -17,6 +17,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
     .el-main{
       padding: 0 !important;
+      position: relative;
       transform: translateX(1px)
     }
     .el-header{

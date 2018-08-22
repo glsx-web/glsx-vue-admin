@@ -39,4 +39,7 @@ export default {
  .el-menu--horizontal{
    height: 60px
  }
+ .el-tabs__nav {
+   z-index: 1 !important;
+ }
 </style>

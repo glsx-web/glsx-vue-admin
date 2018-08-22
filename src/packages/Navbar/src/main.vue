@@ -1,5 +1,6 @@
 <template>
   <div class="navbar" :style="oStyle">
+    <transition name="logo-transition">
     <div class="logo-container" v-if="!oAside.visible">
       <gl-app-logo v-if="oLogo.visible"
       :width="oLogo.width" 
@@ -7,6 +8,7 @@
       :backgroundColor="oLogo.backgroundColor" 
       :backgroundImage="oLogo.backgroundImage" />
     </div>
+    </transition>
     <gl-app-hamburger v-if="oAside.visible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
@@ -141,7 +143,7 @@ export default {
       this.$emit('@handleNav2', nav2Id)
     },
     screenChange(show) {
-      this.fullScreenShow = show
+      this.fullScreenShow = !show
     }
   }
 }
@@ -155,7 +157,7 @@ export default {
     width: 60px;
     padding: 0 20px;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     top: 5px;
     bottom: 0;
   }

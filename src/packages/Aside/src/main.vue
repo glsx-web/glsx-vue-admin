@@ -2,27 +2,29 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-21 10:31:06
+ * @Last Modified time: 2018-08-22 19:36:18
  */
 <template>
-  <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
-    <transition name="fade-transform" mode="out-in">
-      <gl-app-logo v-if="Logo.visible"
-        :width="oLogo.width" 
-        :height="oLogo.height" 
-        :backgroundColor="oLogo.backgroundColor" 
-        :backgroundImage="oLogo.backgroundImage" />
+  <transition name="Aside-transition">
+    <div  class="aside" :class="oClass" :style="oStyle">
+      <transition name="fade-transform" mode="out-in">
+          <gl-app-logo v-if="Logo.visible" 
+          :width="oLogo.width" 
+          :height="oLogo.height" 
+          :backgroundColor="oLogo.backgroundColor" 
+          :backgroundImage="oLogo.backgroundImage" />
       </transition>
-        <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
-          <gl-app-sidebar 
-            :isCollapse="oSidebar.isCollapse" 
-            :generate="oSidebar.generate"
-            :colors="oSidebar.colors"
-            :oNav3_4="oNav3_4"
-            v-on:@handleNav4="handleNav4"  />
-        </gl-app-scroll>
-        <!-- <i class="dragger" v-drag="greet"></i> -->
-  </div>
+      <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
+        <gl-app-sidebar 
+        :isCollapse="oSidebar.isCollapse" 
+        :generate="oSidebar.generate" 
+        :colors="oSidebar.colors" 
+        :oNav3_4="oNav3_4" 
+        v-on:@handleNav4="handleNav4"  />
+      </gl-app-scroll>
+      <!-- <i class="dragger" v-drag="greet"></i> -->
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -81,10 +83,16 @@ export default {
       }
     },
     oStyle() {
+      if (this.Aside.isClosed) {
+        this.oLogo.backgroundImage = '../../static/favicon.ico'
+      } else {
+        this.oLogo.backgroundImage = this.Logo.image
+      }
       return {
         width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Aside.maxWidth : this.Aside.minWidth)) + 'px',
         backgroundColor: this.app.defaultColor,
-        height: '100%'
+        height: '100%',
+        marginLeft: this.Aside.visible ? 0 : `-${this.Aside.maxWidth}px`
       }
     },
     oLogo() {
@@ -114,19 +122,20 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .aside{
-      position:relative;
-      overflow:hidden;
-    }
-    .dragger{
-      height: 100%;
-      width: 10px;
-      position: absolute;
-      right: 0;
-      cursor: w-resize;
-      z-index: 9999;
-    }
-    #app .sidebar-container {
-      z-index: 1 !important;
-    }
+.aside{
+    position:relative;
+    overflow:hidden;
+    transition: all .5s;
+}
+.dragger{
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    right: 0;
+    cursor: w-resize;
+    z-index: 9999;
+}
+#app .sidebar-container {
+    z-index: 1 !important;
+}
 </style>
