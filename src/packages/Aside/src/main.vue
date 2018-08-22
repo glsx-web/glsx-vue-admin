@@ -8,11 +8,11 @@
   <transition name="Aside-transition">
     <div  class="aside" :class="oClass" :style="oStyle" v-if="Aside.visible">
       <transition name="fade-transform" mode="out-in">
-        <gl-app-logo v-if="Logo.visible" 
-        :width="oLogo.width" 
-        :height="oLogo.height" 
-        :backgroundColor="oLogo.backgroundColor" 
-        :backgroundImage="oLogo.backgroundImage" />
+          <gl-app-logo v-if="Logo.visible" 
+          :width="oLogo.width" 
+          :height="oLogo.height" 
+          :backgroundColor="oLogo.backgroundColor" 
+          :backgroundImage="oLogo.backgroundImage" />
       </transition>
       <gl-app-scroll  :height="nHeight" className="sidebar-container" v-if="Sidebar.visible">
         <gl-app-sidebar 
@@ -85,6 +85,11 @@ export default {
       }
     },
     oStyle() {
+      if (this.Aside.isClosed) {
+        this.oLogo.backgroundImage = '../../static/favicon.ico'
+      } else {
+        this.oLogo.backgroundImage = this.Logo.image
+      }
       return {
         width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Aside.maxWidth : this.Aside.minWidth)) + 'px',
         backgroundColor: this.app.defaultColor,

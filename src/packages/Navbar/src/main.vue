@@ -143,7 +143,7 @@ export default {
       this.$emit('@handleNav2', nav2Id)
     },
     screenChange(show) {
-      this.fullScreenShow = show
+      this.fullScreenShow = !show
     }
   }
 }

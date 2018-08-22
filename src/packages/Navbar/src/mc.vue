@@ -1,16 +1,15 @@
 <template>
   <div class="management-center">
     <span>
-      <i v-if="fullScreenShow" :class="mcIsShow?'el-icon-arrow-right':'el-icon-arrow-left'" @click="handleMcClose"></i>
+      <i v-if="!minSize" :class="mcIsShow?'el-icon-arrow-right':'el-icon-arrow-left'" @click="handleMcClose"></i>
     </span>
-    <div :class="clickSetting?'setting':''">
+    <div :class="clickSetting?'setting':''" ref="mcSlots">
       <transition name="mcSlots">
         <slots :itemsArray="itemsArray" 
         v-on:itemChanged="handleItemChanged" 
         class="management-center-slots" 
         v-show="mcIsShow" 
-        :class="fullScreenShow?'mcFull':'mcChange'" 
-        ref="mcSlots"
+        :class="!minSize?'mcFull':'mcChange'"
         >
           <div slot='slot-1'>
             <gl-app-nav-user :name="name" :avatar="avatar"/>
@@ -34,7 +33,7 @@
       </transition>
     </div>
     <span>
-      <i v-if="changeScreenShow" :class="mcIsShow?'':'el-icon-arrow-down'" @mouseover="handleMcClose"></i>
+      <i v-if="minSize" :class="mcIsShow?'':'el-icon-arrow-down'" @mouseover="handleMcClose"></i>
     </span>
   </div>
 </template>
@@ -54,9 +53,12 @@ export default {
   data() {
     return {
       'mcIsShow': true,
-      'fullScreenShow': true,
-      'changeScreenShow': false,
-      'clickSetting': false
+      'clickSetting': false,
+      'minSize': '',
+      state: {
+        addEvent: true,
+        removeEvent: false
+      }
     }
   },
   props: {
@@ -105,46 +107,45 @@ export default {
     },
     handleClickSetting() {
       const SettingVisible = this.$refs.getSettingVisible.dialogFormVisible
-      if (this.changeScreenShow === true && SettingVisible === false) {
+      if (this.minSize === true && SettingVisible === false) {
         setTimeout(() => {
           this.clickSetting = false
-          this.$refs.mcSlots.$el.addEventListener('mouseleave', this.handleMcClose, false)
+          this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.addEvent)
         }, 400)
         this.mcIsShow = false
-      } else if (this.changeScreenShow === true && SettingVisible === true) {
-        this.$refs.mcSlots.$el.removeEventListener('mouseleave', this.handleMcClose, false)
+      } else if (this.minSize === true && SettingVisible === true) {
+        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.removeEvent)
         this.clickSetting = true
-      } else if (this.fullScreenShow === true) {
+      } else if (this.minSize === true) {
         this.clickSetting = false
       }
     },
     handleMcClose() {
       this.mcIsShow = !this.mcIsShow
     },
+    eventAddOrRemove(element, event, fn, state) {
+      if (typeof element !== 'undefined') {
+        if (state === this.state.addEvent) {
+          element.addEventListener(event, fn, false)
+        } else {
+          element.removeEventListener(event, fn, false)
+        }
+      }
+    },
     resize() {
-      const minSize = this.isMiniSize()
-      if (minSize) {
+      this.minSize = this.isMiniSize()
+      if (this.minSize) {
         this.mcIsShow = false
-        this.fullScreenShow = false
-        this.changeScreenShow = true
-        this.$refs.mcSlots.$el.addEventListener('mouseleave', this.handleMcClose, false)
+        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.addEvent)
       } else {
         this.mcIsShow = true
-        this.fullScreenShow = true
-        this.changeScreenShow = false
-        this.$refs.mcSlots.$el.removeEventListener('mouseleave', this.handleMcClose, false)
+        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.removeEvent)
       }
-      this.$emit('screenChange', this.fullScreenShow)
-    },
-    handleResize() {
-      this.resize()
+      this.$emit('screenChange', this.minSize)
     }
   },
-  beforeMount() {
-    window.addEventListener('resize', this.handleResize)
-  },
   mounted() {
-    this.resize()
+    // this.resize()
   }
 }
 </script>
