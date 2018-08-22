@@ -119,12 +119,13 @@ export default {
   mounted() {
     this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
     this.star.instance.run()
+    this.RemoveAllViews()
   },
   beforeDestroy() {
     this.star.instance.clear()
   },
   methods: {
-    ...mapActions(['Login']),
+    ...mapActions(['Login', 'RemoveAllViews']),
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
       this.star.instance.clear()
@@ -134,6 +135,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          this.$remove_session_config()
           this.loading = true
           this.initConfig()
             .then(() => this.Login({ params: this.loginForm, v: this }))

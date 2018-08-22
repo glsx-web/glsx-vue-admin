@@ -22,13 +22,16 @@ const components = [
   Home,
   Dashboard
 ]
+import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.scss'
+import ElementUI from 'element-ui'
 import { store } from '@/lib'
 import { SessionMixin } from '@/lib/mixins'
 const GlsxVueAdmin = {}
 GlsxVueAdmin.install = function(Vue, opts = {}) {
   Vue.prototype.$config = opts
   Vue.mixin(SessionMixin)
+  Vue.use(ElementUI)
   components.map(component => {
     Vue.component(component.name, (resolve, reject) => {
       resolve(component)

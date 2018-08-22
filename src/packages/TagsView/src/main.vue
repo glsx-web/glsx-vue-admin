@@ -5,7 +5,7 @@
        <gl-app-breadcrumb 
         class="tags-view-wrapper breadcrumb" 
         :breadcrumb="breadcrumb" 
-        v-show="true"/> 
+        v-show="true"/>
       </el-col>
       <el-col :span="16">
          <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
@@ -142,6 +142,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .tags-view-container {
+  background: url('/static/nav-bg.png');
   .tags-view-wrapper {
     line-height: 34px;
     height: 34px;

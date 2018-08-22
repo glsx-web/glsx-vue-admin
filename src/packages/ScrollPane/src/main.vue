@@ -7,7 +7,7 @@
 </template>
 
 <script>
-const padding = 15 // tag's padding
+const padding = 100 // tag's padding
 
 export default {
   name: 'GlAppScrollPane',

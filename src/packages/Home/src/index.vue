@@ -60,17 +60,17 @@ export default {
     cache_states() {
       this.caches.clear()
       this.cache_keys.map(key => {
-        this.caches.set(key, this.Get(key))
-        this.Set(key, AppConst.Visibility.HIDDEN)
+        this.caches.set(key, this.GetSession(key))
+        this.SetSession(key, AppConst.Visibility.HIDDEN)
       })
-      this.Set(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
-      this.Set(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
+      this.SetSession(AsideConst.Visible.Key, AppConst.Visibility.HIDDEN)
     },
     reset_states() {
       for (const [key, value] of this.caches) {
-        this.Set(key, value)
+        this.SetSession(key, value)
       }
-      this.Set(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
+      this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
     },
     set_nav_value(values) {
       KEYS.forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
@@ -80,7 +80,7 @@ export default {
     this.reset_nav()
     this.clear_auth()
     this.cache_states()
-    this.RemoveAllViews
+    this.RemoveAllViews()
     this.aNav = this.$get_menus(this.app.auth.resources, 0)
   },
   beforeDestroy() {

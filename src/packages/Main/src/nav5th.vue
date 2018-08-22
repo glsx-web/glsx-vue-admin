@@ -9,7 +9,7 @@
     <div v-loading="loading" 
         element-loading-text="拼命加载中" 
         element-loading-spinner="el-icon-loading" 
-        element-loading-background="rgba(0, 0, 0, 0.8)" 
+        element-loading-background="rgba(0, 0, 0, 0.5)" 
         id="container" 
         :style="{ height:height+'px',position:'relative'}">
     </div>
@@ -47,6 +47,7 @@ export default {
       })
       if (connection) {
         connection.iframe.className = 'showIframe'
+        this.lastIframe = connection.iframe
         this.$emit('@handleNav5', connection.source)
       }
     }
@@ -123,6 +124,16 @@ export default {
   100% {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+@keyframes iframeHide {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
   }
 }
 .nav5th {
