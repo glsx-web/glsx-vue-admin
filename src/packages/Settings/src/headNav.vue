@@ -147,15 +147,17 @@
 </template>
 
 <script>
-import { PublicMixin, AppMixin } from '@/lib/mixins'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HeadNav',
-  mixins: [PublicMixin, AppMixin],
   props: {
     params: Object,
     theme: Object
   },
   computed: {
+    ...mapGetters([
+      'app'
+    ]),
     pickColor: {
       get: function() {
         return this.color

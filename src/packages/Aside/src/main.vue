@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-22 19:36:18
+ * @Last Modified time: 2018-08-22 23:26:06
  */
 <template>
   <transition name="Aside-transition">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { AsideMixin, ConfigMixin, PublicMixin, BeforeRoute } from '@/lib/mixins'
+import { AsideMixin, PublicMixin } from '@/lib/mixins'
 import GlAppSidebar from '@/packages/Sidebar'
 import GlAppLogo from '@/packages/Logo'
 import GlAppScroll from '@/packages/Scroll'
@@ -36,7 +36,7 @@ import { GlConst, GlCommon } from 'glsx-vue-common'
 const { AppConst } = GlConst
 export default {
   name: 'GlAppAside',
-  mixins: [AsideMixin, ConfigMixin, PublicMixin, BeforeRoute],
+  mixins: [AsideMixin, PublicMixin],
   components: {
     GlAppSidebar,
     GlAppLogo,
@@ -125,7 +125,7 @@ export default {
 .aside{
     position:relative;
     overflow:hidden;
-    transition: all .5s;
+    transition: all .28s;
 }
 .dragger{
     height: 100%;

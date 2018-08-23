@@ -45,12 +45,13 @@ export default {
   .management {
     .el-color-picker__trigger{
       background: linear-gradient(to bottom right, red , blue) !important;
-      height: 22px !important;
-      width: 22px !important;
-      top:6px;
+      height: 20px !important;
+      width: 20px !important;
+      top:5px;
     }
     &>div{
-      padding: 0 10px;
+      padding: 0 12px;
+      margin-top: -1px;
       &:hover{
        background-color: rgba($color: #fff, $alpha: 0.1) ;
       }
@@ -60,6 +61,7 @@ export default {
     vertical-align: middle;
     fill:#fff;
     height: 18px;
+    width:18px;
   }
 }
 </style>

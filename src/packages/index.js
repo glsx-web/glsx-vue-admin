@@ -1,4 +1,3 @@
-import { App, AppEntry } from './App'
 import Aside from './Aside'
 import Breadcrumb from './Breadcrumb'
 import Footer from './Footer'
@@ -15,7 +14,6 @@ import Scroll from './Scroll'
 import ScrollPane from './ScrollPane'
 import Settings from './Settings'
 import Sidebar from './Sidebar'
-import SidebarItem from './SidebarItem'
 import SvgIcon from './SvgIcon'
 import TagsView from './TagsView'
 import ThemePicker from './ThemePicker'
@@ -25,8 +23,6 @@ import Login from './Login'
 import Home from './Home'
 import Dashboard from './Dashboard'
 export {
-  App,
-  AppEntry,
   Aside,
   Breadcrumb,
   Footer,
@@ -43,7 +39,6 @@ export {
   ScrollPane,
   Settings,
   Sidebar,
-  SidebarItem,
   SvgIcon,
   TagsView,
   ThemePicker,

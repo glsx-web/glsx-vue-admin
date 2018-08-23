@@ -12,7 +12,7 @@
         :class="!minSize?'mcFull':'mcChange'"
         >
           <div slot='slot-1'>
-            <gl-app-nav-user :name="name" :avatar="avatar"/>
+            <gl-app-nav-user :name="name" :avatar="avatar" :color="theme.value"/>
           </div>
           <div slot='slot-2' v-if="language.visible">
             <gl-app-lang-select v-on:@setLanguage="handleSetLanguage" :language="language.value" />
@@ -56,8 +56,8 @@ export default {
       'clickSetting': false,
       'minSize': '',
       state: {
-        addEvent: true,
-        removeEvent: false
+        addEvent: 'addEventListener',
+        removeEvent: 'removeEventListener'
       }
     }
   },
@@ -71,7 +71,8 @@ export default {
     settings: Object,
     itemsArray: Array,
     generate: Function,
-    settingParams: Object
+    settingParams: Object,
+    isMinSize: Boolean
   },
   components: {
     GlAppScreenfull,
@@ -110,11 +111,11 @@ export default {
       if (this.minSize === true && SettingVisible === false) {
         setTimeout(() => {
           this.clickSetting = false
-          this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.addEvent)
+          this.eventAddOrRemove(this.state.addEvent)
         }, 400)
         this.mcIsShow = false
       } else if (this.minSize === true && SettingVisible === true) {
-        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.removeEvent)
+        this.eventAddOrRemove(this.state.removeEvent)
         this.clickSetting = true
       } else if (this.minSize === true) {
         this.clickSetting = false
@@ -123,29 +124,22 @@ export default {
     handleMcClose() {
       this.mcIsShow = !this.mcIsShow
     },
-    eventAddOrRemove(element, event, fn, state) {
-      if (typeof element !== 'undefined') {
-        if (state === this.state.addEvent) {
-          element.addEventListener(event, fn, false)
-        } else {
-          element.removeEventListener(event, fn, false)
-        }
-      }
+    eventAddOrRemove(state, element = this.$refs.mcSlots) {
+      element && element[state]('mouseleave', this.handleMcClose, false)
     },
-    resize() {
-      this.minSize = this.isMiniSize()
-      if (this.minSize) {
-        this.mcIsShow = false
-        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.addEvent)
-      } else {
-        this.mcIsShow = true
-        this.eventAddOrRemove(this.$refs.mcSlots, 'mouseleave', this.handleMcClose, this.state.removeEvent)
-      }
-      this.$emit('screenChange', this.minSize)
+    changeState(state) {
+      this.minSize = state
+      this.mcIsShow = !state
+      this.eventAddOrRemove(this.state[state ? 'addEvent' : 'removeEvent'])
+    }
+  },
+  watch: {
+    isMinSize(val) {
+      this.changeState(val)
     }
   },
   mounted() {
-    // this.resize()
+    this.changeState(this.isMinSize)
   }
 }
 </script>

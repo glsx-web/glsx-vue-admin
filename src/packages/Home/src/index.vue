@@ -72,19 +72,8 @@ export default {
   },
   methods: {
     ...mapActions(['RemoveAllViews', 'SetAside']),
-    sys_checked(sys) {
-      this.init_nav(sys.id).then(() => this.$router.push({ path: '/dashboard' }))
-    },
-    init_nav(first) {
-      return new Promise(resolve => {
-        const res = this.app.auth.resources
-        const second = getId(res, first)
-        const third = getId(res, second)
-        const fourth = getId(res, third)
-        const fifth = getId(res, fourth)
-        this.set_nav_value([first, second, third, fourth, fifth])
-        resolve()
-      })
+    sys_checked(sys, menus) {
+      this.set_nav_value(menus).then(() => this.$router.push({ path: '/dashboard' }))
     },
     reset_nav() {
       this.set_nav_value(['', '', '', '', ''])
@@ -101,8 +90,11 @@ export default {
       this.SetAside({ key: AsideConst.Visible.Key, value: this.GetSession(AsideConst.Visible.Key), v: this })// 注意 : 没有特殊情况  请勿用此方法设置状态 (用 SetSession )
       this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.HIDDEN)
     },
-    set_nav_value(values) {
-      KEYS.forEach((key, index) => this.SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+    set_nav_value(values, SetSession = this.SetSession) {
+      return new Promise(resolve => {
+        KEYS.forEach((key, index) => SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+        resolve()
+      })
     }
   },
   mounted() {
@@ -115,10 +107,6 @@ export default {
   beforeDestroy() {
     this.reset_states()
   }
-}
-function getId(res, pid) {
-  const id = res.filter(menu => menu.id + '' === pid + '')[0].children[0].id
-  return id
 }
 </script>
 
@@ -147,6 +135,10 @@ function getId(res, pid) {
 }
 .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
     bottom: 4px;
+  }
+  .lgView,
+  .smView{
+    background: url('/static/nav-bg.png');
   }
   .lgView{
     height: 800px;

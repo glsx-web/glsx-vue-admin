@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import { FooterMixin, PublicMixin } from '@/lib/mixins'
+import { FooterMixin } from '@/lib/mixins'
 export default {
   name: 'GlAppFooter',
-  mixins: [FooterMixin, PublicMixin]
+  mixins: [FooterMixin]
 }
 </script>
 

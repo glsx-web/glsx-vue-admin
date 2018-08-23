@@ -1,9 +1,15 @@
 <template>
-  <div>
-      <div class="controlEntrance" v-if="isShow" @click="showControlPanel"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
+  <div @click="showControlPanel">
+      <div class="controlEntrance" v-if="isShow" ><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
       <gl-app-scroll :height="nHeight" >
-          <ul class="el-menu" id="ul"  :style="oStyle"  @click="showControlPanel">
-            <app-home v-for="(item,index) in aNav" :key="index"  :menu="item" class="el-menu-item controlPanelList" :isvertical="isvertical" ></app-home>
+          <ul class="el-menu" :style="oStyle" >
+            <app-home 
+              v-for="(item,index) in aNav" 
+              :key="index"  
+              :menu="item" 
+              class="el-menu-item controlPanelList" 
+              :isvertical="isvertical"
+              v-on:@checked="sys_checked" ></app-home>
           </ul>
       </gl-app-scroll>
   </div>
@@ -11,21 +17,23 @@
 
 <script>
 import AppHome from '@/packages/Home/src/main'
-import { AppMixin } from '@/lib/mixins'
+import HomeIndex from '@/packages/Home/src/index'
+import { PublicMixin } from '@/lib/mixins'
+import { mapGetters } from 'vuex'
 export default {
   name: 'GlControl',
-  mixins: [AppMixin],
+  mixins: [PublicMixin],
   components: {
     AppHome
   },
   data() {
     return {
       appear: false,
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 74, 89, 655, 422, 688, 77],
       isvertical: false
     }
   },
   computed: {
+    ...mapGetters(['app']),
     nHeight() {
       const nClientHeight = this.app.clientHeight
       return parseInt(nClientHeight)
@@ -46,13 +54,19 @@ export default {
         height: '100%',
         width: '150px',
         marginRight: this.appear ? 0 : '-150px',
-        transition: 'all .3s'
+        transition: 'all .2s',
+        background: 'url("/static/nav-bg.png")',
+        borderLeft: `1px solid `,
+        borderColor: this.app.defaultColor
       }
     }
   },
   methods: {
     showControlPanel() {
       this.appear = !this.appear
+    },
+    sys_checked(sys, menus) {
+      HomeIndex.methods.set_nav_value(menus, this.SetSession)
     }
   }
 }

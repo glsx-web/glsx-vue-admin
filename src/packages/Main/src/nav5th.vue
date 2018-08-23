@@ -1,4 +1,5 @@
 <template>
+ <transition name="el-zoom-in-center">
   <el-tabs tab-position="top" class="nav5th" v-model="activeName">
     <el-tab-pane v-for="(item,index) in aNav5th" :key="index" :index="index+''" :label="item.title" :name="item.id+''">
       <span slot="label">
@@ -14,6 +15,7 @@
         :style="{ height:height+'px',position:'relative'}">
     </div>
   </el-tabs>
+   </transition>
 </template>
 
 <script>
@@ -47,7 +49,7 @@ export default {
       })
       if (connection) {
         connection.iframe.className = 'showIframe'
-        this.lastIframe = connection.iframe
+        // this.lastIframe = connection.iframe
         this.$emit('@handleNav5', connection.source)
       }
     }
@@ -146,6 +148,10 @@ export default {
   }
   .hideIframe {
     display: none;
+    // animation: iframeHide 0.28s;
+    // -moz-animation: iframeHide 0.28s;
+    // -webkit-animation: iframeHide 0.28s; 
+    // -o-animation: iframeHide 0.28s; 
   }
   .el-tabs__nav-wrap::after{
     z-index: 0;

@@ -40,7 +40,7 @@ export default{
         visible: true,
         i18n: 'navbar.theme',
         value: '',
-        preDefineColors: '#409EFF,#FF0000'
+        preDefineColors: '#409EFF,#FF0000,#066C3B'
       }
     },
     tagsView: {

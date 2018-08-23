@@ -1,22 +1,54 @@
 <template>
   <li class="home-li" @click="handleChange()">
-    <div :style="{'background-color' : app.defaultColor}" :class="isvertical? 'vertical': 'horizontal'"><img src="../../../../static/home.png" alt="" :style="isvertical? '' : 'padding-bottom: 28px;'" width="100%" srcset=""></div><span class="text" >{{menu.title}}</span>
+    <div 
+      :style="{'background-color' : app.defaultColor}" 
+      :class="isvertical? 'vertical': 'horizontal'">
+        <img 
+          src="/static/home.png" alt="" 
+          :style="isvertical? '' : 'padding-bottom: 28px;'" 
+          width="100%" srcset="" />
+    </div>
+    <span class="text" :style="getTextColor(menu)">{{menu.title}}</span>
   </li>
 </template>
 
 <script>
-import { AppMixin } from '@/lib/mixins'
+
+import { mapGetters } from 'vuex'
 export default {
   name: 'AppHome',
-  mixins: [AppMixin],
   props: ['menu', 'isvertical'],
   methods: {
     handleChange() {
-      this.$emit('@checked', this.menu)
+      this.reset_menus(this.menu.id).then(menus => {
+        this.$emit('@checked', this.menu, menus)
+      })
+    },
+    reset_menus(first) {
+      return new Promise(resolve => {
+        const res = this.app.auth.resources
+        const second = getId(res, first)
+        const third = getId(res, second)
+        const fourth = getId(res, third)
+        const fifth = getId(res, fourth)
+        resolve([first, second, third, fourth, fifth])
+      })
+    },
+    getTextColor(menu) {
+      const color = this.app.auth.curnav.first === menu.id ? this.aside.sidebar.activeTextColor : '#333'
+      return { color: color }
     }
+  },
+  computed: {
+    ...mapGetters(['app', 'aside'])
   }
 }
-
+function getId(res, pid) {
+  const parent = res.filter(menu => menu.id + '' === pid + '')
+  if (!parent || !parent.length) return ''
+  const children = parent[0].children
+  return children && children.length ? children[0].id : ''
+}
 </script>
 
 <style>

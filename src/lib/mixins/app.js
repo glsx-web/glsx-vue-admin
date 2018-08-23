@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:32
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-21 11:27:10
+ * @Last Modified time: 2018-08-22 23:28:22
  */
 import { mapGetters, mapActions } from 'vuex'
 import { GlConst } from 'glsx-vue-common'

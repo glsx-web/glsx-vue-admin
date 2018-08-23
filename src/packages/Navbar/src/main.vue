@@ -35,7 +35,7 @@
         :settings="settings"
         :generate="generate"
         :itemsArray="itemsArray"
-        @screenChange="screenChange"
+        :isMinSize="isMinSize"
         :style="oStyle"/>
   </div>
 </template>
@@ -51,7 +51,6 @@ import GlAppThemePicker from '@/packages/ThemePicker'
 import GlAppNavUser from '@/packages/NavUser'
 import GlAppLogout from '@/packages/Logout'
 import GlAppSettings from '@/packages/Settings'
-import GlToggle from '@/packages/Toggle'
 import Slots from './slots'
 import Nav2nd from './nav2nd'
 import GlManagementCenter from './mc'
@@ -62,6 +61,7 @@ export default {
     screenfull: Object,
     theme: Object,
     isActive: Boolean,
+    isMinSize: Boolean,
     avatar: Object,
     name: Object,
     logout: Object,
@@ -83,16 +83,13 @@ export default {
     GlAppNavUser,
     GlAppLogout,
     GlAppSettings,
-    GlToggle,
     Slots,
     Nav2nd,
     GlManagementCenter
-    // glLock
   },
   data() {
     return {
-      toogleActive: true,
-      fullScreenShow: true
+      toogleActive: true
     }
   },
   computed: {
@@ -112,6 +109,9 @@ export default {
         backgroundColor: this.oAside.logo.backgroundColor,
         backgroundImage: this.oAside.logo.image
       }
+    },
+    fullScreenShow() {
+      return !this.isMinSize
     }
   },
   methods: {
@@ -138,9 +138,6 @@ export default {
     },
     handleNav2(nav2Id) {
       this.$emit('@handleNav2', nav2Id)
-    },
-    screenChange(show) {
-      this.fullScreenShow = !show
     }
   }
 }
@@ -152,8 +149,8 @@ export default {
   display: flex;
   transition:  background-color .5s linear;
   .hamburger-container {
-    width: 60px;
-    padding: 0 20px;
+    width: 42px;
+    padding: 0px 0 0 10px;
     position: relative;
     z-index: 1;
     top: 5px;

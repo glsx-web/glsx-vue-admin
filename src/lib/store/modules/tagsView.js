@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-18 21:55:39
+ * @Last Modified time: 2018-08-23 19:18:32
  */
 const tagsView = {
   state: {
@@ -70,6 +70,9 @@ const tagsView = {
       state.visitedRoutes = []
       state.cachedViews = []
       state.visitedFrames = []
+    },
+    SAVE_VIEWS: (state, views) => {
+      state.visitedRoutes = views
     }
   },
   actions: {
@@ -96,6 +99,9 @@ const tagsView = {
     },
     SaveKeepStatus({ commit, state }, view) {
       commit('SAVE_KEEP_STATUS', view)
+    },
+    SaveViews({ commit }, views) {
+      commit('SAVE_VIEWS', views)
     }
   },
   getters: {

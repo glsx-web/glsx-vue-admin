@@ -24,27 +24,15 @@ export default {
     },
     style() {
       return {
-        margin: 0
-        // backgroundColor: `rgba(0,0,0,.1)`
+        fontSize: '12px'
       }
     }
   }
 }
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-.el-breadcrumb{
-  font-size: 12px;
-  .el-breadcrumb__inner{
-    color: #999
-  }
-}
-.tags-view-container .tags-view-wrapper {
-  box-shadow: 0 0 0px 0 rgba(0, 0, 0, 0.12), 0 0 1px 0 rgba(0, 0, 0, 0.04) !important;
-}
-</style>
 <style rel="stylesheet/scss" lang="scss">
 .breadcrumb__separator{
-  margin: 1px !important;
+  margin: 0px !important;
+  color: #010b15  !important;
 }
 </style>

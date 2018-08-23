@@ -31,6 +31,7 @@
         :generate="oNavbar.generate"
         :itemsArray="oNavbar.itemsArray"
         :isActive="isActive"
+        :isMinSize="isMinSize"
         :oAside="oAside"
         :oNav2nd="oNavbar.oNav2nd"/>
       <gl-app-tags-view  v-if="oTagsView.visible"
@@ -39,10 +40,12 @@
         v-on:@closeSeletedTag="handleCloseTag"
         v-on:@closeOthersTags="handleCloseOthersTags"
         v-on:@closeAllTags="handleCloseAllTags"
+        v-on:@dragTags="handleDragTags"
         :oStyle="oTagsView.oStyle" 
         :generate="oTagsView.generate"
         :activeId="oTagsView.activeId"
         :breadcrumb="oBreadcrumb"
+        :offset="menuOpenedOffset"
         :visitedRoutes="oTagsView.visitedRoutes"/>
         </draggable>
     </div>
@@ -89,6 +92,9 @@ export default {
     },
     isActive() {
       return this.aside.state === AppConst.States.OPEN
+    },
+    isMinSize() {
+      return this.app.device === AppConst.Device.Types.MINSIZE
     },
     settingParams() {
       return this.$get_session_config()
@@ -161,6 +167,17 @@ export default {
         activeId: this.app.auth.curnav.fifth
       }
     },
+    menuOpenedOffset() {
+      if (this.aside.visible) {
+        if (this.aside.state === AppConst.States.OPEN) {
+          return this.aside.maxWidth
+        } else {
+          return this.aside.minWidth
+        }
+      } else {
+        return 0
+      }
+    },
     oBreadcrumb() {
       const cur = this.app.auth.curnav
       const res = this.app.auth.resources
@@ -200,7 +217,10 @@ export default {
       this.RemoveView(view).then((views) => {
         if (isActive) {
           const latestView = views.slice(-1)[0]
-          if (!latestView.id) { // TODO 优化逻辑
+          if (!latestView || !latestView.id) { // TODO 优化逻辑
+            // const menus = getMenu(this.app.auth.resources, this.app.auth.curnav.fourth)
+            // this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menus.children[0].id)
+            this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
             return
           }
           this.SetSession(AppConst.Auth.CurNav.Key, this.$deep_clone(latestView.target))
@@ -211,7 +231,7 @@ export default {
       this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$deep_clone(selectedTag.target)))
     },
     handleCloseAllTags() {
-      this.RemoveAllViews().then(() => this.$router.push('/home'))
+      this.RemoveAllViews().then(() => this.SetSession(AppConst.Auth.CurNav.Fifth.Key, ''))
     },
     handleItemChanged(value) {
       this.Set(HeaderConst.Navbar.ItemsArray.Key, value)
@@ -221,6 +241,9 @@ export default {
     },
     handleNav2(nav2Id) {
       this.SetSession(AppConst.Auth.CurNav.Second.Key, nav2Id)
+    },
+    handleDragTags(value) {
+      this.SaveViews(value)
     }
   }
 }
