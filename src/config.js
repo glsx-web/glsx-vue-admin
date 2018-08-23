@@ -1,10 +1,10 @@
 export default{
   header: {
     visible: true,
-    height: 60,
+    height: 40,
     navbar: {
       visible: true,
-      height: 60,
+      height: 40,
       user: {
         visible: true,
         avatar: {
@@ -52,7 +52,7 @@ export default{
   aside: {
     visible: true,
     state: 2,
-    maxWidth: 200,
+    maxWidth: 180,
     minWidth: 36,
     sidebar: {
       visible: true,
@@ -62,7 +62,7 @@ export default{
     },
     logo: {
       visible: true,
-      height: 100,
+      height: 75,
       image: '../../static/logo.png',
       backgroundColor: 'transparent'
     }

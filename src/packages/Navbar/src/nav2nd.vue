@@ -35,9 +35,13 @@ export default {
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
  .el-menu--horizontal{
-   height: 60px
+   height: 40px
+ }
+ .el-menu-item {
+   height: 40px !important;
+   line-height: 40px !important;
  }
  .el-tabs__nav {
    z-index: 1 !important;

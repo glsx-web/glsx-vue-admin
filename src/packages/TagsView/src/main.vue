@@ -2,33 +2,30 @@
   <div class="tags-view-container">
     <el-row>
       <el-col :span="8">
-       <gl-app-breadcrumb 
-        class="tags-view-wrapper breadcrumb" 
-        :breadcrumb="breadcrumb" 
-        v-show="true"/>
+         <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane' style="background-color: rgba(0, 0, 0, 0.1);border-right: 1px solid #d8dce5">
+          <transition name="el-zoom-in-center">
+          <gl-app-breadcrumb 
+            class="tags-view-wrapper breadcrumb" 
+            :breadcrumb="breadcrumb" 
+            /> 
+          </transition>
+         </gl-app-scroll-pane>
       </el-col>
       <el-col :span="16">
          <gl-app-scroll-pane class='tags-view-wrapper' ref='scrollPane'>
-          <draggable v-model="visitedRoutes" >
+          <draggable style="padding: 0 12px;" v-model="aTags" >
             <el-tag ref='tag' 
                 @click.native="hanldTagChange(tag)"  
                 :class="isActive(tag) ? 'tags-view-item active' : 'tags-view-item'" 
                 :style="isActive(tag) ? objStyle: '' " 
-                v-for="tag in visitedRoutes" 
+                v-for="tag in aTags" 
                 :key="tag.id" 
                 closable
                 size='small'
                 :disable-transitions="false"
                 @close="closeSelectedTag(tag)"
                 @contextmenu.native.prevent="openMenu(tag,$event)">
-              <!-- <router-link  :to="tag.fullPath" v-if="!tag.fromSub" >
-                {{generate(tag.title)}}
-                <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span>
-              </router-link> -->
-              <!-- <template> -->
                 {{tag.title}}
-                <!-- <span class='el-icon-close' @click.prevent.stop='closeSelectedTag(tag)'></span> -->
-              <!-- </template> -->
             </el-tag>
           </draggable>
         </gl-app-scroll-pane>
@@ -55,14 +52,16 @@ export default {
     generate: Function,
     visitedRoutes: Array,
     activeId: [String, Number],
-    breadcrumb: Array
+    breadcrumb: Array,
+    offset: Number
   },
   data() {
     return {
       menuVisible: false,
       top: 0,
       left: 0,
-      selectedTag: {}
+      selectedTag: {},
+      tags: this.visitedRoutes
     }
   },
   computed: {
@@ -71,21 +70,24 @@ export default {
         backgroundColor: this.oStyle.backgroundColor,
         color: this.oStyle.activeTextColor
       }
+    },
+    aTags: {
+      get() {
+        return this.tags
+      },
+      set(value) {
+        this.$emit('@dragTags', value)
+      }
     }
   },
   watch: {
-    // $route() {
-    //   this.addViewTags().then(() => {
-    //     this.moveToCurrentTag()
-    //   })
-    // },
     menuVisible(value) {
       document.body[ value ? 'addEventListener' : 'removeEventListener']('click', this.closeMenu)
+    },
+    visitedRoutes(value) {
+      this.tags = value
     }
   },
-  // mounted() {
-  //   // this.addViewTags()
-  // },
   methods: {
     hanldTagChange(tag) {
       this.$emit('@hanldTagChange', this.$deep_clone(tag))
@@ -130,7 +132,7 @@ export default {
     openMenu(tag, e) {
       this.menuVisible = true
       this.selectedTag = tag
-      this.left = e.target.offsetLeft
+      this.left = e.clientX - this.offset
       this.top = e.clientY + 15
     },
     closeMenu() {

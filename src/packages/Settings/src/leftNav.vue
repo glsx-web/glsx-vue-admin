@@ -111,22 +111,13 @@
 export default {
   name: 'LeftNav',
   props: {
-    settingParams: Object,
+    params: Object,
     isdisabled: Boolean
   },
   data() {
     return {
-      params: this.$get_session_config(),
       imageUrl: '',
       activeNames: ['1']
-    }
-  },
-  watch: {
-    params: {
-      handler(newVal, oldVal) {
-        this.$emit('@setParamsConfig', newVal)
-      },
-      deep: true
     }
   },
   methods: {

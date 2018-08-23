@@ -1,13 +1,13 @@
 <template>
   <div class="navbar" :style="oStyle">
     <transition name="logo-transition">
-    <div class="logo-container" v-if="!oAside.visible">
-      <gl-app-logo v-if="oLogo.visible"
-      :width="oLogo.width" 
-      :height="oLogo.height" 
-      :backgroundColor="oLogo.backgroundColor" 
-      :backgroundImage="oLogo.backgroundImage" />
-    </div>
+      <div :class="app.mainVisible? 'logo-container logo-container-lg': 'logo-container logo-container-md'" v-if="!oAside.visible">
+        <gl-app-logo v-if="oLogo.visible"
+        :width="oLogo.width" 
+        :height="app.mainVisible? 60 : 40" 
+        :backgroundColor="oLogo.backgroundColor" 
+        :backgroundImage="oLogo.backgroundImage" />
+      </div>
     </transition>
     <gl-app-hamburger v-if="oAside.visible"
         class="hamburger-container" 
@@ -35,7 +35,6 @@
         :settings="settings"
         :generate="generate"
         :itemsArray="itemsArray"
-        :settingParams="settingParams"
         @screenChange="screenChange"
         :style="oStyle"/>
   </div>
@@ -70,7 +69,6 @@ export default {
     settings: Object,
     itemsArray: Array,
     generate: Function,
-    settingParams: Object,
     navbarStyle: Object,
     oNav2nd: Object,
     oAside: Object
@@ -111,7 +109,6 @@ export default {
       return {
         // width: '',
         visible: this.oAside.logo.visible,
-        height: 60,
         backgroundColor: this.oAside.logo.backgroundColor,
         backgroundImage: this.oAside.logo.image
       }
@@ -181,7 +178,12 @@ export default {
     position: relative;
     width:200px;
     z-index: 1;
+  }
+  .logo-container-lg {
     height: 60px;
+  }
+  .logo-container-md {
+    height: 40px;
   }
  }
 </style>

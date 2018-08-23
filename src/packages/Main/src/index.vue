@@ -1,6 +1,5 @@
 <template>
   <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
-    <gl-keep-alive />
     <app-main :cachedViews="cachedViews" v-show="showMain"/>
     <nav5th 
       :oNav5th="oNav5th"

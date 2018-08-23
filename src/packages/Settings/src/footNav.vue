@@ -31,18 +31,12 @@
 <script>
 export default {
   name: 'FootNav',
+  props: {
+    params: Object
+  },
   data() {
     return {
-      params: this.$get_session_config(),
       activeNames: ['1']
-    }
-  },
-  watch: {
-    params: {
-      handler(newVal, oldVal) {
-        this.$emit('@setParamsConfig', newVal)
-      },
-      deep: true
     }
   },
   methods: {

@@ -1,5 +1,7 @@
 <template>
   <div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll">
+    <div :class="isLeft? 'el-icon-arrow-left icon icon-left' : ''" @click="aaa" :style="{'color': app.defaultColor}"></div>
+    <div class="el-icon-arrow-right icon icon-right" @click="bbb" :style="{'color': app.defaultColor}"></div>
     <div class="scroll-wrapper" ref="scrollWrapper" :style="{left: left + 'px'}">
       <slot></slot>
     </div>
@@ -7,23 +9,53 @@
 </template>
 
 <script>
-const padding = 100 // tag's padding
+import { mapGetters } from 'vuex'
+const padding = 60 // tag's padding
 
 export default {
   name: 'GlAppScrollPane',
   data() {
     return {
-      left: 0
+      left: 0,
+      isLeft: false
     }
   },
+  computed: {
+    ...mapGetters(['app'])
+  },
   methods: {
+    aaa() {
+      this.left = Math.min(0, this.left + 120)
+      if (this.left === 0) {
+        this.isLeft = false
+      }
+    },
+    bbb() {
+      const $container = this.$refs.scrollContainer
+      const $containerWidth = $container.offsetWidth
+      const $wrapper = this.$refs.scrollWrapper
+      const $wrapperWidth = $wrapper.offsetWidth
+      if ($containerWidth - padding < $wrapperWidth) {
+        if (this.left < -($wrapperWidth - $containerWidth + padding)) {
+          this.left = this.left
+        } else {
+          this.left = Math.max(this.left - 120, $containerWidth - $wrapperWidth - padding)
+        }
+      } else {
+        this.left = 0
+      }
+      if (this.left === 0) {
+        this.isLeft = false
+      } else {
+        this.isLeft = true
+      }
+    },
     handleScroll(e) {
       const eventDelta = e.wheelDelta || -e.deltaY * 3
       const $container = this.$refs.scrollContainer
       const $containerWidth = $container.offsetWidth
       const $wrapper = this.$refs.scrollWrapper
       const $wrapperWidth = $wrapper.offsetWidth
-
       if (eventDelta > 0) {
         this.left = Math.min(0, this.left + eventDelta)
       } else {
@@ -36,6 +68,11 @@ export default {
         } else {
           this.left = 0
         }
+      }
+      if (this.left === 0) {
+        this.isLeft = false
+      } else {
+        this.isLeft = true
       }
     },
     moveToTarget($target) {
@@ -69,5 +106,19 @@ export default {
     position: absolute;
     transition: left .5s linear
   }
+  .icon {
+    position: absolute; 
+    top: 0; 
+    background-color: #e5e5e5; 
+    z-index: 1;
+    height: 100%;
+    padding-top: 9px;
+  }
+  .icon-left {
+      left: 0;
+    }
+    .icon-right {
+      right: 0;
+    }
 }
 </style>

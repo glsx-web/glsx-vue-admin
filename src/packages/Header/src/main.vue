@@ -31,7 +31,6 @@
         :generate="oNavbar.generate"
         :itemsArray="oNavbar.itemsArray"
         :isActive="isActive"
-        :settingParams="settingParams"
         :oAside="oAside"
         :oNav2nd="oNavbar.oNav2nd"/>
       <gl-app-tags-view  v-if="oTagsView.visible"

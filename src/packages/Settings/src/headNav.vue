@@ -152,16 +152,8 @@ export default {
   name: 'HeadNav',
   mixins: [PublicMixin, AppMixin],
   props: {
-    settingParams: Object,
+    params: Object,
     theme: Object
-  },
-  watch: {
-    params: {
-      handler(newVal, oldVal) {
-        this.$emit('@setParamsConfig', newVal)
-      },
-      deep: true
-    }
   },
   computed: {
     pickColor: {
@@ -183,7 +175,6 @@ export default {
   },
   data() {
     return {
-      params: this.$get_session_config(),
       imageUrl: '',
       color: '#409EFF',
       activeNames: ['1']
