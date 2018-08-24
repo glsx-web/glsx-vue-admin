@@ -141,10 +141,12 @@ export default {
 .nav5th {
   .showIframe {
     opacity: 1;
+    z-index: 1;
     transform: translateX(0px);
   }
   .hideIframe {
     opacity: 0;
+    z-index: 0;
     transform: translateX(50px);
   }
   .el-tabs__nav-wrap::after{
