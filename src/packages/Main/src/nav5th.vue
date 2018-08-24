@@ -1,20 +1,20 @@
 <template>
  <transition name="el-zoom-in-center">
-  <el-tabs tab-position="top" class="nav5th" v-model="activeName">
-    <el-tab-pane v-for="(item,index) in aNav5th" :key="index" :index="index+''" :label="item.title" :name="item.id+''">
-      <span slot="label">
-        <i class="el-icon-date"></i>
-        {{item.title}}
-      </span>
-    </el-tab-pane>
-    <div v-loading="loading" 
-        element-loading-text="拼命加载中" 
-        element-loading-spinner="el-icon-loading" 
-        element-loading-background="rgba(0, 0, 0, 0.5)" 
-        id="container" 
-        :style="{ height:height+'px',position:'relative'}">
-    </div>
-  </el-tabs>
+    <el-tabs tab-position="top" class="nav5th" v-model="activeName" v-show="aNav5th.length">
+        <el-tab-pane v-for="(item,index) in aNav5th" :key="index" :index="index+''" :label="item.title" :name="item.id+''">
+          <span slot="label">
+            <i class="el-icon-date"></i>
+            {{item.title}}
+          </span>
+        </el-tab-pane>
+        <div v-loading="loading" 
+            element-loading-text="拼命加载中" 
+            element-loading-spinner="el-icon-loading" 
+            element-loading-background="rgba(0, 0, 0, 0.5)" 
+            id="container" 
+            :style="{ height:height+'px',position:'relative'}">
+        </div>
+      </el-tabs>
    </transition>
 </template>
 
@@ -140,18 +140,12 @@ export default {
 }
 .nav5th {
   .showIframe {
-    display: block;
-    animation: iframeEnter 0.28s;
-    -moz-animation: iframeEnter 0.28s;
-    -webkit-animation: iframeEnter 0.28s; 
-    -o-animation: iframeEnter 0.28s; 
+    opacity: 1;
+    transform: translateX(0px);
   }
   .hideIframe {
-    display: none;
-    // animation: iframeHide 0.28s;
-    // -moz-animation: iframeHide 0.28s;
-    // -webkit-animation: iframeHide 0.28s; 
-    // -o-animation: iframeHide 0.28s; 
+    opacity: 0;
+    transform: translateX(50px);
   }
   .el-tabs__nav-wrap::after{
     z-index: 0;
@@ -175,6 +169,8 @@ export default {
     border: 0;
     overflow: hidden;
     box-sizing: border-box;
+    position: absolute;
+    transition: all .5s
   }
 }
 </style>

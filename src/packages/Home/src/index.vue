@@ -1,5 +1,5 @@
 <template>
-  <div :class="nHeight>900? 'lgView':'smView'">
+  <div :class="nHeight>900? 'lgView':'smView'" >
     <swiper style="height: 100%" :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
         <app-home :menu="item" class="homeList" :isvertical='isvertical' v-on:@checked="sys_checked"></app-home>
@@ -20,7 +20,6 @@ import 'swiper/dist/css/swiper.css'
 const { AppConst, AsideConst } = GlConst
 import { PublicMixin } from '@/lib/mixins'
 import { mapGetters, mapActions } from 'vuex'
-const KEYS = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
 export default {
   name: 'GlAppHome',
   components: {
@@ -34,28 +33,34 @@ export default {
     nHeight() {
       const nClientHeight = this.app.clientHeight
       return parseInt(nClientHeight)
+    },
+    swiper() {
+      return this.$refs.mySwiper.swiper
     }
   },
   data() {
     return {
       aNav: [],
-      caches: new Map(),
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21],
       isvertical: true,
       swiperOption: {
         slidesPerView: 4,
         slidesPerColumn: 2,
         slidesPerGroup: 4,
-        spaceBetween: 40,
-        loopFillGroupWithBlank: true,
-        // slidesPerColumnFill: 'row',
-        // effect: 'coverflow',
+        // spaceBetween: 40,
+        // loopFillGroupWithBlank: true,
+        observer: true,
+        observeParents: true,
+        grabCursor: true, // 开启鼠标的抓手形状
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
-          // type: 'progressbar',
           renderBullet: (index, className) => {
             return `<span class="${className}">${index + 1}</span>`
+          }
+        },
+        on: {
+          init: function() {
+            setTimeout(() => this.resize.resizeHandler(), 500)
           }
         },
         keyboard: true,
@@ -64,9 +69,6 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         }
-        // scrollbar: {
-        //   el: '.swiper-scrollbar'
-        // }
       }
     }
   },
@@ -82,7 +84,6 @@ export default {
       this.$remove_auth(this.$get_session_config())
     },
     cache_states() {
-      this.caches.clear()
       this.SetSession(AppConst.MainVisible.Key, AppConst.Visibility.VISIBLE)
       this.SetAside({ key: AsideConst.Visible.Key, value: AppConst.Visibility.HIDDEN, v: this })// 注意 : 没有特殊情况  请勿用此方法设置状态 (用 SetSession )
     },
@@ -92,7 +93,7 @@ export default {
     },
     set_nav_value(values, SetSession = this.SetSession) {
       return new Promise(resolve => {
-        KEYS.forEach((key, index) => SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
+        ['First', 'Second', 'Third', 'Fourth', 'Fifth'].forEach((key, index) => SetSession(AppConst.Auth.CurNav[key].Key, values[index]))
         resolve()
       })
     }
@@ -111,17 +112,6 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.el-main{
-  padding: 0 !important;
-}
-.el-header{
-  height: auto !important;
-  padding: 0 1px;
-}
-.el-footer{
-  padding: 0 !important;
-  height: auto !important;
-}
 .swiper-container {
     padding: 90px 20px;
     .swiper-scrollbar {
@@ -147,14 +137,16 @@ export default {
     height: 600px;
   }
 </style>
-<style>
+<style rel="stylesheet/scss" lang="scss">
  .my-swiper .swiper-pagination-bullet {
     width: 20px;
     line-height: 20px;
     height: 20px;
     color: #fff;
-    box-shadow: 0px 2px 1px #666 inset, 2px 3px 4px #666;
     font-size: 12px ;
+      &-active{
+        background-color:#409EFF
+      }
 }
 .my-button-disabled{
   opacity: .3

@@ -43,7 +43,6 @@
 import GlAppScrollPane from '@/packages/ScrollPane'
 import draggable from 'vuedraggable'
 import GlAppBreadcrumb from '@/packages/Breadcrumb'
-// const ORIGINAL_THEME = '#409EFF' // default color
 export default {
   name: 'GlAppTagsView',
   components: { GlAppScrollPane, draggable, GlAppBreadcrumb },
@@ -67,7 +66,7 @@ export default {
   computed: {
     objStyle() {
       return {
-        backgroundColor: this.oStyle.backgroundColor,
+        backgroundColor: this.$color_to_rgb(this.oStyle.backgroundColor, '.7'),
         color: this.oStyle.activeTextColor
       }
     },
@@ -108,23 +107,11 @@ export default {
         resole(true)
       })
     },
-    moveToCurrentTag() {
-      const tags = this.$refs.tag
-      this.$nextTick(() => {
-        tags.forEach((tag) => {
-          if (tag.to === this.$route.fullPath) {
-            this.$refs.scrollPane.moveToTarget(tag.$el)
-            return false
-          }
-        })
-      })
-    },
     closeSelectedTag(view) {
       this.$emit('@closeSeletedTag', view, this.isActive(view))
     },
     closeOthersTags() {
       this.$emit('@closeOthersTags', this.selectedTag)
-      this.moveToCurrentTag()
     },
     closeAllTags() {
       this.$emit('@closeAllTags')

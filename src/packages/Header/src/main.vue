@@ -218,8 +218,6 @@ export default {
         if (isActive) {
           const latestView = views.slice(-1)[0]
           if (!latestView || !latestView.id) { // TODO 优化逻辑
-            // const menus = getMenu(this.app.auth.resources, this.app.auth.curnav.fourth)
-            // this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menus.children[0].id)
             this.SetSession(AppConst.Auth.CurNav.Fifth.Key, '')
             return
           }
@@ -228,7 +226,7 @@ export default {
       })
     },
     handleCloseOthersTags(selectedTag) {
-      this.RemoveOtherView(selectedTag).then(() => this.Set(AppConst.Auth.CurNav.Key, this.$deep_clone(selectedTag.target)))
+      this.RemoveOtherView(selectedTag).then(() => this.SetSession(AppConst.Auth.CurNav.Key, this.$deep_clone(selectedTag.target)))
     },
     handleCloseAllTags() {
       this.RemoveAllViews().then(() => this.SetSession(AppConst.Auth.CurNav.Fifth.Key, ''))

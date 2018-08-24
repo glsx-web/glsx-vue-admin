@@ -54,6 +54,7 @@ function getId(res, pid) {
 <style>
 .home-li {
   position: relative;
+  cursor: pointer;
 }
  .vertical {
   display: inline-block;

@@ -42,18 +42,14 @@ export default {
       return this.$get_menus(this.app.auth.resources, 0)
     },
     isShow() {
-      if (this.$route.name === 'GlAppHome') {
-        return false
-      } else {
-        return true
-      }
+      return this.$route.name !== 'GlAppHome'
     },
     oStyle() {
       return {
         backgroundColor: this.app.defaultColor,
-        height: '100%',
-        width: '150px',
-        marginRight: this.appear ? 0 : '-150px',
+        // height: 'auto',
+        // width: '150px',
+        marginRight: this.appear ? 0 : '-180px',
         transition: 'all .2s',
         background: 'url("/static/nav-bg.png")',
         borderLeft: `1px solid `,
