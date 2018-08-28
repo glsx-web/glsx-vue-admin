@@ -102,7 +102,7 @@ export default {
           this.$emit('@setParamsConfig', this.params)
         } else {
           // 窗口打开
-          this.isdisabled = this.$route.name === 'GlAppHome'
+          this.isdisabled = this.app.mainVisible
           this.params = this.$get_session_config()
         }
       } catch (error) {

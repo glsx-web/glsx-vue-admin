@@ -45,7 +45,7 @@ export default {
   computed: {
     Aside() {
       return {
-        visible: this.aside.visible === true || this.aside.visible === AppConst.Visibility.VISIBLE,
+        visible: !this.app.mainVisible && (this.aside.visible === true || this.aside.visible === AppConst.Visibility.VISIBLE),
         state: this.aside.state,
         maxWidth: this.aside.maxWidth,
         minWidth: this.aside.minWidth,

@@ -1,6 +1,6 @@
 <template>
-  <div @click="showControlPanel">
-      <div class="controlEntrance" v-if="isShow" ><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
+  <div @click="showControlPanel" v-if="isShow">
+      <div class="controlEntrance"><i :class="appear ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i></div>
       <gl-app-scroll :height="nHeight" >
           <ul class="el-menu" :style="oStyle" >
             <app-home 
@@ -42,7 +42,8 @@ export default {
       return this.$get_menus(this.app.auth.resources, 0)
     },
     isShow() {
-      return this.$route.name !== 'GlAppHome'
+      this.appear = false
+      return !this.app.mainVisible
     },
     oStyle() {
       return {

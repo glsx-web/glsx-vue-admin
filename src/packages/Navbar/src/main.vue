@@ -1,7 +1,7 @@
 <template>
   <div class="navbar" :style="oStyle">
     <transition name="logo-transition">
-      <div :class="app.mainVisible? 'logo-container logo-container-lg': 'logo-container logo-container-md'" v-if="!oAside.visible">
+      <div :class="app.mainVisible? 'logo-container logo-container-lg': 'logo-container logo-container-md'" v-if="!oAside.visible || app.mainVisible">
         <gl-app-logo v-if="oLogo.visible"
         :width="oLogo.width" 
         :height="app.mainVisible? 60 : 40" 
@@ -9,7 +9,7 @@
         :backgroundImage="oLogo.backgroundImage" />
       </div>
     </transition>
-    <gl-app-hamburger v-if="oAside.visible"
+    <gl-app-hamburger v-if="oAside.visible && !app.mainVisible"
         class="hamburger-container" 
         :toggleClick="handleToggleSideBar" 
         :isActive="isActive"/>
