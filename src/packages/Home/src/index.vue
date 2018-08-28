@@ -1,5 +1,5 @@
 <template>
-  <div :class="nHeight>900? 'lgView':'smView'" >
+  <div :style="{height: nHeight}" >
     <swiper style="height: 100%" :options="swiperOption" ref="mySwiper" class="my-swiper" >
       <swiper-slide v-for="(item,index) in aNav" :key="index">
         <app-home :menu="item" class="homeList" :isvertical='isvertical' v-on:@checked="sys_checked"></app-home>
@@ -29,10 +29,16 @@ export default {
   },
   mixins: [PublicMixin],
   computed: {
-    ...mapGetters(['app']),
+    ...mapGetters([
+      'app',
+      'header',
+      'footer']),
     nHeight() {
       const nClientHeight = this.app.clientHeight
-      return parseInt(nClientHeight)
+      const nFooterHeight = this.footer.visible ? this.footer.height : 0
+      const nNavbarHeight = this.header.navbar.visible ? 60 || 60 : 0
+      const nTagsViewHeight = this.header.tagsView.visible ? this.header.tagsView.height || 34 : 0
+      return nClientHeight - nFooterHeight - nNavbarHeight - nTagsViewHeight + 'px'
     },
     swiper() {
       return this.$refs.mySwiper.swiper

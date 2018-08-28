@@ -27,6 +27,10 @@ export default {
     .el-footer{
       padding: 0 !important;
       height: auto !important;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translate3d(-50%,0,0);
     }
 </style>
 
