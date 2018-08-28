@@ -24,11 +24,9 @@ const components = [
 ]
 import './styles/index.scss'
 import { store } from '@/lib'
-import { SessionMixin } from '@/lib/mixins'
 const GlsxVueAdmin = {}
 GlsxVueAdmin.install = function(Vue, opts = {}) {
   Vue.prototype.$config = opts
-  Vue.mixin(SessionMixin)
   components.map(component => {
     Vue.component(component.name, (resolve, reject) => {
       resolve(component)

@@ -11,7 +11,8 @@
             element-loading-text="拼命加载中" 
             element-loading-spinner="el-icon-loading" 
             element-loading-background="rgba(0, 0, 0, 0.5)" 
-            id="container" 
+            id="container"
+            ref='$container'
             :style="{ height:height+'px',position:'relative'}">
         </div>
       </el-tabs>
@@ -36,9 +37,16 @@ export default {
   watch: {
     'oNav5th.color': {
       handler(newVal, oldVal) {
-        this.connections.map(con =>
-          con.promise.then(child => child.setTheme(newVal))
-        )
+        this.connections.map(con => con.promise.then(child => child.setTheme(newVal)))
+      }
+    },
+    'oNav5th.isShow': {
+      handler(newVal, oldVal) {
+        if (!newVal) {
+          this.connections = []
+          this.activeName = ''
+          this.$refs.$container.innerHTML = ''
+        }
       }
     },
     activeName(val) {
@@ -65,10 +73,6 @@ export default {
         return menus
       }
     }
-  },
-  beforeDestroy() {
-    this.connections = []
-    this.activeName = ''
   },
   methods: {
     creatActiveName(menus) {

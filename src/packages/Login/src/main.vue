@@ -117,6 +117,7 @@ export default {
     }
   },
   mounted() {
+    this.$remove_session_config()
     this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
     this.star.instance.run()
     this.RemoveAllViews()

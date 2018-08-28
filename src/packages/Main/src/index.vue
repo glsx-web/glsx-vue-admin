@@ -1,10 +1,10 @@
 <template>
   <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
-    <app-main :cachedViews="cachedViews" v-show="showMain"/>
+    <app-main :cachedViews="cachedViews" v-show="!oNav5th.isShow"/>
     <nav5th 
       :oNav5th="oNav5th"
       :height="nHeight-30" 
-      v-on:@handleNav5="handleNav5" v-show="!showMain"/> 
+      v-on:@handleNav5="handleNav5" v-show="oNav5th.isShow"/> 
   </gl-app-scroll>
 </template>
 
@@ -17,13 +17,14 @@ const { AppConst } = GlConst
 import GlKeepAlive from '@/packages/KeepAlive'
 import { mapGetters, mapActions } from 'vuex'
 import Nav5th from './nav5th'
+import { SessionMixin } from '@/lib/mixins'
 /**
 /**
  * 默认颜色
  */
 export default {
   name: 'GlAppMain',
-  mixins: [AppMixin, PublicMixin],
+  mixins: [AppMixin, PublicMixin, SessionMixin],
   components: {
     AppMain,
     GlAppScroll,
@@ -39,9 +40,6 @@ export default {
       'visitedRoutes'
     ]),
     ...mapActions(['AddView']),
-    showMain() {
-      return this.app.mainVisible === AppConst.Visibility.VISIBLE
-    },
     nHeight() {
       this.HandleRestore()
       const nClientHeight = this.app.clientHeight
@@ -54,7 +52,8 @@ export default {
       return {
         menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.fourth),
         color: this.app.defaultColor,
-        active: this.app.auth.curnav.fifth
+        active: this.app.auth.curnav.fifth,
+        isShow: this.app.mainVisible !== AppConst.Visibility.VISIBLE
       }
     }
   },
