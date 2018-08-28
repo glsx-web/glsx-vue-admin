@@ -83,8 +83,8 @@ export default {
   },
   methods: {
     handleNav5(menu) {
-      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menu.id + '').then(cfg => {
-        if (this.visitedRoutes.some(v => v.id + '' === menu.id + '')) return
+      this.SetSession(AppConst.Auth.CurNav.Fifth.Key, menu.id).then(cfg => {
+        if (this.visitedRoutes.some(v => +v.id === +menu.id)) return
         const view = {
           name: menu.title,
           fullPath: menu.path,
@@ -99,10 +99,10 @@ export default {
   }
 }
 function getId(res, pid, index) {
-  const menu = res.filter(menu => menu.id + '' === pid + '')
+  const menu = res.filter(menu => +menu.id === +pid)
   if (!menu || !menu.length) return ''
   const children = menu[0].children
   if (!children) return ''
-  return children.some(child => child.id + '' === index + '') ? index : children[0].id
+  return children.some(child => +child.id === +index) ? index : children[0].id
 }
 </script>

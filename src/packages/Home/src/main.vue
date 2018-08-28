@@ -44,7 +44,7 @@ export default {
   }
 }
 function getId(res, pid) {
-  const parent = res.filter(menu => menu.id + '' === pid + '')
+  const parent = res.filter(menu => +menu.id === +pid)
   if (!parent || !parent.length) return ''
   const children = parent[0].children
   return children && children.length ? children[0].id : ''

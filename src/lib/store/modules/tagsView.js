@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-23 19:18:32
+ * @Last Modified time: 2018-08-28 10:39:15
  */
 const tagsView = {
   state: {
@@ -12,7 +12,7 @@ const tagsView = {
   },
   mutations: {
     ADD_VIEW: (state, view) => {
-      if (state.visitedRoutes.some(v => v.id + '' === view.id + '')) return
+      if (state.visitedRoutes.some(v => +v.id === +view.id)) return
       state.visitedRoutes.push(Object.assign({}, view, {
         name: view.name,
         path: view.fullPath,
@@ -38,7 +38,7 @@ const tagsView = {
     },
     REMOVE_VIEW: (state, view) => {
       for (const [i, v] of state.visitedRoutes.entries()) {
-        if (v.id + '' === view.id + '') {
+        if (v.id === view.id) {
           state.visitedRoutes.splice(i, 1)
           break
         }
@@ -53,7 +53,7 @@ const tagsView = {
     },
     REMOVE_OTHER_VIEW: (state, view) => {
       for (const [i, v] of state.visitedRoutes.entries()) {
-        if (v.id + '' === view.id + '') {
+        if (v.id === view.id) {
           state.visitedRoutes = state.visitedRoutes.slice(i, i + 1)
           break
         }

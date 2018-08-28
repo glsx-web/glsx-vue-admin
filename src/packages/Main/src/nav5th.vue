@@ -44,11 +44,11 @@ export default {
     activeName(val) {
       let connection = null
       this.connections.map(con => {
-        con.source.id + '' === val && (connection = con)
-        con.iframe.className = 'hideIframe'
+        con.source.id === +val && (connection = con)
+        con.iframe.className = 'hideMe'
       })
       if (connection) {
-        connection.iframe.className = 'showIframe'
+        connection.iframe.className = 'showMe'
         // this.lastIframe = connection.iframe
         this.$emit('@handleNav5', connection.source)
       }
@@ -76,7 +76,7 @@ export default {
       return active
     },
     frameLoadedCallback(frame) {
-      if (!this.activeName || frame.id + '' === this.activeName) {
+      if (!this.activeName || frame.id === +this.activeName) {
         this.loading = false
       }
       if (this.loading && !this.timer) {
@@ -100,7 +100,7 @@ export default {
         appendTo: '#container',
         source: item,
         // style: 'display:none;',
-        className: 'hideIframe',
+        className: 'hideMe',
         methods: {
           onload() {
             // _this.loading = false
@@ -118,34 +118,12 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss">
-@keyframes iframeEnter {
-  0% {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes iframeHide {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-}
 .nav5th {
-  .showIframe {
-    opacity: 1;
+  .showMe {
     z-index: 1;
     transform: translateX(0px);
   }
-  .hideIframe {
-    opacity: 0;
+  .hideMe {
     z-index: 0;
     transform: translateX(50px);
   }
@@ -172,7 +150,8 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
     position: absolute;
-    transition: all .5s
+    transition: all .3s;
+    background-color:#f4f6f9;
   }
 }
 </style>

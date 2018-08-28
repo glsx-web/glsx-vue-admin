@@ -246,7 +246,7 @@ export default {
   }
 }
 function getMenu(res, id) {
-  const menu = res.filter(menu => menu.id + '' === id + '')
+  const menu = res.filter(menu => +menu.id === +id)
   return (menu.length) ? menu[0] : {}
 }
 </script>

@@ -95,7 +95,7 @@ export default {
       return this.$route.name ? this.$route : false
     },
     isActive(tag) {
-      return this.activeId + '' === tag.id + ''
+      return +this.activeId === +tag.id
     },
     addViewTags() {
       return new Promise((resole, reject) => {
