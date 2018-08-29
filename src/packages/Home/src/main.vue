@@ -18,6 +18,9 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'AppHome',
   props: ['menu', 'isvertical'],
+  mounted() {
+    (+this.$route.query.sysid === this.menu.id) && this.handleChange()
+  },
   methods: {
     handleChange() {
       this.reset_menus(this.menu.id).then(menus => {
@@ -36,7 +39,7 @@ export default {
     },
     getTextColor(menu) {
       const color = this.app.auth.curnav.first === menu.id ? this.aside.sidebar.activeTextColor : '#333'
-      return { color: color }
+      return { color }
     }
   },
   computed: {

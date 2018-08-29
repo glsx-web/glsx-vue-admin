@@ -52,8 +52,6 @@ export default {
         slidesPerView: 4,
         slidesPerColumn: 2,
         slidesPerGroup: 4,
-        // spaceBetween: 40,
-        // loopFillGroupWithBlank: true,
         observer: true,
         observeParents: true,
         grabCursor: true, // 开启鼠标的抓手形状
@@ -66,7 +64,7 @@ export default {
         },
         on: {
           init: function() {
-            setTimeout(() => this.resize.resizeHandler(), 500)
+            setTimeout(() => this.resize && this.resize.resizeHandler(), 500)
           }
         },
         keyboard: true,
@@ -104,7 +102,7 @@ export default {
       })
     }
   },
-  mounted() {
+  beforeMount() {
     this.reset_nav()
     this.clear_auth()
     this.cache_states()

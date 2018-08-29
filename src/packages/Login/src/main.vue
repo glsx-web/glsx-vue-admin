@@ -118,8 +118,7 @@ export default {
   },
   mounted() {
     this.$remove_session_config()
-    this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
-    this.star.instance.run()
+    this.runStar()
     this.RemoveAllViews()
   },
   beforeDestroy() {
@@ -129,8 +128,12 @@ export default {
     ...mapActions(['Login', 'RemoveAllViews']),
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
-      this.star.instance.clear()
-      this.star.instance = new Star(this.star.id, this.star.count, theme, this.star.mouseLineColor)
+      this.star.lineColor = theme
+      this.runStar()
+    },
+    runStar() {
+      this.star.instance && this.star.instance.clear()
+      this.star.instance = new Star(this.star.id, this.star.count, this.star.lineColor, this.star.mouseLineColor)
       this.star.instance.run()
     },
     handleLogin() {
@@ -143,7 +146,8 @@ export default {
             .then(() => this.GetResources())
             .then(() => {
               this.loading = false
-              this.$router.push({ path: '/home' })
+              const query = this.$route.query
+              this.$router.push({ path: '/home', query })
             }).catch(err => {
               console.log(err)
               this.loading = false

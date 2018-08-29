@@ -53,7 +53,8 @@ export default {
         menus: this.$get_menus(this.app.auth.resources, this.app.auth.curnav.fourth),
         color: this.app.defaultColor,
         active: this.app.auth.curnav.fifth,
-        isShow: this.app.mainVisible !== AppConst.Visibility.VISIBLE
+        isShow: this.app.mainVisible !== AppConst.Visibility.VISIBLE,
+        resources: this.app.auth.resources
       }
     }
   },

@@ -42,11 +42,7 @@ export default {
     },
     'oNav5th.isShow': {
       handler(newVal, oldVal) {
-        if (!newVal) {
-          this.connections = []
-          this.activeName = ''
-          this.$refs.$container.innerHTML = ''
-        }
+        !newVal && this.clear()
       }
     },
     activeName(val) {
@@ -57,13 +53,14 @@ export default {
       })
       if (connection) {
         connection.iframe.className = 'showMe'
-        // this.lastIframe = connection.iframe
         this.$emit('@handleNav5', connection.source)
       }
     }
   },
   computed: {
     aNav5th() {
+      const isShow = this.oNav5th.isShow
+      if (!isShow) return []
       const menus = this.oNav5th.menus
       if (menus) {
         setTimeout(() => {
@@ -78,6 +75,11 @@ export default {
     creatActiveName(menus) {
       var active = this.oNav5th.active + ''
       return active
+    },
+    clear() {
+      this.connections = []
+      this.activeName = ''
+      this.$refs.$container.innerHTML = ''
     },
     frameLoadedCallback(frame) {
       if (!this.activeName || frame.id === +this.activeName) {
@@ -111,8 +113,10 @@ export default {
           }
         }
       })
+      if (!con) return
       con.promise.then(child => {
         child.setTheme(this.oNav5th.color)
+        child.setResources(this.oNav5th.resources)
         // console.log(child.height())
       })
       con.iframe.onload = _ => this.frameLoadedCallback(con.source)
@@ -129,7 +133,7 @@ export default {
   }
   .hideMe {
     z-index: 0;
-    transform: translateX(50px);
+    transform: translateX(100px);
   }
   .el-tabs__nav-wrap::after{
     z-index: 0;
