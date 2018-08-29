@@ -108,17 +108,12 @@ export default {
     },
     handleClickSetting() {
       const SettingVisible = this.$refs.getSettingVisible.dialogFormVisible
-      if (this.minSize === true && SettingVisible === false) {
+      if (this.minSize) {
+        this.clickSetting = SettingVisible
         setTimeout(() => {
-          this.clickSetting = false
-          this.eventAddOrRemove(this.state.addEvent)
+          this.eventAddOrRemove(this.state[SettingVisible ? 'removeEvent' : 'addEvent'])
         }, 400)
-        this.mcIsShow = false
-      } else if (this.minSize === true && SettingVisible === true) {
-        this.eventAddOrRemove(this.state.removeEvent)
-        this.clickSetting = true
-      } else if (this.minSize === true) {
-        this.clickSetting = false
+        SettingVisible ? '' : this.mcIsShow = SettingVisible
       }
     },
     handleMcClose() {
