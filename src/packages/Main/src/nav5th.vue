@@ -161,8 +161,35 @@ export default {
       line-height: 30px;
       font-size: 12px;
     }
-    .el-tabs__nav {
-      transform: translateX(15px) !important;
+    .hideMe {
+        z-index: 0;
+        transform: translateX(100px);
+    }
+    .el-tabs__nav-wrap::after{
+        z-index: 0;
+        box-shadow:0px 1px 1px #B0B0B0;
+    }
+    .el-tabs__header {
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 0;
+        .el-tabs__item {
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+        .el-tabs__nav {
+            transform: translateX(15px) !important;
+        }
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+        position: absolute;
+        transition: all .3s;
+        background-color:#f4f6f9;
     }
   }
   .el-tabs__content {
