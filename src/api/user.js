@@ -2,18 +2,30 @@
  * @Author: limin
  * @Date: 2018-06-25 10:28:50
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-09 23:10:19
+ * @Last Modified time: 2018-08-30 05:42:48
  */
 import { GlAxios } from 'glsx-vue-common'
-const path = 'user'
-
+const path = 'vue'
 const __sLogin = `${path}/login`
-const __sGetInfo = `${path}/getInfo`
+const __sGetInfo = `auth/checkLogin`
 const __sLogout = `${path}/logout`
+const __sLt = `${path}/lt`
+const __sCheckLogin = `auth/checkLogin`
+
+const check = {
+  p: [__sCheckLogin],
+  req: params => GlAxios.get(__sCheckLogin, { params })
+}
+const lt = {
+  p: [__sLt],
+  req: params => GlAxios.post(__sLt, params)
+}
 
 const login = {
   p: [__sLogin],
-  req: params => GlAxios.post(__sLogin, params)
+  req: params => {
+    return (GlAxios.post(__sLogin, params))
+  }
 }
 
 const getInfo = {
@@ -27,5 +39,7 @@ const logout = {
 export {
   login,
   getInfo,
-  logout
+  logout,
+  lt,
+  check
 }

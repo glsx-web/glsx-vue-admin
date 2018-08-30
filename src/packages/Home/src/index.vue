@@ -79,7 +79,9 @@ export default {
   methods: {
     ...mapActions(['RemoveAllViews', 'SetAside']),
     sys_checked(sys, menus) {
-      this.set_nav_value(menus).then(() => this.$router.push({ path: '/dashboard' }))
+      this.set_nav_value(menus).then(() => {
+        this.$router.push({ path: '/dashboard' })
+      })
     },
     reset_nav() {
       this.set_nav_value(['', '', '', '', ''])

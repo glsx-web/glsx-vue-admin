@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-14 11:18:14
+ * @Last Modified time: 2018-08-30 05:40:08
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -34,9 +34,9 @@ export default {
       'InitFooter',
       'InitApp'
     ]),
-    GetResources() {
+    GetResources(params) {
       return new Promise(resolve => {
-        this.GetInfo({ token: this.token, v: this }).then(res => { // 拉取user_info
+        this.GetInfo({ params, v: this }).then(res => { // 拉取user_info
           const { resources } = res.data // note: roles must be a array!
           this.SetSession(AppConst.Auth.Resources.Key, resources)
           resolve()

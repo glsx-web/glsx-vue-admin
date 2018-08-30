@@ -18,11 +18,11 @@ export default {
     .el-main{
       padding: 0 !important;
       position: relative;
-      transform: translateX(1px)
+      transform: translate3d(1px,0,0)
     }
     .el-header{
       height: auto !important;
-      padding: 0 1px;
+      padding: 0 ;
     }
     .el-footer{
       padding: 0 !important;

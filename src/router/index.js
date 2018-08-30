@@ -11,23 +11,9 @@ const GlAppLogin = { template: '<gl-app-login />' }
 const GlAppHome = { template: '<gl-app-home />' }
 const GlAppDashboard = { template: '<gl-app-dashboard />' }
 export const routers = [
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
+  { path: '/404', component: _import('errorPage/401'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
   { path: '/login', component: GlAppLogin, hidden: true },
-  { path: '/', redirect: 'login' },
-  {
-    path: '/form',
-    component: Layout,
-    redirect: '/form/index',
-    children: [
-      {
-        path: 'index',
-        name: 'GlForm',
-        component: _import('form/index'),
-        meta: { title: 'form', icon: 'form', permission: '/form/index', keepAlive: false }
-      }
-    ]
-  },
   {
     path: '/home',
     component: Layout,

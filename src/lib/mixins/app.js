@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:30:32
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-22 23:28:22
+ * @Last Modified time: 2018-08-30 10:00:38
  */
 import { mapGetters, mapActions } from 'vuex'
 import { GlConst } from 'glsx-vue-common'
@@ -13,11 +13,11 @@ const RATIO = 3
 
 export default {
   name: 'AppMixin',
-  watch: {
-    $route(route) {
-      this.app.device === AppConst.Device.Types.MINSIZE && this.aside.state === AppConst.States.OPEN && this.SetAside(AsideConst.State.Key, AppConst.States.CLOSE)
-    }
-  },
+  // watch: {
+  //   $route(route) {
+  //     // this.app.device === AppConst.Device.Types.MINSIZE && this.aside.state === AppConst.States.OPEN && this.SetAside(AsideConst.State.Key, AppConst.States.CLOSE)
+  //   }
+  // },
   computed: {
     ...mapGetters([
       'app',

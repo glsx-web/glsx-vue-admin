@@ -32,11 +32,16 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
       resolve(component)
     })
   })
-  // 系统错误捕获
-  const errorHandler = (error, vm) => {
-    console.error('捕获全局异常=====', error)
-  }
-  Vue.config.errorHandler = errorHandler
+  // const errorHandler = (error, vm) => {
+  //   console.error('抛出全局异常')
+  //   console.error(vm)
+  //   console.error(error)
+  // }
+  // Vue.config.errorHandler = errorHandler
+  // // Vue.prototype.$throw = (error) => errorHandler(error, this)
+  // Vue.prototype.$throw = function(error) {
+  //   return errorHandler(error, this)
+  // }
 }
 /* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {

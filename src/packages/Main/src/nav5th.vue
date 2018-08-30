@@ -1,6 +1,6 @@
 <template>
  <transition name="el-zoom-in-center">
-    <el-tabs tab-position="top" class="nav5th" v-model="activeName" v-show="aNav5th.length">
+    <el-tabs type="border-card" tab-position="top" class="nav5th" v-model="activeName" v-show="aNav5th.length">
         <el-tab-pane v-for="(item,index) in aNav5th" :key="index" :index="index+''" :label="item.title" :name="item.id+''">
           <span slot="label">
             <i class="el-icon-date"></i>
@@ -27,7 +27,8 @@ export default {
       loading: false,
       activeName: '',
       connections: [],
-      timer: 0
+      timer: 0,
+      once: false
     }
   },
   props: {
@@ -45,6 +46,12 @@ export default {
         !newVal && this.clear()
       }
     },
+    'oNav5th.active': {
+      handler(newVal, oldVal) {
+        if (this.connections.length === 0) { return }
+        this.activeName = newVal + ''
+      }
+    },
     activeName(val) {
       let connection = null
       this.connections.map(con => {
@@ -54,42 +61,46 @@ export default {
       if (connection) {
         connection.iframe.className = 'showMe'
         this.$emit('@handleNav5', connection.source)
+        return
       }
+      this.activeName = ''
     }
   },
   computed: {
     aNav5th() {
-      const isShow = this.oNav5th.isShow
-      if (!isShow) return []
+      if (this.$route.fullPath !== '/dashboard/index') return []
       const menus = this.oNav5th.menus
       if (menus) {
         setTimeout(() => {
           menus.map(menu => this.createIframe(menu))
-          this.activeName = this.creatActiveName(menus)
         }, 100)
         return menus
       }
     }
   },
   methods: {
-    creatActiveName(menus) {
-      var active = this.oNav5th.active + ''
-      return active
+    creatActiveName() {
+      this.activeName = this.oNav5th.active + ''
+      this.loading = false
     },
     clear() {
       this.connections = []
       this.activeName = ''
       this.$refs.$container.innerHTML = ''
+      clearTimeout(this.timer)
+      this.timer = null
+      this.once = false
     },
     frameLoadedCallback(frame) {
-      if (!this.activeName || frame.id === +this.activeName) {
-        this.loading = false
+      if (frame.id === this.oNav5th.active) {
+        this.creatActiveName()
       }
       if (this.loading && !this.timer) {
         // 防止异常情况无法关闭遮罩层
         this.timer = setTimeout(() => {
-          this.loading = false
-          this.timer = 0
+          this.creatActiveName()
+          clearTimeout(this.timer)
+          this.timer = null
         }, 1000)
       }
     },
@@ -101,6 +112,7 @@ export default {
         this.connections.some(con => con.source.id === item.id)
       ) { return }
       this.loading = true
+      const res = this.oNav5th.resources
       const con = this.$Penpal.connectToChild({
         url: item.path,
         appendTo: '#container',
@@ -108,15 +120,15 @@ export default {
         // style: 'display:none;',
         className: 'hideMe',
         methods: {
-          onload() {
-            // _this.loading = false
+          getResources() {
+            return new Promise(resolve => {
+              resolve(res)
+            })
           }
         }
       })
-      if (!con) return
       con.promise.then(child => {
         child.setTheme(this.oNav5th.color)
-        child.setResources(this.oNav5th.resources)
         // console.log(child.height())
       })
       con.iframe.onload = _ => this.frameLoadedCallback(con.source)
@@ -129,10 +141,12 @@ export default {
 .nav5th {
   .showMe {
     z-index: 1;
+    opacity: 1;
     transform: translateX(0px);
   }
   .hideMe {
     z-index: 0;
+    opacity: 0;
     transform: translateX(100px);
   }
   .el-tabs__nav-wrap::after{
@@ -151,6 +165,9 @@ export default {
       transform: translateX(15px) !important;
     }
   }
+  .el-tabs__content {
+    padding: 1px !important;
+  }
   iframe {
     width: 100%;
     height: 100%;
@@ -159,7 +176,6 @@ export default {
     box-sizing: border-box;
     position: absolute;
     transition: all .3s;
-    background-color:#f4f6f9;
   }
 }
 </style>

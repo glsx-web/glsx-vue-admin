@@ -76,8 +76,8 @@ export default{
   app: {
     defaultColor: '#409EFF',
     axios: {
-      baseURL: 'http://192.168.3.171:7300/mock/5b0ed7dbf189006180803286/standard',
-      'whiteList': ['user/login', 'user/info', 'user/logout', 'user/getInfo'],
+      baseURL: ' http://192.168.3.171:7300/mock/5b0ed7dbf189006180803286/standard',
+      'whiteList': ['user/login', 'user/info', 'user/logout', 'user/getInfo', 'vue/lt', 'vue/login', 'auth/checkLogin', 'vue/logout'],
       'timeout': 15000
     }
   }

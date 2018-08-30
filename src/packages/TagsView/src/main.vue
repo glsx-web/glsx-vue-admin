@@ -32,9 +32,9 @@
       </el-col>
     </el-row>
     <ul class='contextmenu' v-show="menuVisible" :style="{left:left+'px',top:top+'px'}">
-      <li @click="closeSelectedTag(selectedTag)">{{$t('tagsView.close')}}</li>
-      <li @click="closeOthersTags">{{$t('tagsView.closeOthers')}}</li>
-      <li @click="closeAllTags">{{$t('tagsView.closeAll')}}</li>
+      <li @click="closeSelectedTag(selectedTag)"><i class="el-icon-circle-close"></i> {{$t('tagsView.close')}}</li>
+      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> {{$t('tagsView.closeOthers')}}</li>
+      <li @click="closeAllTags"><i class="el-icon-circle-close"></i> {{$t('tagsView.closeAll')}}</li>
     </ul>
   </div>
 </template>

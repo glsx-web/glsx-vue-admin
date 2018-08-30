@@ -125,7 +125,11 @@ export default {
     this.star.instance.clear()
   },
   methods: {
-    ...mapActions(['Login', 'RemoveAllViews']),
+    ...mapActions([
+      'Login',
+      'RemoveAllViews',
+      'Lt',
+      'Check']),
     handleTheme(theme) {
       this.Set(AppConst.DefaultColor.Key, theme)
       this.star.lineColor = theme
@@ -142,14 +146,21 @@ export default {
           this.$remove_session_config()
           this.loading = true
           this.initConfig()
-            .then(() => this.Login({ params: this.loginForm, v: this }))
-            .then(() => this.GetResources())
+            .then(() => this.Lt())
+            .then((lt) => {
+              const params = this.$merge(this.loginForm, { lt, j_captcha_response: 8888, service: 'http://192.168.3.222/' })
+              return this.Login({ params, v: this })
+            })
+            .then(ticket => this.GetResources({ ticket }))
             .then(() => {
               this.loading = false
               const query = this.$route.query
               this.$router.push({ path: '/home', query })
             }).catch(err => {
-              console.log(err)
+              this.$notify.error({
+                title: '错误',
+                message: err
+              })
               this.loading = false
             })
         } else {

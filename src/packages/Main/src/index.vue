@@ -1,6 +1,6 @@
 <template>
   <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
-    <app-main :cachedViews="cachedViews" v-show="!oNav5th.isShow"/>
+    <app-main  v-show="!oNav5th.isShow"/>
     <nav5th 
       :oNav5th="oNav5th"
       :height="nHeight-30" 
@@ -36,7 +36,6 @@ export default {
       'footer',
       'app',
       'header',
-      'cachedViews',
       'visitedRoutes'
     ]),
     ...mapActions(['AddView']),

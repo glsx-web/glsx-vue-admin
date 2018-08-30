@@ -2,13 +2,13 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:23
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-28 10:39:15
+ * @Last Modified time: 2018-08-29 17:52:15
  */
 const tagsView = {
   state: {
-    visitedRoutes: [],
-    visitedFrames: [],
-    cachedViews: []
+    visitedRoutes: []
+    // visitedFrames: [],
+    // cachedViews: []
   },
   mutations: {
     ADD_VIEW: (state, view) => {
@@ -19,23 +19,23 @@ const tagsView = {
         title: (view.meta && view.meta.title) || view.title || 'no-name',
         id: view.id
       }))
-      if (view.meta && view.meta.keepAlive) {
-        state.cachedViews.push(view.name)
-      }
+      // if (view.meta && view.meta.keepAlive) {
+      //   state.cachedViews.push(view.name)
+      // }
     },
-    SAVE_KEEP_STATUS: (state, view) => {
-      if (view.meta.keepAlive) {
-        state.cachedViews.push(view.name)
-      } else {
-        for (const i of state.cachedViews) {
-          if (i === view.name) {
-            const index = state.cachedViews.indexOf(i)
-            state.cachedViews.splice(index, 1)
-            break
-          }
-        }
-      }
-    },
+    // SAVE_KEEP_STATUS: (state, view) => {
+    //   if (view.meta.keepAlive) {
+    //     state.cachedViews.push(view.name)
+    //   } else {
+    //     for (const i of state.cachedViews) {
+    //       if (i === view.name) {
+    //         const index = state.cachedViews.indexOf(i)
+    //         state.cachedViews.splice(index, 1)
+    //         break
+    //       }
+    //     }
+    //   }
+    // },
     REMOVE_VIEW: (state, view) => {
       for (const [i, v] of state.visitedRoutes.entries()) {
         if (v.id === view.id) {
@@ -43,13 +43,13 @@ const tagsView = {
           break
         }
       }
-      for (const i of state.cachedViews) {
-        if (i === view.name) {
-          const index = state.cachedViews.indexOf(i)
-          state.cachedViews.splice(index, 1)
-          break
-        }
-      }
+      // for (const i of state.cachedViews) {
+      //   if (i === view.name) {
+      //     const index = state.cachedViews.indexOf(i)
+      //     state.cachedViews.splice(index, 1)
+      //     break
+      //   }
+      // }
     },
     REMOVE_OTHER_VIEW: (state, view) => {
       for (const [i, v] of state.visitedRoutes.entries()) {
@@ -58,18 +58,18 @@ const tagsView = {
           break
         }
       }
-      for (const i of state.cachedViews) {
-        if (i === view.name) {
-          const index = state.cachedViews.indexOf(i)
-          state.cachedViews = state.cachedViews.slice(index, i + 1)
-          break
-        }
-      }
+      // for (const i of state.cachedViews) {
+      //   if (i === view.name) {
+      //     const index = state.cachedViews.indexOf(i)
+      //     state.cachedViews = state.cachedViews.slice(index, i + 1)
+      //     break
+      //   }
+      // }
     },
     REMOVE_ALL_VIEWS: (state) => {
       state.visitedRoutes = []
-      state.cachedViews = []
-      state.visitedFrames = []
+      // state.cachedViews = []
+      // state.visitedFrames = []
     },
     SAVE_VIEWS: (state, views) => {
       state.visitedRoutes = views
@@ -105,8 +105,8 @@ const tagsView = {
     }
   },
   getters: {
-    visitedRoutes: state => state.visitedRoutes,
-    cachedViews: state => state.cachedViews
+    visitedRoutes: state => state.visitedRoutes
+    // cachedViews: state => state.cachedViews
   }
 }
 
