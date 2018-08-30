@@ -14,6 +14,7 @@ export const routers = [
   { path: '/404', component: _import('errorPage/401'), hidden: true },
   { path: '/401', component: _import('errorPage/401'), hidden: true },
   { path: '/login', component: GlAppLogin, hidden: true },
+  { path: '/', hidden: true, redirect: 'login' },
   {
     path: '/home',
     component: Layout,
