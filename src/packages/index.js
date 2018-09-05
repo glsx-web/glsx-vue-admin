@@ -22,6 +22,7 @@ import GlControl from './ControlPanel'
 import Login from './Login'
 import Home from './Home'
 import Dashboard from './Dashboard'
+import Gl404 from './ErrorPage'
 export {
   Aside,
   Breadcrumb,
@@ -46,5 +47,6 @@ export {
   GlControl,
   Login,
   Home,
-  Dashboard
+  Dashboard,
+  Gl404
 }

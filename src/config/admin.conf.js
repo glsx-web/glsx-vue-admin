@@ -9,7 +9,7 @@ export default{
         visible: true,
         avatar: {
           visible: true,
-          value: 'http://www.didihu.com.cn/ddhpc/images/footer_logo.png'
+          value: ''
         },
         name: {
           visible: true,
@@ -74,11 +74,6 @@ export default{
     height: 30
   },
   app: {
-    defaultColor: '#409EFF',
-    axios: {
-      baseURL: ' http://192.168.3.171:7300/mock/5b0ed7dbf189006180803286/standard',
-      'whiteList': ['user/login', 'user/info', 'user/logout', 'user/getInfo', 'vue/lt', 'vue/login', 'auth/checkLogin', 'vue/logout'],
-      'timeout': 15000
-    }
+    defaultColor: '#409EFF'
   }
 }

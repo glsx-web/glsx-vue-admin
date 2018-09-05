@@ -18,7 +18,7 @@ export default {
     .el-main{
       padding: 0 !important;
       position: relative;
-      transform: translate3d(1px,0,0)
+      // transform: translate3d(1px,0,0)
     }
     .el-header{
       height: auto !important;

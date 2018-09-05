@@ -8,7 +8,8 @@ import {
   GlControl,
   Login,
   Home,
-  Dashboard
+  Dashboard,
+  Gl404
 } from './packages'
 const components = [
   Aside,
@@ -20,7 +21,8 @@ const components = [
   GlControl,
   Login,
   Home,
-  Dashboard
+  Dashboard,
+  Gl404
 ]
 import './styles/index.scss'
 import { store } from '@/lib'
@@ -32,16 +34,6 @@ GlsxVueAdmin.install = function(Vue, opts = {}) {
       resolve(component)
     })
   })
-  // const errorHandler = (error, vm) => {
-  //   console.error('抛出全局异常')
-  //   console.error(vm)
-  //   console.error(error)
-  // }
-  // Vue.config.errorHandler = errorHandler
-  // // Vue.prototype.$throw = (error) => errorHandler(error, this)
-  // Vue.prototype.$throw = function(error) {
-  //   return errorHandler(error, this)
-  // }
 }
 /* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {

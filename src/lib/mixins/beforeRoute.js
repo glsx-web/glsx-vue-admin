@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-30 05:40:08
+ * @Last Modified time: 2018-08-31 12:27:16
  */
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -37,7 +37,7 @@ export default {
     GetResources(params) {
       return new Promise(resolve => {
         this.GetInfo({ params, v: this }).then(res => { // 拉取user_info
-          const { resources } = res.data // note: roles must be a array!
+          const { resources } = res // note: roles must be a array!
           this.SetSession(AppConst.Auth.Resources.Key, resources)
           resolve()
         }).catch(err => {

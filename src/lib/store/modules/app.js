@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-30 05:57:40
+ * @Last Modified time: 2018-08-31 12:25:39
  */
 import { GlConst } from 'glsx-vue-common'
 import { login, logout, lt, check } from '@/api/user'
@@ -55,7 +55,7 @@ const app = {
       return new Promise((resolve, reject) => {
         const { params, v } = args
         check.req(params).then(response => {
-          const { roles, name, avatar } = response.data
+          const { roles, name, avatar } = response
           if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
             dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v })
               .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
@@ -76,7 +76,7 @@ const app = {
     Lt({ dispatch }) {
       return new Promise((resolve, reject) => {
         lt.req().then((data) => {
-          resolve(data.data)
+          resolve(data)
         }).catch(err => {
           throw err
         })
@@ -87,8 +87,8 @@ const app = {
       return new Promise((resolve, reject) => {
         const { params, v } = args
         login.req(params).then((data) => {
-          v.$set_session_config_by_key(AppConst.Auth.Token.Key, data.data)
-          resolve(data.data.serviceId)
+          v.$set_session_config_by_key(AppConst.Auth.Token.Key, data)
+          resolve(data.serviceId)
         }).catch(err => {
           throw err
         })

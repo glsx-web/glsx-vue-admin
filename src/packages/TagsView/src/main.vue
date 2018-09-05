@@ -136,9 +136,9 @@ export default {
     line-height: 34px;
     height: 34px;
     border-bottom: 1px solid #d8dce5;
-    -moz-box-shadow:0px 1px 1px #B0B0B0; 
-    -webkit-box-shadow:0px 1px 1px #B0B0B0; 
-    box-shadow:0px 1px 1px #B0B0B0;
+    // -moz-box-shadow:0px 1px 1px #B0B0B0; 
+    // -webkit-box-shadow:0px 1px 1px #B0B0B0; 
+    // box-shadow:0px 1px 1px #B0B0B0;
     &.breadcrumb{
       padding-left: 20px;
     }

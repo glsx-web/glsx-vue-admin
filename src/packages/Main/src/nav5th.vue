@@ -1,6 +1,6 @@
 <template>
  <transition name="el-zoom-in-center">
-    <el-tabs type="border-card" tab-position="top" class="nav5th" v-model="activeName" v-show="aNav5th.length">
+    <el-tabs  tab-position="top" class="nav5th" v-model="activeName" v-show="aNav5th.length">
         <el-tab-pane v-for="(item,index) in aNav5th" :key="index" :index="index+''" :label="item.title" :name="item.id+''">
           <span slot="label">
             <i class="el-icon-date"></i>
@@ -112,7 +112,7 @@ export default {
         this.connections.some(con => con.source.id === item.id)
       ) { return }
       this.loading = true
-      const res = this.oNav5th.resources
+      var _this = this
       const con = this.$Penpal.connectToChild({
         url: item.path,
         appendTo: '#container',
@@ -122,14 +122,16 @@ export default {
         methods: {
           getResources() {
             return new Promise(resolve => {
-              resolve(res)
+              resolve({
+                resources: _this.oNav5th.resources,
+                color: _this.oNav5th.color
+              })
             })
           }
         }
       })
       con.promise.then(child => {
         child.setTheme(this.oNav5th.color)
-        // console.log(child.height())
       })
       con.iframe.onload = _ => this.frameLoadedCallback(con.source)
       this.connections.push(con)
@@ -149,10 +151,10 @@ export default {
     opacity: 0;
     transform: translateX(100px);
   }
-  .el-tabs__nav-wrap::after{
-    z-index: 0;
-    box-shadow:0px 1px 1px #B0B0B0;
-  }
+  // .el-tabs__nav-wrap::after{
+  //   z-index: 0;
+  //   box-shadow:0px 1px 1px #B0B0B0;
+  // }
   .el-tabs__header {
     background-color: rgba(0, 0, 0, 0.1);
     margin: 0;
@@ -161,35 +163,13 @@ export default {
       line-height: 30px;
       font-size: 12px;
     }
-    .hideMe {
+    .el-tabs__nav-wrap{
+      padding-left: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      &::after{
         z-index: 0;
-        transform: translateX(100px);
-    }
-    .el-tabs__nav-wrap::after{
-        z-index: 0;
-        box-shadow:0px 1px 1px #B0B0B0;
-    }
-    .el-tabs__header {
-        background-color: rgba(0, 0, 0, 0.1);
-        margin: 0;
-        .el-tabs__item {
-            height: 30px;
-            line-height: 30px;
-            font-size: 12px;
-        }
-        .el-tabs__nav {
-            transform: translateX(15px) !important;
-        }
-    }
-    iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
-        overflow: hidden;
-        box-sizing: border-box;
-        position: absolute;
-        transition: all .3s;
-        background-color:#f4f6f9;
+        border-bottom: 1px solid #d8dce5;
+      }
     }
   }
   .el-tabs__content {
