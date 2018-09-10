@@ -148,10 +148,10 @@ export default {
           this.initConfig()
             .then(() => this.Lt())
             .then((lt) => {
-              const params = this.$merge(this.loginForm, { lt, j_captcha_response: 8888, service: 'http://192.168.3.222/' })
+              const params = this.$merge(this.loginForm, { lt, j_captcha_response: 8888 })
               return this.Login({ params, v: this })
             })
-            .then(ticket => this.GetResources({ ticket }))
+            .then(() => this.GetResources({}))
             .then(() => {
               this.loading = false
               const query = this.$route.query

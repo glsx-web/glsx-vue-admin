@@ -1,7 +1,7 @@
 export default{
   axios: {
-    baseURL: 'http://192.168.3.171:7300/mock/5b0ed7dbf189006180803286/standard',
-    whiteList: ['user/login', 'user/info', 'user/logout', 'user/getInfo', 'vue/lt', 'vue/login', 'auth/checkLogin', 'vue/logout'],
+    baseURL: 'http://cas.dev.glsx.net/cas/',
+    whiteList: ['api/lt', 'api/login', 'auth/menu/getByUserId', 'api/logout'],
     timeout: 15000,
     result: {
       data_key: 'data', // 返回值数据实体存放对象

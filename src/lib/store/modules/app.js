@@ -2,10 +2,10 @@
  * @Author: limin
  * @Date: 2018-06-25 10:29:04
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-31 12:25:39
+ * @Last Modified time: 2018-09-10 15:14:07
  */
 import { GlConst } from 'glsx-vue-common'
-import { login, logout, lt, check } from '@/api/user'
+import { login, logout, lt, getMenus } from '@/api/user'
 const { AppConst, HeaderConst } = GlConst
 const app = {
   state: {
@@ -54,18 +54,18 @@ const app = {
     GetInfo({ dispatch }, args) {
       return new Promise((resolve, reject) => {
         const { params, v } = args
-        check.req(params).then(response => {
+        getMenus.req(params).then(response => {
           const { roles, name, avatar } = response
-          if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v })
-              .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
-            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name, v }, { root: true })
-              .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, name))
-            dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar, v }, { root: true })
-              .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Avatar.Key, avatar))
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
+          // if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v })
+            .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
+          dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name, v }, { root: true })
+            .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, name))
+          dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar, v }, { root: true })
+            .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Avatar.Key, avatar))
+          // } else {
+          //   reject('getInfo: roles must be a non-null array !')
+          // }
           resolve(response)
         }).catch(err => {
           throw err
