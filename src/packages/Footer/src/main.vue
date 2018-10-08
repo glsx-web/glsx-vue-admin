@@ -1,5 +1,5 @@
 <template>
-  <div class="footer" v-if="footer.visible" :style="{lineHeight:this.footer.height+'px'}">
+  <div class="footer" v-if="footer.visible" :style="{lineHeight:this.footer.height/2+'px'}">
 			Copyright © 2012-2022 深圳广联赛讯有限公司 版权所有
   </div>
 </template>
