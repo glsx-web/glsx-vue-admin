@@ -1,9 +1,9 @@
 <template>
-  <gl-app-scroll :height="parseInt(nHeight+40)" :option='{enableScroll:false}'>
+  <gl-app-scroll :height="nHeight" :option='{enableScroll:false}'>
     <app-main  v-show="!oNav5th.isShow"/>
     <nav5th 
       :oNav5th="oNav5th"
-      :height="nHeight" 
+      :height="nHeight-30" 
       v-on:@handleNav5="handleNav5" v-show="oNav5th.isShow"/> 
   </gl-app-scroll>
 </template>
