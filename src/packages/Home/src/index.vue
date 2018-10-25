@@ -109,7 +109,7 @@ export default {
     this.clear_auth()
     this.cache_states()
     this.RemoveAllViews()
-    this.aNav = this.$get_menus(this.app.auth.resources, 0)
+    this.aNav = this.$get_menus(this.app.auth.resources, 1000)
   },
   beforeDestroy() {
     this.reset_states()

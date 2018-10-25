@@ -68,7 +68,7 @@ const app = {
           // }
           resolve(response)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
@@ -78,7 +78,7 @@ const app = {
         lt.req().then((data) => {
           resolve(data)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
@@ -90,7 +90,7 @@ const app = {
           v.$set_session_config_by_key(AppConst.Auth.Token.Key, data)
           resolve(data.serviceId)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
@@ -102,7 +102,7 @@ const app = {
           v.$remove_auth()
           resolve()
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     }

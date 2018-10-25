@@ -50,7 +50,7 @@ export default {
         backgroundColor: this.app.defaultColor,
         // height: 'auto',
         // width: '150px',
-        marginRight: this.appear ? 0 : '-180px',
+        marginRight: this.appear ? 0 : '-200px',
         transition: 'all .2s',
         background: 'url("/static/nav-bg.png")',
         borderLeft: `1px solid `,
