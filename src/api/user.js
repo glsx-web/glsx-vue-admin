@@ -10,7 +10,7 @@ const __sLogin = `${path}/login`
 // const __sGetInfo = `auth/checkLogin`
 const __sLogout = `${path}/logout`
 const __sLt = `${path}/lt`
-const __sGetMenus = `auth/menu/getByUserId`
+const __sGetMenus = `auth/menu/findTree`
 
 const getMenus = {
   p: [__sGetMenus],

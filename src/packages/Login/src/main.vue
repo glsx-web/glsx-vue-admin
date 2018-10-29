@@ -87,7 +87,6 @@ export default {
   },
   data() {
     const validateUsername = (rule, value, callback) => {
-      console.log(rule)
       if (!value) {
       // if (!isvalidUsername(value)) {
         callback(new Error('请输入正确的用户名'))
@@ -183,29 +182,31 @@ export default {
           this.initConfig()
             .then(() => this.Lt())
             .then((lt) => {
+              this.SetSession(AppConst.Auth.Token.Key, lt)
               const params = this.$merge(this.loginForm, { lt, j_captcha_response: this.loginForm.code })
               return this.Login({ params, v: this })
             })
-            .then(() => this.GetResources({}))
+            .then((data) => {
+              console.log(data)
+              this.SetSession(HeaderConst.Navbar.User.Name.Key, data.realname)
+              return this.GetResources({})
+            })
             .then(() => {
               this.loading = false
               const query = this.$route.query
-              console.log(this.loginForm.name)
-              this.SetSession(HeaderConst.Navbar.User.Name.Key, this.loginForm.username)
               this.$router.push({ path: '/home', query })
             }).catch(err => {
               this.msg = err
               console.log(err)
-              // if (err === 'reload') {
-              //   this.handleLogin()
-              // } else {
-              this.$notify.error({
-                title: '错误',
-                message: err
-              })
+              if (err === '数据接口登录成功，请重新获取数据') {
+                this.handleLogin()
+              } else {
+                this.$notify.error({
+                  title: '错误',
+                  message: err
+                })
+              }
               this.handleCodeClick()
-              // this.handleLogin()
-              // }
               this.loading = false
             })
         } else {
