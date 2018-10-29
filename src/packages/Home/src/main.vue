@@ -23,9 +23,11 @@ export default {
   },
   methods: {
     handleChange() {
-      this.reset_menus(this.menu.id).then(menus => {
-        this.$emit('@checked', this.menu, menus)
-      })
+      this.menu.openStyle
+        ? window.open(this.menu.path)
+        : this.reset_menus(this.menu.id).then(menus => {
+          this.$emit('@checked', this.menu, menus)
+        })
     },
     reset_menus(first) {
       return new Promise(resolve => {
