@@ -19,7 +19,7 @@
         <span class="svg-container svg-container_login">
           <gl-svg-icon icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="username" type="text" v-model="loginForm.username"  placeholder="username" />
       </el-form-item>
       </transition>
       <transition
@@ -38,16 +38,29 @@
       </el-form-item>
       </transition>
       <transition
+        appear
+        appear-class="username-appear"
+        appear-to-class="appear-to"
+        appear-active-class="appear-active">
+        <el-form-item prop="code" class="code">
+          <el-col style="width:70%;">
+            <el-input name="code" type="text" v-model="loginForm.code" autoComplete="on" placeholder="验证码"/>
+          </el-col>
+          <el-col style="width:30%; height:47px;">
+            <img class="code-img" :src="code + rand" @click="handleCodeClick">
+          </el-col>
+        </el-form-item>
+      </transition>
+      <transition
           appear
           appear-class="login-appear"
           appear-to-class="appear-to"
           appear-active-class="appear-active">
-      <el-form-item>
-          <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-            登 录
-          </el-button>
-        
-      </el-form-item>
+        <el-form-item>
+            <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
+              登 录
+            </el-button>
+        </el-form-item>
       </transition>
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -62,8 +75,8 @@
 import { mapActions } from 'vuex'
 import { ConfigMixin, BeforeRoute } from '@/lib/mixins'
 import GlAppThemePicker from '@/packages/ThemePicker'
-import { GlConst, GlValidate } from 'glsx-vue-common'
-const { isvalidUsername } = GlValidate
+import { GlConst } from 'glsx-vue-common'
+// const { isvalidUsername } = GlValidate
 const { AppConst, HeaderConst } = GlConst
 import Star from './stars'
 export default {
@@ -74,29 +87,50 @@ export default {
   },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+      if (!value) {
+      // if (!isvalidUsername(value)) {
         callback(new Error('请输入正确的用户名'))
+      } else if (value.length < 5) {
+        callback(new Error('用户名不能小于5位'))
       } else {
         callback()
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
+      if (!value) {
+        callback(new Error('请输入正确的密码'))
+      } else if (value.length < 5) {
         callback(new Error('密码不能小于5位'))
       } else {
         callback()
       }
     }
+    const validateCode = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入验证码'))
+      } else {
+        callback()
+      }
+    }
     return {
+      code: 'http://cas.dev.glsx.net/cas/captcha.htm?rand=',
+      msg: '验证码错误',
+      rand: Date.now(),
       loginForm: {
         username: 'admin',
-        password: 'admin'
+        password: 'admin',
+        code: ''
       },
       loginRules: {
         username: [
           { required: true, trigger: 'blur', validator: validateUsername }
         ],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
+        password: [
+          { required: true, trigger: 'blur', validator: validatePass }
+        ],
+        code: [
+          { required: true, trigger: 'blur', validator: validateCode }
+        ]
       },
       theme: {
         preDefineColors:
@@ -148,19 +182,31 @@ export default {
           this.initConfig()
             .then(() => this.Lt())
             .then((lt) => {
-              const params = this.$merge(this.loginForm, { lt, j_captcha_response: 8888 })
+              this.SetSession(AppConst.Auth.Token.Key, lt)
+              const params = this.$merge(this.loginForm, { lt, j_captcha_response: this.loginForm.code })
               return this.Login({ params, v: this })
             })
-            .then(() => this.GetResources({}))
+            .then((data) => {
+              console.log(data)
+              this.SetSession(HeaderConst.Navbar.User.Name.Key, data.realname)
+              return this.GetResources({})
+            })
             .then(() => {
               this.loading = false
               const query = this.$route.query
               this.$router.push({ path: '/home', query })
             }).catch(err => {
-              this.$notify.error({
-                title: '错误',
-                message: err
-              })
+              this.msg = err
+              console.log(err)
+              if (err === '数据接口登录成功，请重新获取数据') {
+                this.handleLogin()
+              } else {
+                this.$notify.error({
+                  title: '错误',
+                  message: err
+                })
+              }
+              this.handleCodeClick()
               this.loading = false
             })
         } else {
@@ -169,6 +215,9 @@ export default {
           return false
         }
       })
+    },
+    handleCodeClick() {
+      this.rand = Date.now()
     }
   }
 }
@@ -203,6 +252,20 @@ $light_gray: #eee;
     border-radius: 5px;
     color: #454545;
   }
+  .code {
+      border: 0px;
+      background: rgba(0,0,0,0);
+      // overflow: hidden;
+      height: 47px;
+      .el-input{
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        color: #454545;
+        width: 90%;
+      }
+    }
+  
 }
 </style>
 
@@ -286,6 +349,12 @@ $light_gray: #eee;
   .appear-to{
     transform: translateY(0px);
     transform: translateX(0px);
+  }
+  .code-img {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
   }
 }
 </style>

@@ -4,9 +4,9 @@
  * @Last Modified by: limin
  * @Last Modified time: 2018-09-10 15:14:07
  */
-import { GlConst } from 'glsx-vue-common'
+// import { GlConst } from 'glsx-vue-common'
 import { login, logout, lt, getMenus } from '@/api/user'
-const { AppConst, HeaderConst } = GlConst
+// const { AppConst, HeaderConst } = GlConst
 const app = {
   state: {
     count: 0,
@@ -53,22 +53,22 @@ const app = {
     // 获取用户信息
     GetInfo({ dispatch }, args) {
       return new Promise((resolve, reject) => {
-        const { params, v } = args
+        const { params } = args
         getMenus.req(params).then(response => {
-          const { roles, name, avatar } = response
+          // const { roles, name, avatar } = response
           // if (roles && roles.length > 0) { // 验证返回的roles是否是一个非空数组
-          dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v })
-            .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
-          dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name, v }, { root: true })
-            .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, name))
-          dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar, v }, { root: true })
-            .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Avatar.Key, avatar))
+          //   dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: roles, v })
+          //     .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, roles))
+          //   dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: name, v }, { root: true })
+          //     .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, name))
+          //   dispatch('SetHeader', { key: HeaderConst.Navbar.User.Avatar.Key, value: avatar, v }, { root: true })
+          //     .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Avatar.Key, avatar))
           // } else {
           //   reject('getInfo: roles must be a non-null array !')
           // }
           resolve(response)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
@@ -78,19 +78,24 @@ const app = {
         lt.req().then((data) => {
           resolve(data)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
     // 登入
     Login({ dispatch }, args) {
       return new Promise((resolve, reject) => {
-        const { params, v } = args
+        const { params } = args
         login.req(params).then((data) => {
-          v.$set_session_config_by_key(AppConst.Auth.Token.Key, data)
-          resolve(data.serviceId)
+          // v.$set_session_config_by_key(AppConst.Auth.Token.Key, data)
+          // dispatch('SetApp', { key: AppConst.Auth.Roles.Key, value: data.roles, v })
+          //   .then(() => v.$set_session_config_by_key(AppConst.Auth.Roles.Key, data.roles))
+          // dispatch('SetHeader', { key: HeaderConst.Navbar.User.Name.Key, value: data.realname, v }, { root: true })
+          //   .then(() => v.$set_session_config_by_key(HeaderConst.Navbar.User.Name.Key, data.realname))
+          // console.log(data)
+          resolve(data)
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     },
@@ -102,7 +107,7 @@ const app = {
           v.$remove_auth()
           resolve()
         }).catch(err => {
-          throw err
+          reject(err)
         })
       })
     }
