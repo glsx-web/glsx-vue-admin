@@ -165,12 +165,13 @@ export default {
     right: 0px;
     z-index: 5;
     flex-direction: column;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     background-color: transparent;
+    overflow: hidden;
 }
 .mcChange div{
     text-align: center;
-    padding: 0 10px;
+    padding: 0 40px;
 }
 .el-icon-arrow-right,
 .el-icon-arrow-left,
