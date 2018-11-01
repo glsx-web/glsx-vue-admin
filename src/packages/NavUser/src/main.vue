@@ -1,11 +1,13 @@
 <template>
     <div class="user-container">
-      <avatar  
-        v-if="avatar.visible" 
-        :color="color" 
-        :username="name.value|| 'visitor'" 
-        :size="20"
-        ></avatar>
+      <div class="user-container-avatar">
+        <avatar  
+          v-if="avatar.visible" 
+          :color="color" 
+          :username="name.value|| 'visitor'" 
+          :size="20"
+          ></avatar>
+        </div>
       <span v-if="name.visible" class="user-container-name" :style="{color:backgroundColor}">{{name.value|| 'visitor'}}</span>
       <!-- <img v-if="avatar.visible" class="user-container-avatar" :src="avatar.value"> -->
     </div>
@@ -53,13 +55,34 @@ function randomColor() {
 </script>
 
 <style  rel="stylesheet/scss" lang="scss" scoped>
-  .user-container{
+  .user-container-name{
+      font-size: 14px;
+      letter-spacing: 1px;
+  }
+  .mcFull .user-container{
     display: flex;
     align-items: center;
     justify-content: center;
     &-name {
       padding-left: 10px;
-      font-size: 14px;
+    }
+  }
+  .mcChange .user-container{
+    text-align: center;
+    width: 60px;
+    line-height: 20px;
+    padding: 5px 5px;
+    &-avatar{
+      display: inline-block;
+    }
+    &-name {
+      word-break: break-all;
+      text-overflow: ellipsis;
+      display: -webkit-box; 
+      -webkit-box-orient: vertical; 
+      -webkit-line-clamp: 2; 
+      overflow: hidden;
+      padding-top: 5px;
     }
   }
 </style>
