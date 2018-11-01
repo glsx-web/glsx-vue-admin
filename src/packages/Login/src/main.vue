@@ -182,12 +182,14 @@ export default {
           this.initConfig()
             .then(() => this.Lt())
             .then((lt) => {
-              this.SetSession(AppConst.Auth.Token.Key, lt)
+              // this.SetSession(AppConst.Auth.Token.Key, lt)
               const params = this.$merge(this.loginForm, { lt, j_captcha_response: this.loginForm.code })
+              console.log(params)
               return this.Login({ params, v: this })
             })
             .then((data) => {
               console.log(data)
+              this.SetSession(AppConst.Auth.Token.Key, data.ticketId)
               this.SetSession(HeaderConst.Navbar.User.Name.Key, data.realname)
               return this.GetResources({})
             })
@@ -198,7 +200,7 @@ export default {
             }).catch(err => {
               this.msg = err
               console.log(err)
-              if (err === '数据接口登录成功，请重新获取数据') {
+              if (err === 'reload') {
                 this.handleLogin()
               } else {
                 this.$notify.error({
