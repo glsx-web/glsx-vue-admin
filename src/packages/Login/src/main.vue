@@ -57,7 +57,7 @@
           appear-to-class="appear-to"
           appear-active-class="appear-active">
         <el-form-item>
-            <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
+            <el-button type="primary" style="width:100%;" :loading="loading" @keyup.enter="handleLogin" @click.native.prevent="handleLogin">
               登 录
             </el-button>
         </el-form-item>
@@ -147,6 +147,14 @@ export default {
         id: 'star',
         lineColor: this.$get_config_by_key(AppConst.DefaultColor.Key) || 'red',
         mouseLineColor: 'red'
+      }
+    }
+  },
+  created() {
+    document.onkeydown = e => {
+      if (e.keyCode === 13) {
+        console.log('enter')
+        this.handleLogin()
       }
     }
   },
