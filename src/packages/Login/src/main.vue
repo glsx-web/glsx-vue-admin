@@ -7,7 +7,7 @@
         appear-class="title-appear"
         appear-to-class="appear-to"
         appear-active-class="appear-active">
-        <h3 class="title">GLSX-VUE-ADMIN</h3>
+        <h3 class="title">车辆网支撑平台</h3>
        </transition>
       <gl-app-theme-picker v-on:@themeHandler="handleTheme" class="login-form-color-picker" :theme="theme.value" :predefineColors="theme.preDefineColors" />
       <transition
@@ -62,10 +62,10 @@
             </el-button>
         </el-form-item>
       </transition>
-      <div class="tips">
+      <!-- <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: admin</span>
-      </div>
+      </div> -->
     </el-form>
   </div>
 </template>
@@ -113,7 +113,7 @@ export default {
       }
     }
     return {
-      code: 'http://cas.dev.glsx.net/cas/captcha.htm?rand=',
+      code: 'http://qcsso.glsx.net:7060/cas/captcha.htm?rand=',
       msg: '验证码错误',
       rand: Date.now(),
       loginForm: {
@@ -153,7 +153,6 @@ export default {
   created() {
     document.onkeydown = e => {
       if (e.keyCode === 13) {
-        console.log('enter')
         this.handleLogin()
       }
     }
