@@ -73,7 +73,7 @@
 <script>
 
 import { mapActions } from 'vuex'
-import { ConfigMixin, BeforeRoute } from '@/lib/mixins'
+import { ConfigMixin, BeforeRoute, PublicMixin } from '@/lib/mixins'
 import GlAppThemePicker from '@/packages/ThemePicker'
 import { GlConst } from 'glsx-vue-common'
 // const { isvalidUsername } = GlValidate
@@ -81,7 +81,7 @@ const { AppConst, HeaderConst } = GlConst
 import Star from './stars'
 export default {
   name: 'GlAppLogin',
-  mixins: [ConfigMixin, BeforeRoute],
+  mixins: [ConfigMixin, BeforeRoute, PublicMixin],
   components: {
     GlAppThemePicker
   },
@@ -113,7 +113,7 @@ export default {
       }
     }
     return {
-      code: 'http://cas.dev.glsx.net/cas/captcha.htm?rand=',
+      code: '',
       msg: '验证码错误',
       rand: Date.now(),
       loginForm: {
@@ -153,7 +153,6 @@ export default {
   created() {
     document.onkeydown = e => {
       if (e.keyCode === 13) {
-        console.log('enter')
         this.handleLogin()
       }
     }
@@ -162,6 +161,8 @@ export default {
     this.$remove_session_config()
     this.runStar()
     this.RemoveAllViews()
+    const base = this.$get_session_common_config(AppConst.Axios.BaseURL.Key)
+    this.code = base.axios.baseURL + '/cas/captcha.htm?rand='
   },
   beforeDestroy() {
     this.star.instance.clear()
@@ -192,11 +193,9 @@ export default {
             .then((lt) => {
               // this.SetSession(AppConst.Auth.Token.Key, lt)
               const params = this.$merge(this.loginForm, { lt, j_captcha_response: this.loginForm.code })
-              console.log(params)
               return this.Login({ params, v: this })
             })
             .then((data) => {
-              console.log(data)
               this.SetSession(AppConst.Auth.Token.Key, data.ticketId)
               this.SetSession(HeaderConst.Navbar.User.Name.Key, data.realname)
               return this.GetResources({})
@@ -207,7 +206,6 @@ export default {
               this.$router.push({ path: '/home', query })
             }).catch(err => {
               this.msg = err
-              console.log(err)
               if (err === 'reload') {
                 this.handleLogin()
               } else {
@@ -221,7 +219,6 @@ export default {
             })
         } else {
           this.loading = false
-          console.log('error submit!!')
           return false
         }
       })

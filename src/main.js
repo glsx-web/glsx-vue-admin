@@ -8,18 +8,25 @@ import 'normalize.css/normalize.css'
 import GlsxVueAdmin from './index'
 import GlsxVueCommon from 'glsx-vue-common'
 import ElementUI from 'element-ui'
-import { admin, common } from '@/config'
-Vue.use(GlsxVueAdmin, admin)
-Vue.use(GlsxVueCommon, common)
-Vue.use(ElementUI)
+// import { admin, common } from '@/config'
+import axios from 'axios'
 import { i18n } from '@/lib'
 import router from '@/router'
 import store from './store'
-import './icons'
-new Vue({
-  el: '#app',
-  router,
-  i18n,
-  store,
-  render: h => h(App)
-})
+// import './icons'
+(async() => {
+  const URL = 'http://192.168.3.171:7300/mock/5be17454f31545347559d499/config'
+  const admin = await axios.get(URL + '/admin')
+  const common = await axios.get(URL + '/admin_common')
+  Vue.use(GlsxVueAdmin, admin.data)
+  Vue.use(GlsxVueCommon, common.data)
+  Vue.use(ElementUI)
+  new Vue({
+    el: '#app',
+    router,
+    i18n,
+    store,
+    render: h => h(App)
+  })
+})()
+

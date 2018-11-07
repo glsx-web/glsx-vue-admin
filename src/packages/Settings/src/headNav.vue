@@ -172,12 +172,8 @@ export default {
       }
     },
     preColors() {
-      console.log(this.params)
       return this.params.header.navbar.theme.preDefineColors.split(',')
     }
-  },
-  mounted() {
-    console.log(this.params)
   },
   data() {
     return {

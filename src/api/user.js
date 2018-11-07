@@ -5,12 +5,12 @@
  * @Last Modified time: 2018-09-10 14:36:54
  */
 import { GlAxios } from 'glsx-vue-common'
-const path = 'api'
+const path = '/cas/api'
 const __sLogin = `${path}/login`
 // const __sGetInfo = `auth/checkLogin`
 const __sLogout = `${path}/logout`
 const __sLt = `${path}/lt`
-const __sGetMenus = `auth/menu/findTree`
+const __sGetMenus = `/admin-operating-auth/menu/findTree`
 
 const getMenus = {
   p: [__sGetMenus],
