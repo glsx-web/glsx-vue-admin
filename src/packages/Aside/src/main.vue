@@ -2,7 +2,7 @@
  * @Author: limin
  * @Date: 2018-07-01 01:36:03
  * @Last Modified by: limin
- * @Last Modified time: 2018-08-28 10:39:51
+ * @Last Modified time: 2018-11-13 14:41:32
  */
 <template>
   <transition name="Aside-transition">
@@ -110,7 +110,7 @@ export default {
   methods: {
     handleNav4(nav4Id) {
       const res = this.app.auth.resources
-      const nav3Id = res.filter(menu => +menu.id === +nav4Id)[0].pid
+      const nav3Id = res.filter(menu => +menu.id === +nav4Id)[0].parentId
       this.SetSession(AppConst.Auth.CurNav.Third.Key, nav3Id)
       this.SetSession(AppConst.Auth.CurNav.Fourth.Key, nav4Id)
     }
