@@ -14,7 +14,7 @@
         },
         linkTo: {
           type: String,
-          default: '/'
+          default: '/#/home/index'
         },
         width: {
           type: Number,

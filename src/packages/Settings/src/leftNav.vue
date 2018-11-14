@@ -17,7 +17,7 @@
                       <el-col :span="5">
                         <div class="grid-content">maxWidth</div>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="17">
                         <el-form-item>
                           <el-input-number v-model="params.aside.maxWidth"></el-input-number>
                         </el-form-item>
@@ -25,7 +25,7 @@
                       <el-col :span="5">
                         <div class="grid-content">minWidth</div>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="17">
                         <el-form-item>
                           <el-input-number v-model="params.aside.minWidth"></el-input-number>
                         </el-form-item>
@@ -40,7 +40,7 @@
                       <el-col :span="5">
                         <div class="grid-content">logo</div>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="17">
                         <el-form-item>
                           <el-switch v-model="params.aside.logo.visible" active-text="开" inactive-text="关"></el-switch>
                         </el-form-item>
@@ -48,12 +48,12 @@
                       <el-col :span="5">
                         <div class="grid-content">高度设置</div>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="17">
                         <el-form-item>
                           <el-input-number v-model="params.aside.logo.height"></el-input-number>
                         </el-form-item>
                       </el-col>
-                      <el-col :span="5">
+                      <!-- <el-col :span="5">
                         <div class="grid-content">上传logo</div>
                       </el-col>
                       <el-col :span="6">
@@ -63,7 +63,7 @@
                               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </el-form-item>
-                      </el-col>
+                      </el-col> -->
                     </el-form>
                   </el-collapse-item>
                   <el-collapse-item name="3">
@@ -117,7 +117,7 @@ export default {
   data() {
     return {
       imageUrl: '',
-      activeNames: ['1']
+      activeNames: ['1', '2', '3']
     }
   },
   methods: {

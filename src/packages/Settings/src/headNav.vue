@@ -9,12 +9,12 @@
             <el-col :span="5">
               <div class="grid-content">用户头像</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="17">
               <el-form-item>
                 <el-switch v-model="params.header.navbar.user.avatar.visible" active-text="开" inactive-text="关"></el-switch>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <!-- <el-col :span="5">
               <div class="grid-content">头像上传</div>
             </el-col>
             <el-col :span="6">
@@ -24,7 +24,7 @@
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :span="5">
               <div class="grid-content">用户名称</div>
             </el-col>
@@ -179,7 +179,7 @@ export default {
     return {
       imageUrl: '',
       color: '#409EFF',
-      activeNames: ['1']
+      activeNames: ['1', '2', '3', '4', '5', '6']
     }
   },
   methods: {

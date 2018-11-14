@@ -1,7 +1,7 @@
 <template>
   <gl-app-scroll :height=200 style="min-height:200px;">
     <el-collapse v-model="activeNames">
-      <el-collapse-item>
+      <el-collapse-item name='1'>
         <template slot="title"  @click="handeleTitleClick">
             版权信息 
         </template>

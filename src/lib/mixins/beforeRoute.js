@@ -43,7 +43,7 @@ export default {
           resolve()
         }).catch(err => {
           reject(err)
-          this.Logout()
+          // this.Logout({ 'token': '', v: this })
         })
       })
     }
