@@ -49,7 +49,7 @@ export default {
     'oNav5th.active': {
       handler(newVal, oldVal) {
         if (this.connections.length === 0) { return }
-        this.connections.map(con => con.promise.then(child => child.setTheme(this.oNav5th.color)))
+        // this.connections.map(con => con.promise.then(child => child.setTheme(this.oNav5th.color)))
         this.activeName = newVal + ''
       }
     },
