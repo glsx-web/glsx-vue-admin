@@ -123,9 +123,20 @@ export default {
       element && element[state]('mouseleave', this.handleMcClose, false)
     },
     changeState(state) {
+      const SettingVisible = this.$refs.getSettingVisible.dialogFormVisible
       this.minSize = state
-      this.mcIsShow = !state
-      this.eventAddOrRemove(this.state[state ? 'addEvent' : 'removeEvent'])
+      if (SettingVisible) {
+        if (this.minSize) {
+          this.mcIsShow = true
+          this.clickSetting = true
+        } else {
+          this.mcIsShow = true
+          this.clickSetting = false
+        }
+      } else {
+        this.mcIsShow = !state
+        this.eventAddOrRemove(this.state[state ? 'addEvent' : 'removeEvent'])
+      }
     }
   },
   watch: {
