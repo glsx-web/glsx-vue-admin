@@ -46,8 +46,10 @@ import HeadNav from './headNav'
 import LeftNav from './leftNav'
 import FootNav from './footNav'
 import { mapGetters } from 'vuex'
+import { ConfigMixin } from '@/lib/mixins'
 export default {
   name: 'GlAppSettings',
+  mixins: [ConfigMixin],
   components: {
     LangSelect,
     GlAppThemePicker,
@@ -61,23 +63,7 @@ export default {
   computed: {
     ...mapGetters([
       'app'
-    ]),
-    pickColor: {
-      get: function() {
-        return this.color
-      },
-      set: function(value) {
-        this.color = value
-        this.params.header.navbar.theme.preDefineColors += `,${value}`
-        // const set = new Set(this.params.header.navbar.theme.preDefineColors)
-        // if (!set.has(this.color)) {
-        //   this.params.header.navbar.theme.preDefineColors.push(this.color)
-        // }
-      }
-    },
-    preColors() {
-      return this.params.header.navbar.theme.preDefineColors.split(',')
-    }
+    ])
   },
   data() {
     return {
@@ -121,7 +107,14 @@ export default {
     // 恢复默认设置
     restoreDefault() {
       this.$remove_config()
-      this.$router.push('/')
+      this.resetConfig().then(() => {
+        this.$router.push('/')
+        var styleTag = document.getElementById('chalk-style')
+        if (styleTag) {
+          styleTag.parentNode.removeChild(styleTag)
+        }
+        // window.location.reload()
+      })
       // this.$emit('@setParamsConfig', this.params)
       // this.dialogFormVisible = false
       // this.visible = false

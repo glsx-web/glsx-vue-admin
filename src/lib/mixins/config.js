@@ -29,6 +29,17 @@ export default {
         }
         resole()
       })
+    },
+    resetConfig() {
+      return new Promise(resole => {
+        const config = this.$config
+        for (var key in config) {
+          const action = `Init${this.$first_uppercase(key)}`
+          const pa = { v: this, config: config[key] }
+          this[action](pa)
+        }
+        resole()
+      })
     }
   }
 }

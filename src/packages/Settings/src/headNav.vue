@@ -84,14 +84,14 @@
                   <el-switch v-model="params.header.tagsView.visible" active-text="开" inactive-text="关"></el-switch>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <!-- <el-col :span="5">
               <div class="grid-content">activeColor</div>
             </el-col>
             <el-col :span="6">
               <el-form-item >
                 <el-color-picker v-model="params.header.tagsView.activeColor" size="mini"></el-color-picker>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-form>
         </el-collapse-item>
         <el-collapse-item name="5">
@@ -220,11 +220,11 @@ export default {
 </script>
 
 <style  rel="stylesheet/scss" lang="scss" scoped>
-  .grid-content {
-    line-height: 36px;
-    font-weight: bold;
-    text-indent:30px;
-  } 
+  // .grid-content {
+  //   line-height: 36px;
+  //   font-weight: bold;
+  //   text-indent:30px;
+  // } 
   .preColor {
     display: inline-block;
     height: 30px;

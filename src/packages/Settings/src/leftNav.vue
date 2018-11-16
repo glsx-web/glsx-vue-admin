@@ -15,19 +15,19 @@
                         </el-form-item>
                       </el-col>
                       <el-col :span="5">
-                        <div class="grid-content">maxWidth</div>
+                        <div class="grid-content">菜单的最大宽度</div>
                       </el-col>
-                      <el-col :span="17">
+                      <el-col :span="6">
                         <el-form-item>
-                          <el-input-number v-model="params.aside.maxWidth"></el-input-number>
+                          <el-input type="number" v-model="params.aside.maxWidth"></el-input>
                         </el-form-item>
                       </el-col>
                       <el-col :span="5">
-                        <div class="grid-content">minWidth</div>
+                        <div class="grid-content">菜单的最小宽度</div>
                       </el-col>
-                      <el-col :span="17">
+                      <el-col :span="6">
                         <el-form-item>
-                          <el-input-number v-model="params.aside.minWidth"></el-input-number>
+                          <el-input type="number" v-model="params.aside.minWidth"></el-input>
                         </el-form-item>
                       </el-col>
                     </el-form>
@@ -38,7 +38,7 @@
                     </template>
                     <el-form :model="params.aside.logo">
                       <el-col :span="5">
-                        <div class="grid-content">logo</div>
+                        <div class="grid-content">logo开关</div>
                       </el-col>
                       <el-col :span="17">
                         <el-form-item>
@@ -46,11 +46,11 @@
                         </el-form-item>
                       </el-col>
                       <el-col :span="5">
-                        <div class="grid-content">高度设置</div>
+                        <div class="grid-content">logo高度设置</div>
                       </el-col>
-                      <el-col :span="17">
+                      <el-col :span="6">
                         <el-form-item>
-                          <el-input-number v-model="params.aside.logo.height"></el-input-number>
+                          <el-input type="number" v-model="params.aside.logo.height"></el-input>
                         </el-form-item>
                       </el-col>
                       <!-- <el-col :span="5">
@@ -68,11 +68,11 @@
                   </el-collapse-item>
                   <el-collapse-item name="3">
                     <template slot="title"  @click="handeleTitleClick">
-                        sidebar 
+                        三四级菜单 
                     </template>
                     <el-form :model="params.aside.sidebar">
                       <el-col :span="5">
-                        <div class="grid-content">sidebar</div>
+                        <div class="grid-content">三四级菜单</div>
                       </el-col>
                       <el-col :span="17">
                         <el-form-item>
@@ -82,7 +82,7 @@
                     </el-form>
                     <el-form :model="params.aside.sidebar">
                       <el-col :span="5">
-                          <div class="grid-content">选中的标签</div>
+                          <div class="grid-content">选中菜单字体</div>
                         </el-col>
                         <el-col :span="6">
                           <el-form-item >
@@ -92,7 +92,7 @@
                           </el-form-item>
                         </el-col>
                         <el-col :span="5">
-                          <div class="grid-content">字体颜色</div>
+                          <div class="grid-content">未选中菜单字体</div>
                         </el-col>
                         <el-col :span="6">
                           <el-form-item >
@@ -142,6 +142,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style  rel="stylesheet/scss" lang="scss">
+  .grid-content {
+    display: inline-block;
+    line-height: 36px;
+    font-weight: bold;
+    text-indent: 15px;
+    width: 100px;
+  }
+  .w-100 {
+    width: 100px;
+  }
 </style>

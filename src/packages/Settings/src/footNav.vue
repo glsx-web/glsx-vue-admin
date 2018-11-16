@@ -6,22 +6,10 @@
             版权信息 
         </template>
         <el-form :model="params.footer">
-          <el-col :span="5">
             <div class="grid-content">footer</div>
-          </el-col>
-          <el-col :span="17">
-            <el-form-item>
-              <el-switch v-model="params.footer.visible" active-text="开" inactive-text="关"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :span="5">
+            <el-switch v-model="params.footer.visible" active-text="开" inactive-text="关"></el-switch>
             <div class="grid-content">底部高度</div>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item>
-                <el-input-number v-model="params.footer.height"></el-input-number>
-            </el-form-item>
-          </el-col>
+            <el-input class="w-100" type="number" v-model="params.footer.height"></el-input>
         </el-form>
       </el-collapse-item>
     </el-collapse>
