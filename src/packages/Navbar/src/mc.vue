@@ -181,7 +181,7 @@ export default {
     overflow: hidden;
 }
 .mcChange div{
-    text-align: center;
+    // text-align: center;
     padding: 0 40px;
 }
 .el-icon-arrow-right,

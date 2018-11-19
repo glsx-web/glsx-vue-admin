@@ -5,7 +5,7 @@
       :class="isvertical? 'vertical': 'horizontal'">
         <img 
           src="/static/home.png" alt="" 
-          :style="isvertical? '' : 'padding-bottom: 28px;'" 
+          :style="isvertical? '' : 'position: absolute;top: 0;left: 0;width: 100%;'" 
           width="100%" srcset="" />
     </div>
     <span class="text" :style="getTextColor(menu)">{{menu.title}}</span>
@@ -76,5 +76,6 @@ function getId(res, pid) {
   width: 30px;
   height: 30px;
   border-radius: 10px;
+  position: relative;
 }
 </style>

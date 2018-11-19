@@ -1,19 +1,15 @@
 <template>
-    <gl-app-scroll :height=300 style="min-height:200px;">
+    <gl-app-scroll :height=300 style="min-height:200px;max-height: 400px;">
     <el-collapse v-model="activeNames" >
       <el-collapse-item name="1">
           <template slot="title"  @click="handeleTitleClick">
               用户信息 
           </template>
           <el-form :model="params.header.navbar.user">
-            <el-col :span="5">
+              <div>
               <div class="grid-content">用户头像</div>
-            </el-col>
-            <el-col :span="17">
-              <el-form-item>
                 <el-switch v-model="params.header.navbar.user.avatar.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
+                </div>
             <!-- <el-col :span="5">
               <div class="grid-content">头像上传</div>
             </el-col>
@@ -25,19 +21,11 @@
                 </el-upload>
               </el-form-item>
             </el-col> -->
-            <el-col :span="5">
+            <div>
               <div class="grid-content">用户名称</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
                 <el-switch v-model="params.header.navbar.user.name.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
-                <el-input v-model="params.header.navbar.user.name.value" :disabled="true"></el-input>
-              </el-form-item>
-            </el-col>
+                <el-input class="m-l-100 w-100" v-model="params.header.navbar.user.name.value" :disabled="true"></el-input>
+            </div>
           </el-form>
         </el-collapse-item>
         <el-collapse-item name="2">
@@ -45,15 +33,9 @@
               选择语言 
           </template>
           <el-form :model="params.header.navbar.language">
-            <el-col :span="5">
               <div class="grid-content">语言</div>
               <!-- <lang-select class="international" v-on:@setLanguage="handleSetLanguage" :language="params.header.navbar.language.value"></lang-select> -->
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
                 <el-switch v-model="params.header.navbar.language.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
           </el-form>
         </el-collapse-item>
         <el-collapse-item name="3">
@@ -61,14 +43,8 @@
               窗口设置 
           </template>
           <el-form :model="params.header.navbar.screenfull">
-            <el-col :span="5">
               <div class="grid-content">全屏</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
                 <el-switch v-model="params.header.navbar.screenfull.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
           </el-form>
         </el-collapse-item>
         <el-collapse-item name="4">
@@ -76,14 +52,8 @@
               标签窗口
           </template>
           <el-form :model="params.header">
-            <el-col :span="5">
               <div class="grid-content">标签窗口</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
                   <el-switch v-model="params.header.tagsView.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
             <!-- <el-col :span="5">
               <div class="grid-content">activeColor</div>
             </el-col>
@@ -99,32 +69,16 @@
               主题设置 
           </template>
           <el-form :model="params.header.navbar.theme">
-            <el-col :span="5">
+            <div>
               <div class="grid-content">皮肤</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item >
                 <el-switch v-model="params.header.navbar.theme.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
               <div class="grid-content">添加预选色</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item >
-                <el-color-picker v-model="pickColor" size="mini"></el-color-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
+              <el-color-picker v-model="pickColor" size="mini"></el-color-picker>
+            </div>
               <div class="grid-content">已有的预选色</div>
-            </el-col>
-            <el-col :span="17">
-              <el-form-item >
                 <div class="preselectedColor">
                   <div class="preColor" v-for="(item , index) in preColors" :key="index" :style="{background: item}" @click="close(item)" style=""></div>
                 </div>
-              </el-form-item>
-            </el-col>
           </el-form>
         </el-collapse-item>
         <el-collapse-item name="6">
@@ -132,14 +86,8 @@
               注销入口 
           </template>
           <el-form :model="params.header.navbar.logout">
-            <el-col :span="5">
               <div class="grid-content">注销</div>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
-                <el-switch v-model="params.header.navbar.logout.visible" active-text="开" inactive-text="关"></el-switch>
-              </el-form-item>
-            </el-col>
+              <el-switch v-model="params.header.navbar.logout.visible" active-text="开" inactive-text="关"></el-switch>
           </el-form>
         </el-collapse-item>
     </el-collapse>
@@ -232,6 +180,11 @@ export default {
     margin-right: 10px;
     position: relative;
     cursor: pointer;
+    vertical-align: middle;
+  }
+  .preselectedColor {
+    display: inline-block;
+    vertical-align: middle;
   }
   .preselectedColor div:first-child {
     pointer-events: none;

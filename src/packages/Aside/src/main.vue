@@ -83,7 +83,7 @@ export default {
       }
     },
     oStyle() {
-      this.Aside.isClosed ? this.oLogo.backgroundImage = '../../static/favicon.ico' : this.oLogo.backgroundImage = this.Logo.image
+      this.Aside.isClosed ? this.oLogo.backgroundImage = '../../static/favicon.png' : this.oLogo.backgroundImage = this.Logo.image
       return {
         width: ((this.Aside.isClosed && this.isMinSize) ? 0 : (this.Aside.isOpend ? this.Aside.maxWidth : this.Aside.minWidth)) + 'px',
         backgroundColor: this.app.defaultColor,

@@ -6,30 +6,16 @@
                         左侧菜单 
                     </template>
                     <el-form :model="params.aside">
-                      <el-col :span="5">
+                      <div>
                         <div class="grid-content">菜单</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
-                          <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关" :disabled="isdisabled"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
+                        <el-switch v-model="params.aside.visible" active-text="开" inactive-text="关" :disabled="isdisabled"></el-switch>
+                      </div>
+                      <div>
                         <div class="grid-content">菜单的最大宽度</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input type="number" v-model="params.aside.maxWidth"></el-input>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
+                        <el-input class="w-100" type="number" v-model="params.aside.maxWidth"></el-input>
                         <div class="grid-content">菜单的最小宽度</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input type="number" v-model="params.aside.minWidth"></el-input>
-                        </el-form-item>
-                      </el-col>
+                        <el-input class="w-100" type="number" v-model="params.aside.minWidth"></el-input>
+                      </div>
                     </el-form>
                   </el-collapse-item>
                   <el-collapse-item name="2">
@@ -37,22 +23,10 @@
                         logo 
                     </template>
                     <el-form :model="params.aside.logo">
-                      <el-col :span="5">
                         <div class="grid-content">logo开关</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
                           <el-switch v-model="params.aside.logo.visible" active-text="开" inactive-text="关"></el-switch>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="5">
                         <div class="grid-content">logo高度设置</div>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-form-item>
-                          <el-input type="number" v-model="params.aside.logo.height"></el-input>
-                        </el-form-item>
-                      </el-col>
+                          <el-input class="w-100" type="number" v-model="params.aside.logo.height"></el-input>
                       <!-- <el-col :span="5">
                         <div class="grid-content">上传logo</div>
                       </el-col>
@@ -71,36 +45,20 @@
                         三四级菜单 
                     </template>
                     <el-form :model="params.aside.sidebar">
-                      <el-col :span="5">
                         <div class="grid-content">三四级菜单</div>
-                      </el-col>
-                      <el-col :span="17">
-                        <el-form-item>
-                          <el-switch v-model="params.aside.sidebar.visible" active-text="开" inactive-text="关"></el-switch>
-                        </el-form-item>
-                      </el-col>
+                        <el-switch v-model="params.aside.sidebar.visible" active-text="开" inactive-text="关"></el-switch>
                     </el-form>
                     <el-form :model="params.aside.sidebar">
-                      <el-col :span="5">
-                          <div class="grid-content">选中菜单字体</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <div>
-                               <el-color-picker v-model="params.aside.sidebar.activeTextColor" size="mini"></el-color-picker>
-                            </div>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="5">
-                          <div class="grid-content">未选中菜单字体</div>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item >
-                            <div>
-                               <el-color-picker v-model="params.aside.sidebar.textColor" size="mini"></el-color-picker>
-                            </div>
-                          </el-form-item>
-                        </el-col>
+                      <div class="grid-content">选中菜单字体</div>
+                      <div style="display:inline-block">
+                          <el-color-picker v-model="params.aside.sidebar.activeTextColor" size="mini"></el-color-picker>
+                      </div>
+                    </el-form>
+                    <el-form :model="params.aside.sidebar">
+                      <div class="grid-content">未选中菜单字体</div>
+                        <div style="display:inline-block">
+                            <el-color-picker v-model="params.aside.sidebar.textColor" size="mini"></el-color-picker>
+                        </div>
                     </el-form>
                   </el-collapse-item>
                 </el-collapse>
@@ -147,10 +105,13 @@ export default {
     display: inline-block;
     line-height: 36px;
     font-weight: bold;
-    text-indent: 15px;
-    width: 100px;
+    text-indent: 25px;
+    width: 150px;
   }
   .w-100 {
-    width: 100px;
+    width: 88px !important;
+  }
+  .m-l-100{
+    margin-left: 100px;
   }
 </style>

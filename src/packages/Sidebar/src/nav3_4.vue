@@ -3,7 +3,7 @@
     <template v-for="(item,index) in aNav3_4">
       <el-submenu :index="item.id+''" v-if="item.children && item.children.length" :key="item.title">
         <template slot="title" >
-          <i class="el-icon-location"></i>
+          <i :class="icon"></i>
           <span>{{item.title}}</span>
         </template>
         <el-menu-item @click="handleNav4(child.id)" v-for="child in item.children" :index="child.id+''" :key="child.title">{{child.title}}</el-menu-item>
@@ -24,10 +24,18 @@ export default {
     oNav3_4: Object,
     generate: Function
   },
+  data() {
+    return {
+      icon: 'el-icon-menu'
+    }
+  },
   computed: {
     aNav3_4() {
       return this.oNav3_4.menus
     }
+  },
+  mounted() {
+    console.log(this.aNav3_4)
   },
   methods: {
     handleNav4(nav4Id) {

@@ -109,11 +109,11 @@ export default {
       this.$remove_config()
       this.resetConfig().then(() => {
         this.$router.push('/')
-        var styleTag = document.getElementById('chalk-style')
-        if (styleTag) {
-          styleTag.parentNode.removeChild(styleTag)
-        }
-        // window.location.reload()
+        // var styleTag = document.getElementById('chalk-style')
+        // if (styleTag) {
+        //   styleTag.parentNode.removeChild(styleTag)
+        // }
+        window.location.reload()
       })
       // this.$emit('@setParamsConfig', this.params)
       // this.dialogFormVisible = false
