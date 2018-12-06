@@ -34,9 +34,6 @@ export default {
       return this.oNav3_4.menus
     }
   },
-  mounted() {
-    console.log(this.aNav3_4)
-  },
   methods: {
     handleNav4(nav4Id) {
       this.$emit('@handleNav4', nav4Id)

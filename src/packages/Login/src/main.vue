@@ -206,14 +206,14 @@ export default {
               this.$router.push({ path: '/home', query })
             }).catch(err => {
               this.msg = err
-              if (err === 'reload') {
-                this.handleLogin()
-              } else {
-                this.$notify.error({
-                  title: '错误',
-                  message: err
-                })
-              }
+              // if (err === 'reload') {
+              //   this.handleLogin()
+              // } else {
+              this.$notify.error({
+                title: '错误',
+                message: err
+              })
+              // }
               this.handleCodeClick()
               this.loading = false
             })
