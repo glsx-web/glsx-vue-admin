@@ -1,6 +1,6 @@
 {
   "name": "glsx-vue-admin",
-  "version": "2.0.14",
+  "version": "2.0.16",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "limin <limin.mail@qq.com>",
@@ -19,7 +19,7 @@
     "easyscroll": "^1.0.1",
     "element-ui": "^2.4.1",
     "glsx-vue-admin": "^2.0.9",
-    "glsx-vue-common": "^1.1.17",
+    "glsx-vue-common": "^1.1.20",
     "nprogress": "0.2.0",
     "prettier": "^1.13.4",
     "screenfull": "^3.3.2",
