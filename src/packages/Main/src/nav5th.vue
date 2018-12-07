@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { GlConst } from 'glsx-vue-common'
+const { EventConst } = GlConst
 export default {
   name: 'Nav5th',
   data() {
@@ -51,6 +53,7 @@ export default {
         if (this.connections.length === 0) { return }
         // this.connections.map(con => con.promise.then(child => child.setTheme(this.oNav5th.color)))
         this.activeName = newVal + ''
+        this._emit(EventConst.P2C.NAV_CHANGE_FIFTH)
       }
     },
     activeName(val) {
@@ -128,6 +131,9 @@ export default {
                 color: _this.oNav5th.color
               })
             })
+          },
+          $$emit(event) {
+            _this._emit(event)
           }
         }
       })
@@ -136,6 +142,9 @@ export default {
       })
       con.iframe.onload = _ => this.frameLoadedCallback(con.source)
       this.connections.push(con)
+    },
+    _emit(event) {
+      this.connections.map(con => con.promise.then(child => child.$$on(event)))
     }
   }
 }
