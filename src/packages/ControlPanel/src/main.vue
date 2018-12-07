@@ -93,13 +93,10 @@ export default {
 .controlEntrance {
   opacity: 1;
 }
-// .controlPanelMenu {
-//   .controlPanelList {
-//     list-style: none;
-//     width: 60px;
-//     height: 30px;
-//     padding-bottom: 25px;
-//     box-sizing: content-box;
-//   }
-// }
+.controlPanelList {
+  width: 198px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>
